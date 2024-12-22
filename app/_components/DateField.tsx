@@ -51,6 +51,7 @@ const DateField = ({ placeholder, setValue, value, stateLabel }: Props) => {
             onSelect={(date) => {
               setOpen(false);
               setValue(date?.toString() || "");
+              console.log("Chosen Date:",date?.toString())
             }}
             initialFocus
           />
