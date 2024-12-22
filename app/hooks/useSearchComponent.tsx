@@ -1,76 +1,101 @@
 "use client";
-import { LOCATIONS, LOCATIONS_CONST, LOCATIONS_MAP } from "@/lib/Types";
-import { generateTimeSlots, wait } from "@/lib/utils";
+import { LOCATIONS_CONST, LOCATIONS_MAP } from "@/lib/Types";
+import { generateTimeSlots } from "@/lib/utils";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState, useTransition } from "react";
 
 export const useSearchComponent = () => {
+  // Hooks
   const searchParams = useSearchParams();
-  const [pickUpLocation, setPickUpLocation] = useState<string | null>(
-    searchParams.get("pickUpLocation") ?? ""
-  );
-  const [dropOffLocation, setDropOffLocation] = useState<string | null>(
-    searchParams.get("dropOffLocation") ?? ""
-  );
-
-  const [deliveryDate, setDeliveryDate] = useState(
-    searchParams.get("deliveryDate") ?? ""
-  );
-  const [deliveryTime, setDeliveryTime] = useState(
-    searchParams.get("deliveryTime") ?? ""
-  );
-
-  const [returnDate, setReturnDate] = useState(
-    searchParams.get("returnDate") ?? ""
-  );
-  const [returnTime, setReturnTime] = useState(
-    searchParams.get("returnTime") ?? ""
-  );
-
-  const [isDropOff, setIsDropOff] = useState<boolean>(!!(searchParams.get("isDropOff") && searchParams.get("isDropOff")==='true'));
-
-  const [pending, startTransition] = useTransition();
   const router = useRouter();
+  const [pending, startTransition] = useTransition();
 
-  const locations = useMemo(
-    () =>
-      LOCATIONS_CONST.map((location) => ({
-        value: location,
-        label: LOCATIONS_MAP[location],
-      })),
-    []
+  // Utility function to fetch query params
+  const getQueryParam = (key: string) => searchParams.get(key) ?? "";
+
+  // States initialized from query params
+  const [pickUpLocation, setPickUpLocation] = useState(getQueryParam("pickUpLocation"));
+  const [dropOffLocation, setDropOffLocation] = useState(getQueryParam("dropOffLocation"));
+  const [deliveryDate, setDeliveryDate] = useState(getQueryParam("deliveryDate"));
+  const [deliveryTime, setDeliveryTime] = useState(getQueryParam("deliveryTime"));
+  const [returnDate, setReturnDate] = useState(getQueryParam("returnDate"));
+  const [returnTime, setReturnTime] = useState(getQueryParam("returnTime"));
+  const [isDropOff, setIsDropOff] = useState(getQueryParam("isDropOff") === "true");
+
+  // Memoized values
+  const locations = useMemo(() =>
+    LOCATIONS_CONST.map((location) => ({
+      value: location,
+      label: LOCATIONS_MAP[location],
+    })), []
   );
 
   const hours = useMemo(() => generateTimeSlots(30), []);
 
+  // Sync state with URL when query params change
   useEffect(() => {
-    setPickUpLocation(searchParams.get("pickUpLocation") ?? "");
-    setDropOffLocation(searchParams.get("dropOffLocation") ?? "");
-    setDeliveryDate(searchParams.get("deliveryDate") ?? "");
-    setDeliveryTime(searchParams.get("deliveryTime") ?? "");
-    setReturnDate(searchParams.get("returnDate") ?? "");
-    setReturnTime(searchParams.get("returnTime") ?? "");
-    setIsDropOff(!!(searchParams.get("isDropOff") && searchParams.get("isDropOff")==='true'));
-    console.log('IS_DROP_OFF',isDropOff)
+    setPickUpLocation(getQueryParam("pickUpLocation"));
+    setDropOffLocation(getQueryParam("dropOffLocation"));
+    setDeliveryDate(getQueryParam("deliveryDate"));
+    setDeliveryTime(getQueryParam("deliveryTime"));
+    setReturnDate(getQueryParam("returnDate"));
+    setReturnTime(getQueryParam("returnTime"));
+    setIsDropOff(getQueryParam("isDropOff") === "true");
   }, [searchParams]);
 
+  // Push query params to URL only if changes are detected
   const handlePush = () => {
-    startTransition(async() => {
-      const params = new URLSearchParams(); // Create query string
+    const params = new URLSearchParams(searchParams); // Get current params
 
-      // Add params only if they exist
-      if (pickUpLocation) params.set("pickUpLocation", pickUpLocation);
-      if (dropOffLocation) params.set("dropOffLocation", dropOffLocation);
-      if (deliveryDate) params.set("deliveryDate", deliveryDate);
-      if (deliveryTime) params.set("deliveryTime", deliveryTime);
-      if (returnDate) params.set("returnDate", returnDate);
-      if (returnTime) params.set("returnTime", returnTime);
-      if (isDropOff) params.set("isDropOff", "true");
+    // Create queryParams object based on state
+    const queryParams = {
+      pickUpLocation,
+      dropOffLocation,
+      deliveryDate,
+      deliveryTime,
+      returnDate,
+      returnTime,
+      isDropOff: isDropOff ? "true" : null, // Convert boolean to string
+    };
 
-      // Push updated URL
-      const url = `/cars?${params.toString()}`;
-      router.push(url, { scroll: false }); // No page reload
+    // Check if any changes have been made
+    let hasChanges = false;
+    Object.entries(queryParams).forEach(([key, value]) => {
+      const currentValue = params.get(key); // Current value in URL
+      if ((value && value !== currentValue) || (!value && currentValue)) {
+        hasChanges = true; // Change detected
+      }
     });
+
+    if (!hasChanges) {
+      console.log('No Change')
+      return
+    }; // Exit early if no changes
+
+    // Update query params
+    Object.entries(queryParams).forEach(([key, value]) => {
+      if (value) {
+        params.set(key, value.toString()); // Set new value
+      } else {
+        params.delete(key); // Remove param if null
+      }
+    });
+    startTransition(() => {
+      // Push updated URL
+      router.push(`/cars?${params.toString()}`, { scroll: false });
+    });
+  };
+
+  // Reset Filters
+  const resetFilters = () => {
+    setPickUpLocation("");
+    setDropOffLocation("");
+    setDeliveryDate("");
+    setDeliveryTime("");
+    setReturnDate("");
+    setReturnTime("");
+    setIsDropOff(false);
+    router.push("/cars", { scroll: false }); // Clear all query params
   };
 
   return {
@@ -91,6 +116,7 @@ export const useSearchComponent = () => {
     locations,
     hours,
     handlePush,
+    resetFilters,
     pending,
   };
 };

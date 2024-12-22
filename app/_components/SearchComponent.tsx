@@ -50,7 +50,7 @@ const SearchComponent = ({ className }: Props) => {
                 items={locations}
                 param="pickUpLocation"
                 push={false}
-                setValue={(val: string | null) => setPickUpLocation(val)}
+                setValue={(val: string) => setPickUpLocation(val)}
                 value={pickUpLocation}
                 stateLabel="Pick Up Location"
               />
@@ -59,7 +59,7 @@ const SearchComponent = ({ className }: Props) => {
                   items={locations}
                   param="dropOffLocation"
                   push={false}
-                  setValue={(val: string | null) => setDropOffLocation(val)}
+                  setValue={(val: string) => setDropOffLocation(val)}
                   value={dropOffLocation}
                   stateLabel="Drop Off Location"
                 />

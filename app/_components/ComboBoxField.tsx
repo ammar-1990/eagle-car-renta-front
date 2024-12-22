@@ -28,7 +28,7 @@ type Props = {
   placeholder?: string;
   param: string;
   value:string | null,
-  setValue:(value:string | null)=>void
+  setValue:(value:string)=>void
   
 } & ({push:true} | {push:false,stateLabel:string})
 

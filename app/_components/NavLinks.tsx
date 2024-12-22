@@ -61,7 +61,7 @@ const NavLinks = ({ carTypes }: Props) => {
               minWidth
               key={`link-${index}`}
               value={value}
-              setValue={(val: string | null) => setValue(val)}
+              setValue={(val: string) => setValue(val)}
               push
               items={refactoredCarTypes}
               placeholder="Select Car Type"
