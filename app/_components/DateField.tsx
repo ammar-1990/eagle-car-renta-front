@@ -13,6 +13,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import StateLabel from "./StateLabel";
+import { convertDateToISOString } from "@/lib/date";
 
 type Props = {
   value: string;
@@ -46,12 +47,14 @@ const DateField = ({ placeholder, setValue, value, stateLabel }: Props) => {
                 today.setHours(0, 0, 0, 0); 
                 return date < today
             }}
+            classNames={{day_selected:'bg-site-primary text-white'}}
             mode="single"
             selected={new Date(value)}
             onSelect={(date) => {
               setOpen(false);
-              setValue(date?.toString() || "");
-              console.log("Chosen Date:",date?.toString())
+              const refactoredDate = convertDateToISOString(date)
+              setValue(refactoredDate || '');
+              console.log("Chosen Date:",refactoredDate)
             }}
             initialFocus
           />

@@ -1,3 +1,4 @@
+'use client'
 import { LOCATIONS, LOCATIONS_CONST, LOCATIONS_MAP } from "@/lib/Types";
 import { generateTimeSlots } from "@/lib/utils";
 import { useState } from "react";
