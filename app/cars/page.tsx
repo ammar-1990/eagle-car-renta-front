@@ -1,10 +1,13 @@
 import React from 'react'
+import Banner from '../_components/Banner'
 
 type Props = {}
 
 const CarsPage = (props: Props) => {
   return (
-    <div>CARS</div>
+    <div>
+         <Banner label='Cars' />
+      CARS</div>
   )
 }
 
