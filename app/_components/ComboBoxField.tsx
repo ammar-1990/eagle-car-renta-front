@@ -18,10 +18,11 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import StateLabel from "./StateLabel";
 
 type Props = {
+  minWidth?:boolean,
   items: { value: string; label: string }[];
   noItems?: string;
   placeholder?: string;
@@ -38,6 +39,7 @@ export function ComboBoxField({
   noItems = "No Items Found",
   placeholder = "Select Item",
   param,
+  minWidth,
   ...rest
 }: Props) {
 
@@ -52,11 +54,13 @@ export function ComboBoxField({
  
   const [label, setLabel] = React.useState(initialLabel);
 
+
   const router = useRouter();
   const [pending, startTransition] = React.useTransition();
 
  
   React.useEffect(() => {
+   
     if (value && isPush) {
       startTransition(() => {
         router.push(`/cars?${param}=${value}`);
@@ -73,7 +77,7 @@ export function ComboBoxField({
             variant="outline"
             role="combobox"
             aria-expanded={open}
-            className=" w-full justify-between capitalize"
+            className={cn(" w-full justify-between capitalize ", !value && 'text-muted-foreground',minWidth && "min-w-[200px]")}
           >
             {value
               ? items.find((item) => item.label === label)?.label
@@ -86,6 +90,7 @@ export function ComboBoxField({
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-[200px] p-0">
+   
           <Command>
             <CommandInput placeholder={placeholder} />
             <CommandList>

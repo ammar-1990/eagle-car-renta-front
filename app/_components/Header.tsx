@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import Logo from "./Logo";
 import NavLinks from "./NavLinks";
 import SuperButton from "@/components/SuperButton";
@@ -14,6 +14,7 @@ const Header = async(props: Props) => {
   return (
     <header className="fixed top-0 left-0 w-full  z-10">
       <Container>
+        <Suspense>
         <div className="  flex items-center bg-white  p-[32px] rounded-bl-[16px] rounded-br-[16px] justify-between">
           {/* logo */}
           <Logo />
@@ -27,6 +28,7 @@ const Header = async(props: Props) => {
             title="My Booking"
           />
         </div>
+        </Suspense>
       </Container>
     </header>
   );

@@ -63,6 +63,7 @@ const RenderLoadingButton = (
     buttonType,
     ...rest
   } = props;
+  const showIcon =(Icon && title) || (Icon && !title && !loading)
   return (
     <Button
       {...rest}
@@ -72,9 +73,9 @@ const RenderLoadingButton = (
       className={cn("disabled:opacity-55", className)}
       disabled={loading}
     >
-      {Icon && Icon}
+      {showIcon && Icon}
       {!!loading && !!loadingTitle ? loadingTitle : title}
-      {!!loading && <Loader2 className="ml-3 animate-spin" />}
+      {!!loading && <Loader2 className={cn("ml-3 animate-spin",!title && 'ml-0') }/>}
     </Button>
   );
 };

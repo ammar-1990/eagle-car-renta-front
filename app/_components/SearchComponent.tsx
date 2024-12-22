@@ -19,19 +19,21 @@ const SearchComponent = ({ className }: Props) => {
     deliveryDate,
     deliveryTime,
     dropOffLocation,
-    pickupLocation,
+    pickUpLocation,
     returnDate,
     returnTime,
     setDeliveryDate,
     setDeliveryTime,
     setDropOffLocation,
-    setPickupLocation,
+    setPickUpLocation,
     setReturnDate,
     setReturnTime,
     isDropOff,
     setIsDropOff,
     locations,
     hours,
+    pending,
+    handlePush
   } = useSearchComponent();
   return (
     <div className={cn("px-4", className)}>
@@ -48,8 +50,8 @@ const SearchComponent = ({ className }: Props) => {
                 items={locations}
                 param="pickUpLocation"
                 push={false}
-                setValue={(val: string | null) => setPickupLocation(val)}
-                value={pickupLocation}
+                setValue={(val: string | null) => setPickUpLocation(val)}
+                value={pickUpLocation}
                 stateLabel="Pick Up Location"
               />
               {isDropOff && (
@@ -94,7 +96,11 @@ const SearchComponent = ({ className }: Props) => {
             <div className="flex items-center space-x-2 mt-2">
               <Checkbox
                 checked={isDropOff}
-                onCheckedChange={() => setIsDropOff(!isDropOff)}
+                onCheckedChange={() => {
+                  if(!isDropOff){
+                    setDropOffLocation('')
+                  }
+                  setIsDropOff(!isDropOff)}}
                 id="isDropOff"
               />
               <label
@@ -109,7 +115,8 @@ const SearchComponent = ({ className }: Props) => {
           <SuperButton
             className="w-full lg:w-auto  h-[80px]"
             buttonType="loadingButton"
-            loading={false}
+            loading={pending}
+            clickHandler={()=>new Promise<void>(r=>{handlePush()})}
             Icon={<Search className="icon" />}
           />
         </div>
