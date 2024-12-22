@@ -70,3 +70,7 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+.icon {
+  @apply w-8 h-8
+}

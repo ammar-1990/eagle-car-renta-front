@@ -1,10 +1,11 @@
+import { cn } from '@/lib/utils'
 import React, { PropsWithChildren } from 'react'
 
-type Props = {} & PropsWithChildren
+type Props = {className?:string} & PropsWithChildren
 
-const Container = ({children}: Props) => {
+const Container = ({className,children}: Props) => {
   return (
-    <div className='max-w-[1224px] w-full mx-auto'>
+    <div className={cn('max-w-[1224px] w-full mx-auto',className)}>
         {children}
     </div>
   )

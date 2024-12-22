@@ -1,7 +1,9 @@
+'use client'
 import { CarType } from '@prisma/client'
 import Link from 'next/link'
-import React from 'react'
+import React, { useState } from 'react'
 import ComboBoxField from './ComboBoxField'
+import { useSearchParams } from 'next/navigation'
 
 type Props = {
     carTypes:CarType[]
@@ -29,6 +31,10 @@ const links = [
 
 const NavLinks = ({carTypes}: Props) => {
     const refactoredCarTypes = carTypes.map(type=>({value:type.id,label:type.title}))
+    const searchParams = useSearchParams()
+    const initialValue = searchParams.get('carType');
+    const [value, setValue] = useState<string | null>(initialValue)
+
   return (
     <nav className='flex items-center gap-[40px]'>
         {links.map((link, index)=>{
@@ -39,7 +45,7 @@ const NavLinks = ({carTypes}: Props) => {
                     </Link>
                 )
             }else{
-                return(<ComboBoxField items={refactoredCarTypes} placeholder='Select Car Type' param='carType' />)
+                return(<ComboBoxField key={`link-${index}`} value={value} setValue={(val:string | null)=>setValue(val)} push items={refactoredCarTypes} placeholder='Select Car Type' param='carType' />)
             }
         })}
     </nav>

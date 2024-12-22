@@ -7,7 +7,8 @@ const BookingPage = (props: Props) => {
   return (
     <div>
       <Banner label='About Us'/>
-      BookingPage</div>
+      BookingPage
+      </div>
   )
 }
 
