@@ -7,6 +7,7 @@ import { getCarTypes } from "@/lib/getters";
 
 type Props = {};
 
+export const dynamic = "force-dynamic"
 const Header = async(props: Props) => {
 
   const carTypes = await getCarTypes() 

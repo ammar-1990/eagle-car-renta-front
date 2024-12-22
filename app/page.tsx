@@ -1,8 +1,11 @@
 import { wait } from "@/lib/utils";
 import Banner from "./_components/Banner";
 import SearchComponent from "./_components/SearchComponent";
+import { Suspense } from "react";
 
 type Props = {}
+
+export const dynamic = "force-dynamic"
 export default async function Home(props: Props) {
 
   return (
@@ -10,7 +13,9 @@ export default async function Home(props: Props) {
          <Banner label="Descover Top Cars <br/> With Just One Click." className="justify-end" labelStyles="mr-[110px]"/>
          {/* search component */}
          <div className="-mt-[72.5px]">
+          <Suspense>
          <SearchComponent/>
+         </Suspense>
          </div>
       
     </div>
