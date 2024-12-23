@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { Check, ChevronsUpDown, Loader } from "lucide-react";
+import { Check, ChevronDown, ChevronsUpDown, Loader } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -23,6 +23,7 @@ import StateLabel from "./StateLabel";
 
 type Props = {
   minWidth?:boolean,
+  noBorder?:boolean,
   items: { value: string; label: string }[];
   noItems?: string;
   placeholder?: string;
@@ -36,6 +37,7 @@ export function ComboBoxField({
   value,
   setValue,
   items,
+  noBorder,
   noItems = "No Items Found",
   placeholder = "Select Item",
   param,
@@ -72,12 +74,12 @@ export function ComboBoxField({
     <div>
       {!rest.push &&   <StateLabel stateLabel={rest.stateLabel} />}
       <Popover open={open} onOpenChange={setOpen}>
-        <PopoverTrigger asChild>
+        <PopoverTrigger asChild className={cn("",noBorder && "border-none hover:bg-transparent")}>
           <Button
             variant="outline"
             role="combobox"
             aria-expanded={open}
-            className={cn(" w-full justify-between capitalize ", !value && 'text-muted-foreground',minWidth && "min-w-[200px]")}
+            className={cn(" w-full justify-between capitalize ",minWidth && "min-w-[200px]")}
           >
             {value
               ? items.find((item) => item.label === label)?.label
@@ -85,7 +87,7 @@ export function ComboBoxField({
             {pending ? (
               <Loader className="animate-spin ml-2 h-4 w-4 shrink-0 opacity-50" />
             ) : (
-              <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+              <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
             )}
           </Button>
         </PopoverTrigger>

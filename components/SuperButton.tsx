@@ -90,7 +90,7 @@ const RenderPushButton = (
   const router = useRouter();
   const handler = () => {
     startTransition(() => {
-      router.push(href);
+      router.push(href,{scroll:false});
     });
   };
 

@@ -58,6 +58,7 @@ const NavLinks = ({ carTypes }: Props) => {
         } else {
           return (
             <ComboBoxField
+              noBorder
               minWidth
               key={`link-${index}`}
               value={value}
