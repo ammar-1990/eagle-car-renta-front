@@ -6,10 +6,16 @@ import Container from "./_components/Container";
 import BrandsSlider from "./_components/BrandsSlider";
 import Benefits from "./_components/Benefits";
 import OurCars from "./_components/OurCars";
+import CarsByLocation from "./_components/CarsByLocation";
+import { Skeleton } from "@/components/ui/skeleton";
+import { LOCATIONS_CONST } from "@/lib/Types";
 
-type Props = {};
+type Props = {
+  searchParams:Promise<{location:(typeof LOCATIONS_CONST)[number]}>
+};
 
-export default async function Home(props: Props) {
+export default async function Home({searchParams}: Props) {
+  const location = (await searchParams).location
   return (
     <div>
       <Banner
@@ -34,8 +40,16 @@ export default async function Home(props: Props) {
       {/* Our Cars */}
       <div className="py-[95px] bg-[#F5F5F5]">
       <OurCars />
+
+      <div className="mt-[52px]">
+        <Suspense fallback={<Skeleton className="w-full h-[400px] rounded-md bg-muted-foreground"/>}>
+        <CarsByLocation  location={location} />
+        </Suspense>
+      
+        </div>
+
       </div>
-   
+ 
     </div>
   );
 }

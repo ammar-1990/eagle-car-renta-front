@@ -5,3 +5,12 @@ export const LOCATIONS_MAP: Record<(typeof LOCATIONS_CONST)[number], string> = {
   LOS_ANGELES: "los angeles",
   ORLANDO: "orlando",
 };
+
+
+
+export type PricingType = {
+  hour:string,
+  days:string[],
+  week:string,
+  month:string
+}
