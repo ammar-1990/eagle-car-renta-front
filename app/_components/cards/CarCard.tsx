@@ -1,13 +1,17 @@
 import ImageComponent from "@/components/ImageComponent";
+import SuperButton from "@/components/SuperButton";
 import { PricingType } from "@/lib/Types";
 import { Car } from "@prisma/client";
 import { Fuel, UserRound } from "lucide-react";
 import React from "react";
 
-type Props = { car: Car & { carType: { title: string } } };
+type Props = { car: Car & { carType: { title: string } } ,isMainPage?:boolean };
 
-const CarCard = ({ car }: Props) => {
+const CarCard = ({ car,isMainPage = false }: Props) => {
   const dayPrice = (car.pricing as PricingType).days[0];
+  const url = isMainPage 
+  ? `/cars?location=${car.location}`
+  :`/checkout`
   return (
     <article className="border rounded-[24px] overflow-hidden">
       <ImageComponent
@@ -53,6 +57,7 @@ const CarCard = ({ car }: Props) => {
                         {car.seats}
                 </span>
         </div>
+        <SuperButton buttonType="linkButton" href={url} className="mt-[18px] w-full rounded-full" title="Book Now" />
       </div>
     </article>
   );

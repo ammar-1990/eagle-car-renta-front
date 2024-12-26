@@ -9,13 +9,15 @@ import OurCars from "./_components/OurCars";
 import CarsByLocation from "./_components/CarsByLocation";
 import { Skeleton } from "@/components/ui/skeleton";
 import { LOCATIONS_CONST } from "@/lib/Types";
+import EasySteps from "./_components/EasySteps";
 
 type Props = {
-  searchParams:Promise<{location:(typeof LOCATIONS_CONST)[number]}>
+  searchParams: Promise<{ location: (typeof LOCATIONS_CONST)[number] }>;
 };
 
-export default async function Home({searchParams}: Props) {
-  const location = (await searchParams).location
+export default async function Home({ searchParams }: Props) {
+  const location = (await searchParams).location;
+
   return (
     <div>
       <Banner
@@ -39,17 +41,22 @@ export default async function Home({searchParams}: Props) {
       </div>
       {/* Our Cars */}
       <div className="py-[95px] bg-[#F5F5F5]">
-      <OurCars />
+        <OurCars />
 
-      <div className="mt-[52px]">
-        <Suspense fallback={<Skeleton className="w-full h-[400px] rounded-md bg-muted-foreground"/>}>
-        <CarsByLocation  location={location} />
-        </Suspense>
-      
+        <div className="mt-[52px]">
+          <Suspense
+            fallback={
+              <Skeleton className="w-full h-[400px] rounded-md bg-muted-foreground" />
+            }
+          >
+            <CarsByLocation location={location} />
+          </Suspense>
         </div>
-
       </div>
- 
+      {/* Easy Steps */}
+      <div className="py-[52px]">
+        <EasySteps />
+      </div>
     </div>
   );
 }
