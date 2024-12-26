@@ -59,7 +59,7 @@ export default {
   		}
   	}
   },
-  plugins: [require("tailwindcss-animate"), plugin(function ({ addUtilities }) {
+  plugins: [require("tailwindcss-animate"), plugin(function ({ addUtilities }:{addUtilities:any}) {
 	addUtilities({
 	  '.text-stroke': {
 		'-webkit-text-stroke-width': '2px',

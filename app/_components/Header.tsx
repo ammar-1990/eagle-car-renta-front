@@ -12,10 +12,10 @@ const Header = async(props: Props) => {
 
   const carTypes = await getCarTypes() 
   return (
-    <header className="fixed top-0 left-0 w-full  z-10">
+    <header className="fixed top-0 left-0 w-full  z-10 ">
       <Container>
         <Suspense>
-        <div className="  flex items-center bg-white  p-[32px] rounded-bl-[16px] rounded-br-[16px] justify-between">
+        <div className="  flex items-center bg-white/85 backdrop-blur-md border border-t-0  p-[32px] rounded-bl-[16px] rounded-br-[16px] justify-between">
           {/* logo */}
           <Logo />
           {/* Nav Links */}

@@ -74,7 +74,7 @@ export function ComboBoxField({
     <div>
       {!rest.push &&   <StateLabel stateLabel={rest.stateLabel} />}
       <Popover open={open} onOpenChange={setOpen}>
-        <PopoverTrigger asChild className={cn("",noBorder && "border-none hover:bg-transparent")}>
+        <PopoverTrigger asChild className={cn("",noBorder && "border-none hover:bg-transparent bg-transparent shadow-none")}>
           <Button
             variant="outline"
             role="combobox"
