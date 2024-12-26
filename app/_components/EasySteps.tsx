@@ -44,8 +44,8 @@ const EasySteps = (props: Props) => {
       <p className="mt-[8px] text-site-primary font-[700] text-[32px] w-fit mx-auto text-center">
         How to rent a car with Eagle Car Rental
       </p>
-      <Container>
-        <div className="mt-12 grid grid-cols-1 lg:grid-cols-2 h-[800px] relative">
+      <Container className="mt-[130px]">
+        <div className="  grid grid-cols-1 lg:grid-cols-2 h-[800px] relative">
           <ImageComponent
             src="/easy-steps.png"
             alt="easy-steps"
