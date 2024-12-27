@@ -9,6 +9,7 @@ import {
 import React from "react";
 import Container from "./Container";
 import ImageComponent from "@/components/ImageComponent";
+import SectionHeader from "./SectionHeader";
 
 type Props = {};
 const EASY_STEPS = [
@@ -38,14 +39,11 @@ const EASY_STEPS = [
 const EasySteps = (props: Props) => {
   return (
     <section className="px-8">
-      <p className="w-fit mx-auto   text-[24px] font-[400]  text-[#5E5E5E] text-center">
-        In 4 easy steps this is{" "}
-      </p>
-      <p className="mt-[8px] text-site-primary font-[700] text-[32px] w-fit mx-auto text-center">
-        How to rent a car with Eagle Car Rental
-      </p>
+        <SectionHeader title="In 4 easy steps this is" description=" How to rent a car with Eagle Car Rental" />
+    
       <Container className="mt-[130px]">
         <div className="  grid grid-cols-1 lg:grid-cols-2 h-[800px] relative">
+            <div className="bg-[#DE2127]  w-[47px] h-full absolute left-1/2 -translate-x-[50%] hidden xl:block" />
           <ImageComponent
             src="/easy-steps.png"
             alt="easy-steps"

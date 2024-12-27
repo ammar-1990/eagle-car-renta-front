@@ -5,6 +5,7 @@ import React from "react";
 import Container from "./Container";
 import { useSearchParams } from "next/navigation";
 import { cn } from "@/lib/utils";
+import SectionHeader from "./SectionHeader";
 
 type Props = {};
 
@@ -14,9 +15,7 @@ const OurCars = (props: Props) => {
   return (
     <Container>
       <div>
-        <h3 className="text-site-primary text-[48px] font-[700] w-full text-center">
-          Our Cars
-        </h3>
+    <SectionHeader title="Review Our Cars" description="Our Cars" />
         <div className="mt-[52px] flex items-center justify-center gap-[16px]">
           {LOCATIONS_CONST.map((location,index) => (
             <SuperButton

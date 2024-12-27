@@ -31,7 +31,7 @@ const CarsByLocation = async ({ location }: Props) => {
       {!cars.length && (
         <NoResult title="No Cars" description="No cars in this location" />
       )}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[32px]">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[32px] px-8">
         {cars.map((car) => (
           <CarCard key={car.id} car={car} isMainPage />
         ))}

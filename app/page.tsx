@@ -10,6 +10,9 @@ import CarsByLocation from "./_components/CarsByLocation";
 import { Skeleton } from "@/components/ui/skeleton";
 import { LOCATIONS_CONST } from "@/lib/Types";
 import EasySteps from "./_components/EasySteps";
+import Reviews from "./_components/Reviews";
+import Blogs from "./_components/Blogs";
+import SectionHeader from "./_components/SectionHeader";
 
 type Props = {
   searchParams: Promise<{ location: (typeof LOCATIONS_CONST)[number] }>;
@@ -56,6 +59,20 @@ export default async function Home({ searchParams }: Props) {
       {/* Easy Steps */}
       <div className="py-[52px]">
         <EasySteps />
+      </div>
+      {/* Reviews */}
+      <div className="mt-[52px]">
+        <Reviews />
+      </div>
+      {/* Blogs */}
+      <div className="mt-[52px]">
+        <Container>
+          <SectionHeader description="Blog" title="Review our blogs" />
+          <Suspense fallback={<Skeleton className="bg-muted-foreground rounded-md min-h-[400px]" />}>
+          <Blogs />
+          </Suspense>
+    
+        </Container>
       </div>
     </div>
   );
