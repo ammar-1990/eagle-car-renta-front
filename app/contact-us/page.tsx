@@ -6,7 +6,7 @@ type Props = {}
 const ContactUsPage = (props: Props) => {
   return (
     <div>
-          <Banner label='About Us'/>
+          <Banner label='Contact Us'/>
         ContactUsPage</div>
   )
 }
