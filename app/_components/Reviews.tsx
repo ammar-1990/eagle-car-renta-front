@@ -101,7 +101,7 @@ const ReviewCard = ({
 }) => {
   const grayStarts = 5 - stars;
   return (
-    <article className="p-8 rounded-md shadow-md border flex flex-col gap-3 h-full">
+    <article className="p-8 rounded-md shadow-md border flex flex-col gap-3 h-full select-none">
       {/* header */}
       <div className="flex items-center gap-3">
         <h4 className="text-xs font-[600]">{name}</h4>

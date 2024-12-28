@@ -38,7 +38,7 @@ const EASY_STEPS = [
 
 const EasySteps = (props: Props) => {
   return (
-    <section className="px-8">
+    <section className="px-8 sm:px-0">
         <SectionHeader title="In 4 easy steps this is" description=" How to rent a car with Eagle Car Rental" />
     
       <Container className="mt-[130px]">

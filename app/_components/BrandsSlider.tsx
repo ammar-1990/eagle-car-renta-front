@@ -19,7 +19,7 @@ const BRANDS = [
 
 const BrandsSlider = (props: Props) => {
   return (
-    <Container className=' px-[8px]'>
+    <Container className=' px-[8px] sm:px-0'>
         <div className="flex items-center flex-wrap justify-between   gap-[20px]">
             {BRANDS.map(brand=><ImageComponent key={brand} src={`/brands/${brand}`} alt='brand' aspect='square' className='w-[75px]' imgClassName='object-contain' />)}
         </div>
