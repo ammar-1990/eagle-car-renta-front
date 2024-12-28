@@ -17,8 +17,8 @@ const ELEMENTS = [
     Icon: <Mail />,
   },
   {
-    title: "Contact Us",
-    info: "000-00000-00",
+    title: "address",
+    info: "California",
     Icon: <MapPinHouse />,
   },
 ];
