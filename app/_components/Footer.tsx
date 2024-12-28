@@ -52,7 +52,7 @@ const Footer = (props: Props) => {
       <div className="p-[16px] rounded-[16px] border border-separate">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
           {ELEMENTS.map(({ Icon, info, title }) => (
-            <article className="flex items-center gap-[16px] px[36.8.px] justify-self-center  text-border">
+            <article key={`footer-element-card-${title}`} className="flex items-center gap-[16px] px[36.8.px] justify-self-center  text-border">
               <div className="flex items-center justify-center border rounded-[12px] w-[45px] h-[48px]">
                 {Icon}
               </div>
@@ -80,7 +80,7 @@ const Footer = (props: Props) => {
           </p>
         </article>
         <article className="flex flex-col justify-between md:justify-self-center gap-[20px]">
-          {LINKS.map((link)=><Link className="text-border capitalize" key={`footer-link-${link.title}`} href={link.href}>{link.title}</Link>)}
+          {LINKS.map((link)=><Link  className="text-border capitalize" key={`footer-link-${link.title}`} href={link.href}>{link.title}</Link>)}
         </article>
         <article className="lg:justify-self-end text-border">
            3RD SECTION
