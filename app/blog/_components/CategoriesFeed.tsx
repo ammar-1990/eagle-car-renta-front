@@ -24,6 +24,7 @@ const CategoriesFeed = async ({category:categoryParams}: Props) => {
        />
        {categories.map((category) => (
          <SuperButton
+         key={`category-${category.id}`}
          variant={categoryParams===category.id ? 'site' : 'secondary'}
          className="rounded-md text-xs capitalize"
            buttonType="linkButton"
