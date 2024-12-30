@@ -6,7 +6,7 @@ type Props = {}
 
 const SingleBlogLoadingPage = (props: Props) => {
   return (
-   <LoadingPage/>
+   <LoadingPage type='logo' />
   )
 }
 

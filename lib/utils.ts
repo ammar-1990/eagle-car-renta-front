@@ -2,6 +2,8 @@ import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
 import CustomError from "./CustomError";
 import { toast } from "sonner";
+import { cache } from "react";
+import prisma from "./prisma";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -31,3 +33,21 @@ export function generateTimeSlots(interval: number = 30): string[] {
   }
   return times;
 }
+
+
+export const getBlog = cache(async(slug:string)=>{
+  const blog = await prisma.blog.findUnique({
+    where:{
+        slug:slug
+    },
+    include:{
+        category:{
+            select:{
+                title:true
+            }
+        }
+    }
+})
+
+return blog
+})

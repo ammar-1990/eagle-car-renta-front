@@ -8,11 +8,11 @@ type Props = {
     type?:'logo' | 'loader'
 }
 
-const LoadingPage = ({fullScreen,type = 'loader'}: Props) => {
+const LoadingPage = ({fullScreen,type = 'logo'}: Props) => {
   if(type === 'logo')
  { return (
-    <div className={cn('grid place-content-center w-full h-full bg-white',fullScreen && ' fixed top-0 left-0')}>
-        <div  className='bg-site-primary p-8 rounded-lg animate-pulse'>
+    <div className={cn('grid place-content-center w-full h-full bg-white min-h-screen',fullScreen && ' fixed top-0 left-0')}>
+        <div  className=' p-8 rounded-lg animate-pulse'>
             <div className='relative aspect-video w-[150px]'>
                 <Image alt='loading-logo' src={'/Logo.png'} fill className='object-contain' />
             </div>
@@ -20,7 +20,7 @@ const LoadingPage = ({fullScreen,type = 'loader'}: Props) => {
     </div>
   )}else{
     return (
-      <div className={cn('grid place-content-center w-full h-full bg-white')}>
+      <div className={cn('grid place-content-center w-full h-full bg-white min-h-screen')}>
     
     <div className='flex flex-col gap-2 items-center text-site-primary'>
       <span className=''>Loading...</span>
