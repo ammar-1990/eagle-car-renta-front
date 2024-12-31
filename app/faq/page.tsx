@@ -7,6 +7,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import BrandsSlider from "../_components/BrandsSlider";
 
 type Props = {};
 
@@ -59,18 +60,26 @@ const FAQPage = (props: Props) => {
       <Banner label="FAQ" />
       <div className="mt-[52px]">
         <Container>
-          <Accordion type="multiple" >
+          <Accordion type="multiple">
             {FAQs.map((FAQ, index) => {
               return (
-                <AccordionItem key={`FAQ-${index}`} value={`item-${index + 1}`} className="border-b-0 border rounded-[16px] px-[16px] mb-[16px]">
+                <AccordionItem
+                  key={`FAQ-${index}`}
+                  value={`item-${index + 1}`}
+                  className="border-b-0 border rounded-[16px] px-[16px] mb-[16px]"
+                >
                   <AccordionTrigger>{FAQ.Q}</AccordionTrigger>
                   <AccordionContent className="text-[#727272] text-[14px] font-[400] max-w-[770px] ">
-                   {FAQ.A}
+                    {FAQ.A}
                   </AccordionContent>
                 </AccordionItem>
               );
             })}
           </Accordion>
+          {/* Brands Slider */}
+          <div className="mt-[52px]">
+            <BrandsSlider />
+          </div>
         </Container>
       </div>
     </div>
