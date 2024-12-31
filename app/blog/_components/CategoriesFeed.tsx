@@ -18,7 +18,7 @@ const CategoriesFeed = async ({category:categoryParams}: Props) => {
        <SuperButton 
        variant={!categoryParams?'site' :'secondary'}
        className="rounded-md text-xs capitalize"
-           buttonType="linkButton"
+           buttonType="pushButton"
            href={`/blog`}
            title={"All"}
        />
@@ -27,7 +27,7 @@ const CategoriesFeed = async ({category:categoryParams}: Props) => {
          key={`category-${category.id}`}
          variant={categoryParams===category.id ? 'site' : 'secondary'}
          className="rounded-md text-xs capitalize"
-           buttonType="linkButton"
+           buttonType="pushButton"
            href={`/blog?category=${category.id}`}
            title={category.title}
          />
