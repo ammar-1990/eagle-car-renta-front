@@ -74,3 +74,8 @@ body {
 .icon {
   @apply w-8 h-8
 }
+
+
+.input-contact-us {
+  @apply   border-none shadow-none bg-[#F5F5F7] placeholder:text-[#8B8FA8] h-[70px] 
+}

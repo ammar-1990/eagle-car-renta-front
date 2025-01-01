@@ -5,6 +5,7 @@ import Header from "./_components/Header";
 import Banner from "./_components/Banner";
 import { Suspense } from "react";
 import Footer from "./_components/Footer";
+import { Toaster } from "@/components/ui/sonner";
 
 const poppins = Poppins({
   weight: ["400", "500", "700", "900"],
@@ -25,8 +26,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${poppins.className} antialiased`}>
         <Header />
-        <main className="pb-8">{children}</main>
+        <main className=" ">{children}</main>
         <Footer/>
+        <Toaster richColors />
       </body>
     </html>
   );
