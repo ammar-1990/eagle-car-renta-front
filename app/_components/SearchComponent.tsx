@@ -12,9 +12,10 @@ import { Checkbox } from "@/components/ui/checkbox";
 
 type Props = {
   className?: string;
+  isSearchCars?:boolean
 };
 
-const SearchComponent = ({ className }: Props) => {
+const SearchComponent = ({ className,isSearchCars }: Props) => {
   const {
     deliveryDate,
     deliveryTime,
@@ -34,7 +35,7 @@ const SearchComponent = ({ className }: Props) => {
     hours,
     pending,
     handlePush
-  } = useSearchComponent();
+  } = useSearchComponent(isSearchCars);
   return (
     <div className={cn("px-4", className)}>
       <Container>

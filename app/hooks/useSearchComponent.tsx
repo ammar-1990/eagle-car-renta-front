@@ -1,10 +1,11 @@
 "use client";
-import { LOCATIONS_CONST, LOCATIONS_MAP } from "@/lib/Types";
+import { convertDateToISOString } from "@/lib/date";
+import { afterTomorrow, DEFAULT_LOCATION, DEFAULT_TIME, LOCATIONS_CONST, LOCATIONS_MAP, tomorrow } from "@/lib/Types";
 import { generateTimeSlots } from "@/lib/utils";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState, useTransition } from "react";
 
-export const useSearchComponent = () => {
+export const useSearchComponent = (isSearchCars?: boolean) => {
   // Hooks
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -13,34 +14,69 @@ export const useSearchComponent = () => {
   // Utility function to fetch query params
   const getQueryParam = (key: string) => searchParams.get(key) ?? "";
 
+
+
   // States initialized from query params
-  const [pickUpLocation, setPickUpLocation] = useState(getQueryParam("pickUpLocation"));
-  const [dropOffLocation, setDropOffLocation] = useState(getQueryParam("dropOffLocation"));
-  const [deliveryDate, setDeliveryDate] = useState(getQueryParam("deliveryDate"));
-  const [deliveryTime, setDeliveryTime] = useState(getQueryParam("deliveryTime"));
-  const [returnDate, setReturnDate] = useState(getQueryParam("returnDate"));
-  const [returnTime, setReturnTime] = useState(getQueryParam("returnTime"));
-  const [isDropOff, setIsDropOff] = useState(getQueryParam("isDropOff") === "true");
+  const [pickUpLocation, setPickUpLocation] = useState(
+    getQueryParam("pickUpLocation") || (isSearchCars ? DEFAULT_LOCATION : "")
+  );
+  const [dropOffLocation, setDropOffLocation] = useState(
+    getQueryParam("dropOffLocation")
+  );
+  const [deliveryDate, setDeliveryDate] = useState(
+    getQueryParam("deliveryDate") ||
+      (isSearchCars ? convertDateToISOString(tomorrow) ?? "" : "")
+  );
+  const [deliveryTime, setDeliveryTime] = useState(
+    getQueryParam("deliveryTime") || (isSearchCars ? DEFAULT_TIME : "")
+  );
+  const [returnDate, setReturnDate] = useState(
+    getQueryParam("returnDate") ||
+      (isSearchCars ? convertDateToISOString(afterTomorrow) ?? "" : "")
+  );
+  const [returnTime, setReturnTime] = useState(
+    getQueryParam("returnTime") || (isSearchCars ? DEFAULT_TIME : "")
+  );
+  const [isDropOff, setIsDropOff] = useState(
+    getQueryParam("isDropOff") === "true"
+  );
 
   // Memoized values
-  const locations = useMemo(() =>
-    LOCATIONS_CONST.map((location) => ({
-      value: location,
-      label: LOCATIONS_MAP[location],
-    })), []
+  const locations = useMemo(
+    () =>
+      LOCATIONS_CONST.map((location) => ({
+        value: location,
+        label: LOCATIONS_MAP[location],
+      })),
+    []
   );
 
   const hours = useMemo(() => generateTimeSlots(30), []);
 
   // Sync state with URL when query params change
   useEffect(() => {
-    setPickUpLocation(getQueryParam("pickUpLocation"));
+    setPickUpLocation(
+      getQueryParam("pickUpLocation") || (isSearchCars ? DEFAULT_LOCATION : "")
+    );
     setDropOffLocation(getQueryParam("dropOffLocation"));
-    setDeliveryDate(getQueryParam("deliveryDate"));
-    setDeliveryTime(getQueryParam("deliveryTime"));
-    setReturnDate(getQueryParam("returnDate"));
-    setReturnTime(getQueryParam("returnTime"));
+    setDeliveryDate(
+      getQueryParam("deliveryDate") ||
+        (isSearchCars ? convertDateToISOString(tomorrow) ?? "" : "")
+    );
+    setDeliveryTime(
+      getQueryParam("deliveryTime") || (isSearchCars ? DEFAULT_TIME : "")
+    );
+    setReturnDate(
+      getQueryParam("returnDate") ||
+        (isSearchCars ? convertDateToISOString(afterTomorrow) ?? "" : "")
+    );
+    setReturnTime(
+      getQueryParam("returnTime") || (isSearchCars ? DEFAULT_TIME : "")
+    );
     setIsDropOff(getQueryParam("isDropOff") === "true");
+
+
+ 
   }, [searchParams]);
 
   // Push query params to URL only if changes are detected
@@ -50,7 +86,7 @@ export const useSearchComponent = () => {
     // Create queryParams object based on state
     const queryParams = {
       pickUpLocation,
-      dropOffLocation,
+      dropOffLocation : isDropOff ? dropOffLocation : null,
       deliveryDate,
       deliveryTime,
       returnDate,
@@ -68,9 +104,9 @@ export const useSearchComponent = () => {
     });
 
     if (!hasChanges) {
-      console.log('No Change')
-      return
-    }; // Exit early if no changes
+      console.log("No Change");
+      return;
+    } // Exit early if no changes
 
     // Update query params
     Object.entries(queryParams).forEach(([key, value]) => {

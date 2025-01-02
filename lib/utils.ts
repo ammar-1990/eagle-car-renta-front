@@ -4,6 +4,8 @@ import CustomError from "./CustomError";
 import { toast } from "sonner";
 import { cache } from "react";
 import prisma from "./prisma";
+import { afterTomorrow, DEFAULT_LOCATION, DEFAULT_TIME, SearchCarsParams, tomorrow } from "./Types";
+import { convertDateToISOString } from "./date";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -53,4 +55,28 @@ return blog
 })
 
 
- 
+ export const prepareCarsSearchParams = (params:SearchCarsParams)=>{
+  const pickUpLocation = params.pickUpLocation ?? DEFAULT_LOCATION
+  const deliveryDate = params.deliveryDate ?? convertDateToISOString(tomorrow) 
+  const deliveryTime = params.deliveryTime ?? DEFAULT_TIME
+  const returnDate = params.returnDate ?? convertDateToISOString(afterTomorrow)
+  const returnTime = params.returnTime ?? DEFAULT_TIME
+
+  return {
+    pickUpLocation,deliveryDate,deliveryTime,returnDate,returnTime
+  }
+ }
+
+
+ export function combineDateAndTimeToUTC(
+  dateString: string,
+  timeString: string
+) {
+  // Combine the date and time strings
+  const combinedDateTimeString = `${dateString}T${timeString}:00.000Z`;
+
+  // Create a Date object from the combined string
+  const utcDate = new Date(combinedDateTimeString);
+
+  return utcDate;
+}
