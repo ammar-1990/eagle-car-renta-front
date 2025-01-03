@@ -1,4 +1,4 @@
-import { Car } from "@prisma/client";
+import { Car, Fuel } from "@prisma/client";
 import { z } from "zod";
 
 export const LOCATIONS = ["LOS_ANGELES", "LAS_VEGAS", "ORLANDO"];
@@ -26,38 +26,56 @@ tomorrow.setDate(tomorrow.getDate() + 1);
 export const afterTomorrow = new Date();
 afterTomorrow.setDate(afterTomorrow.getDate() + 2);
 
-
-
-export const searchCarsSchema = z.object({
-  pickUpLocation: z.enum(LOCATIONS_CONST, { message: "Invalid pick-up location" }),
-  dropOffLocation: z
-    .enum(LOCATIONS_CONST)
-    .optional() // Allow undefined or missing dropOffLocation
-    .or(z.literal("")), // Also allow an empty string if applicable
-  deliveryDate: z.string().refine((date) => !isNaN(Date.parse(date)), {
-    message: "Invalid delivery date format",
-  }),
-  deliveryTime: z.string().regex(/^([0-1]\d|2[0-3]):([0-5]\d)$/, {
-    message: "Invalid delivery time format (HH:mm)",
-  }),
-  returnDate: z.string().refine((date) => !isNaN(Date.parse(date)), {
-    message: "Invalid return date format",
-  }),
-  returnTime: z.string().regex(/^([0-1]\d|2[0-3]):([0-5]\d)$/, {
-    message: "Invalid return time format (HH:mm)",
-  }),
-}) .refine((data) => {
-  const deliveryDateTime = new Date(
-    `${data.deliveryDate}T${data.deliveryTime}`
+export const searchCarsSchema = z
+  .object({
+    pickUpLocation: z.enum(LOCATIONS_CONST, {
+      message: "Invalid pick-up location",
+    }),
+    dropOffLocation: z
+      .enum(LOCATIONS_CONST)
+      .optional() // Allow undefined or missing dropOffLocation
+      .or(z.literal("")), // Also allow an empty string if applicable
+    deliveryDate: z.string().refine((date) => !isNaN(Date.parse(date)), {
+      message: "Invalid delivery date format",
+    }),
+    deliveryTime: z.string().regex(/^([0-1]\d|2[0-3]):([0-5]\d)$/, {
+      message: "Invalid delivery time format (HH:mm)",
+    }),
+    returnDate: z.string().refine((date) => !isNaN(Date.parse(date)), {
+      message: "Invalid return date format",
+    }),
+    returnTime: z.string().regex(/^([0-1]\d|2[0-3]):([0-5]\d)$/, {
+      message: "Invalid return time format (HH:mm)",
+    }),
+    seats: z
+      .union([
+        z.array(z.string()), // Array of strings (multiple seats)
+        z.string(), // Single seat passed as string
+      ])
+      .optional(),
+    fuel: z
+      .union([
+        z.array(
+          z.nativeEnum(Fuel, { invalid_type_error: "Enter Valid Fuel Type" })
+        ),
+        z.nativeEnum(Fuel, { invalid_type_error: "Enter Valid Fuel Type" }),
+      ])
+      .optional(),
+  })
+  .refine(
+    (data) => {
+      const deliveryDateTime = new Date(
+        `${data.deliveryDate}T${data.deliveryTime}`
+      );
+      const returnDateTime = new Date(`${data.returnDate}T${data.returnTime}`);
+      return returnDateTime > deliveryDateTime;
+    },
+    { message: "Return date and time must be after delivery date and time" }
   );
-  const returnDateTime = new Date(
-    `${data.returnDate}T${data.returnTime}`
-  );
-  return returnDateTime > deliveryDateTime;
-}, { message: "Return date and time must be after delivery date and time" })
-
-;
 
 // Export Type
 export type SearchCarsParams = z.infer<typeof searchCarsSchema>;
-export type CarsWithBookings = (Car & {bookings:{startDate:Date,endDate:Date}[],carType:{title:string}})[]
+export type CarsWithBookings = (Car & {
+  bookings: { startDate: Date; endDate: Date }[];
+  carType: { title: string };
+})[];

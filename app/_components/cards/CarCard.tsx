@@ -18,7 +18,7 @@ const CarCard = ({ car,isMainPage = false }: Props) => {
         alt="car"
         src={car.image}
         aspect="video"
-        className="h-[260px] w-full"
+        className=" w-full"
         imgClassName="object-cover"
       />
       <div className="p-[24px] bg-white">

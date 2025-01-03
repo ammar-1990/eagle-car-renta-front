@@ -62,8 +62,9 @@ return blog
   const returnDate = params.returnDate ?? convertDateToISOString(afterTomorrow)
   const returnTime = params.returnTime ?? DEFAULT_TIME
 
+
   return {
-    pickUpLocation,deliveryDate,deliveryTime,returnDate,returnTime
+    ...params,pickUpLocation,deliveryDate,deliveryTime,returnDate,returnTime
   }
  }
 
