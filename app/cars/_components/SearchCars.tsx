@@ -18,10 +18,10 @@ type Props = {
 const SearchCars = ({ validParamsData }: Props) => {
 
   return (
-    <div className="">
+    <div className="group" >
       <SearchComponent isSearchCars />
       <Container>
-        <div className="grid grid-cols-1 md:grid-cols-4 mt-[62px] gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-4 mt-[62px] gap-4" >
           <div className="col-span-1">
             <Filter/>
           </div>

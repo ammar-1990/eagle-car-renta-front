@@ -4,7 +4,7 @@ import CustomError from "./CustomError";
 import { toast } from "sonner";
 import { cache } from "react";
 import prisma from "./prisma";
-import { afterTomorrow, DEFAULT_LOCATION, DEFAULT_TIME, SearchCarsParams, tomorrow } from "./Types";
+import { afterTomorrow, DEFAULT_LOCATION, DEFAULT_TIME, PricingType, SearchCarsParams, tomorrow } from "./Types";
 import { convertDateToISOString } from "./date";
 
 export function cn(...inputs: ClassValue[]) {
@@ -80,4 +80,73 @@ return blog
   const utcDate = new Date(combinedDateTimeString);
 
   return utcDate;
+}
+
+
+export function calculateDuration(startDate: Date, endDate: Date) {
+  const msInHour = 1000 * 60 * 60;
+  const msInDay = msInHour * 24;
+  const msInWeek = msInDay * 7;
+
+  let diff = endDate.getTime() - startDate.getTime();
+
+  const months = Math.floor(diff / (30 * msInDay));
+  diff -= months * (30 * msInDay);  // Subtract months
+
+  const weeks = Math.floor(diff / msInWeek);
+  diff -= weeks * msInWeek;  // Subtract weeks
+
+  const days = Math.floor(diff / msInDay);
+  diff -= days * msInDay;  // Subtract days
+
+  const hours = Math.floor(diff / msInHour);
+
+  return {
+    months,
+    weeks,
+    days,
+    hours,
+  };
+}
+
+
+export function calculateTotalPrice(duration: ReturnType<typeof calculateDuration>, pricing: PricingType) {
+  const { months, weeks, days, hours } = duration;
+
+  // Convert pricing strings to numbers
+  const hourRate = parseFloat(pricing.hour);
+  const weekRate = parseFloat(pricing.week);
+  const monthRate = parseFloat(pricing.month);
+  const dayRates = pricing.days.map((d) => parseFloat(d));
+
+  let total = 0;
+
+  // Calculate price for months
+  total += months * monthRate;
+
+  // Calculate price for weeks
+  total += weeks * weekRate;
+
+  // Calculate price for days
+  for (let i = 0; i < days; i++) {
+    total += i < dayRates.length ? dayRates[i] : dayRates[dayRates.length - 1];
+  }
+
+  // Calculate price for hours 
+  total += hours * hourRate;
+  return total;
+}
+
+
+export function formatDuration(duration: ReturnType<typeof calculateDuration>): string {
+  const { months, weeks, days, hours } = duration;
+
+  const parts = [];
+
+  if (months > 0) parts.push(`${months} month${months > 1 ? 's' : ''}`);
+  if (weeks > 0) parts.push(`${weeks} week${weeks > 1 ? 's' : ''}`);
+  if (days > 0) parts.push(`${days} day${days > 1 ? 's' : ''}`);
+  if (hours > 0) parts.push(`${hours} hour${hours > 1 ? 's' : ''}`);
+
+  return parts.length > 0 ? parts.join(", ") : "Less than an hour";
 }

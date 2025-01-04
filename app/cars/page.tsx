@@ -45,7 +45,7 @@ const CarsPage = async ({ searchParams }: Props) => {
 
  
   return (
-    <div className="bg-[#F3F3F3]">
+    <div className="bg-[#F3F3F3] pb-12">
       <Banner label="Cars" />
       <div className="-mt-[72.5px]">
         <Suspense>

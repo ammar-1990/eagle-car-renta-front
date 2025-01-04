@@ -2,22 +2,28 @@
 
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
+import { cn } from "@/lib/utils";
 import { useRouter, useSearchParams } from "next/navigation";
 
-import React, { useState, useTransition } from "react";
+import React, { useEffect, useState, useTransition } from "react";
 
 type Props = {
   title: string;
   value: string;
   isChecked: boolean;
   param: string;
+  className?:string
 };
 
-const FilterItem = ({ title, isChecked, param, value }: Props) => {
+const FilterItem = ({ title, isChecked, param, value ,className}: Props) => {
   const [pending, startTransition] = useTransition();
   const searchParams = useSearchParams();
   const router = useRouter();
   const [localChecked, setLocalChecked] = useState(isChecked);
+
+  useEffect(()=>{
+    setLocalChecked(isChecked)
+  },[isChecked])
 
   const handleClick = () => {
     const params = new URLSearchParams(searchParams);
@@ -28,10 +34,14 @@ const FilterItem = ({ title, isChecked, param, value }: Props) => {
       : [...values, value];
 
     if (newValues.length) {
-      params.set(param, newValues.join(","));
+      params.delete(param);
+      newValues.forEach((v) => params.append(param, v))
     } else {
       params.delete(param);
+
     }
+    console.log("!!!VALUES",newValues)
+    console.log("!!!VALUES JOINED",newValues.join(','))
     setLocalChecked(() => !localChecked);
 
     startTransition(() => {
@@ -40,17 +50,19 @@ const FilterItem = ({ title, isChecked, param, value }: Props) => {
   };
 
   return (
-    <div data-load={pending ? "true" : undefined} className="flex items-center justify-between">
+    <div
+    onClick={handleClick}
+    data-load={pending ? "true" : undefined} className={cn("flex items-center justify-between cursor-pointer hover:bg-muted px-3 py-1 rounded-md",className)}>
       <Label
         htmlFor={`filter-checkbox-${title}`}
-        className="text-[14px] font-[500] text-[#494949] cursor-pointer"
+        className="text-[14px] font-[500] text-[#494949]  capitalize"
       >
         {title}
       </Label>
       <Checkbox
         id={`filter-checkbox-${title}`}
         checked={localChecked}
-        onCheckedChange={handleClick}
+      
       />
     </div>
   );
