@@ -60,6 +60,7 @@ const FilterItem = ({ title, isChecked, param, value ,className}: Props) => {
         {title}
       </Label>
       <Checkbox
+      className="data-[state=checked]:bg-site-primary"
         id={`filter-checkbox-${title}`}
         checked={localChecked}
       
