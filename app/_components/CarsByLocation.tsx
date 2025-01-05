@@ -17,6 +17,7 @@ const CarsByLocation = async ({ location }: Props) => {
     where: {
       location: adjustedLocation,
     },
+    take:3,
     include: {
       carType: {
         select: {
@@ -33,7 +34,7 @@ const CarsByLocation = async ({ location }: Props) => {
       )}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[32px] px-8 sm:px-0">
         {cars.map((car) => (
-          <CarCard key={car.id} car={car} isMainPage />
+          <CarCard  key={car.id} car={car} isMainPage />
         ))}
       </div>
 

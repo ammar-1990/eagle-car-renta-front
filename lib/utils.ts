@@ -61,10 +61,15 @@ return blog
   const deliveryTime = params.deliveryTime ?? DEFAULT_TIME
   const returnDate = params.returnDate ?? convertDateToISOString(afterTomorrow)
   const returnTime = params.returnTime ?? DEFAULT_TIME
+  let pageNumber = params.pageNumber 
+  if(!pageNumber || isNaN(Number(pageNumber)) || Number(pageNumber) < 1 || !Number.isInteger(Number(pageNumber))){
+    console.warn("Invalid page param::",pageNumber)
+    pageNumber = '1'
+   }
 
 
   return {
-    ...params,pickUpLocation,deliveryDate,deliveryTime,returnDate,returnTime
+    ...params,pickUpLocation,deliveryDate,deliveryTime,returnDate,returnTime,pageNumber
   }
  }
 
@@ -149,4 +154,22 @@ export function formatDuration(duration: ReturnType<typeof calculateDuration>): 
   if (hours > 0) parts.push(`${hours} hour${hours > 1 ? 's' : ''}`);
 
   return parts.length > 0 ? parts.join(", ") : "Less than an hour";
+}
+
+
+
+
+export function formatToDollar(value: number): string {
+  if (isNaN(value)) {
+    throw new Error("Invalid number input");
+  }
+
+  const isWholeNumber = value % 1 === 0;
+
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+    minimumFractionDigits: isWholeNumber ? 0 : 2,
+    maximumFractionDigits: isWholeNumber ? 0 : 2,
+  }).format(value);
 }

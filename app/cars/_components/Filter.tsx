@@ -13,7 +13,7 @@ const Filter = (props: Props) => {
     <div
    
       data-load={pending ? "true" : undefined}
-      className="bg-white border rounded-[14px] p-[24px] "
+      className="bg-white border rounded-[14px] p-[24px] sticky top-[120px] w-full"
     >
       <div className="flex items-center justify-between ">
         <h3 className="font-[600] text-[20px]">Filters</h3>

@@ -18,7 +18,6 @@ export const LOCATIONS_MAP: Record<(typeof LOCATIONS_CONST)[number], string> = {
   ORLANDO: "orlando",
 };
 
-
 export const FUEL = ["GASOLINE", "DIESEL", "ELECTRIC", "HYBRID"];
 export const FUEL_CONST = ["GASOLINE", "DIESEL", "ELECTRIC", "HYBRID"] as const;
 export const FUEL_MAP: Record<(typeof FUEL_CONST)[number], string> = {
@@ -80,6 +79,8 @@ export const searchCarsSchema = z
         z.nativeEnum(Fuel, { invalid_type_error: "Enter Valid Fuel Type" }),
       ])
       .optional(),
+    carType: z.string().optional(),
+    pageNumber: z.string(),
   })
   .refine(
     (data) => {
@@ -89,7 +90,34 @@ export const searchCarsSchema = z
       const returnDateTime = new Date(`${data.returnDate}T${data.returnTime}`);
       return returnDateTime > deliveryDateTime;
     },
-    { message: "Return date and time must be after delivery date and time" }
+    { message: "Return date and time must be after delivery date and time",path:['deliveryDate'] }
+  );
+
+export const checkoutParamsSchema = z
+  .object({
+    slug: z.string().min(1, "Required"),
+    deliveryDate: z.string().refine((date) => !isNaN(Date.parse(date)), {
+      message: "Invalid delivery date format",
+    }),
+    deliveryTime: z.string().regex(/^([0-1]\d|2[0-3]):([0-5]\d)$/, {
+      message: "Invalid delivery time format (HH:mm)",
+    }),
+    returnDate: z.string().refine((date) => !isNaN(Date.parse(date)), {
+      message: "Invalid return date format",
+    }),
+    returnTime: z.string().regex(/^([0-1]\d|2[0-3]):([0-5]\d)$/, {
+      message: "Invalid return time format (HH:mm)",
+    }),
+  })
+  .refine(
+    (data) => {
+      const deliveryDateTime = new Date(
+        `${data.deliveryDate}T${data.deliveryTime}`
+      );
+      const returnDateTime = new Date(`${data.returnDate}T${data.returnTime}`);
+      return returnDateTime > deliveryDateTime;
+    },
+    { message: "Return date and time must be after delivery date and time",path:['deliveryDate'] }
   );
 
 // Export Type
@@ -98,15 +126,26 @@ export type CarsWithBookings = (Car & {
   bookings: { startDate: Date; endDate: Date }[];
   carType: { title: string };
 })[];
+export type CheckoutParams = z.infer<typeof checkoutParamsSchema>
 
 
-const numberSchema = z.string().min(1,'Required').refine(data=>/^[0-9.]*$/.test(data),{message:'Only Numbers'})
+//to pass to card card
+export type CarCheckoutParams = {
+  deliveryDate: string;
+  deliveryTime: string;
+  returnDate: string;
+  returnTime: string;
+};
+
+const numberSchema = z
+  .string()
+  .min(1, "Required")
+  .refine((data) => /^[0-9.]*$/.test(data), { message: "Only Numbers" });
 export const pricingSchema = z.object({
-  hour:numberSchema,
-  days:z.array(numberSchema).length(6,"Enter 6 Days"),
-  week:numberSchema,
-  month:numberSchema
-})
+  hour: numberSchema,
+  days: z.array(numberSchema).length(6, "Enter 6 Days"),
+  week: numberSchema,
+  month: numberSchema,
+});
 
-
- 
+export const TAKE_CARS = 12;

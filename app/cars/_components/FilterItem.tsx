@@ -40,6 +40,7 @@ const FilterItem = ({ title, isChecked, param, value ,className}: Props) => {
       params.delete(param);
 
     }
+    params.set('pageNumber','1')
     console.log("!!!VALUES",newValues)
     console.log("!!!VALUES JOINED",newValues.join(','))
     setLocalChecked(() => !localChecked);

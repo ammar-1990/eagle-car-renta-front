@@ -64,8 +64,10 @@ export function ComboBoxField({
   React.useEffect(() => {
    
     if (value && isPush) {
+      const params  = new URLSearchParams(searchParams)
+      params.set(param,value)
       startTransition(() => {
-        router.push(`/cars?${param}=${value}`);
+        router.push(`/cars?${params.toString()}`,{scroll:false});
       });
     }
   }, [value]);

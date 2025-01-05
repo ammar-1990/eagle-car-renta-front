@@ -1,6 +1,6 @@
 import ImageComponent from "@/components/ImageComponent";
 import SuperButton from "@/components/SuperButton";
-import { PricingType } from "@/lib/Types";
+import { CarCheckoutParams, PricingType } from "@/lib/Types";
 import { cn } from "@/lib/utils";
 import { Car } from "@prisma/client";
 import { Fuel, UserRound } from "lucide-react";
@@ -8,21 +8,30 @@ import React from "react";
 
 type Props = {
   car: Car & { carType: { title: string } };
-  isMainPage?: boolean;
   totalPrice?: string;
   durationDescription?: string;
-};
+} & (
+  | {
+      isMainPage: true;
+    }
+  | { isMainPage?: false; carsCheckoutParams: CarCheckoutParams }
+);
 
 const CarCard = ({
   car,
   totalPrice,
   durationDescription,
   isMainPage = false,
+  ...rest
 }: Props) => {
   const dayPrice = (car.pricing as PricingType).days[0];
   const price = totalPrice ? totalPrice : dayPrice;
   const duration = durationDescription ? `${durationDescription}` : "USD/day";
-  const url = isMainPage ? `/cars?location=${car.location}` : `/checkout`;
+  const url = isMainPage
+    ? `/cars?location=${car.location}`
+    : rest && "carsCheckoutParams" in rest
+    ? `/checkout?slug=${car.slug}&${new URLSearchParams(rest.carsCheckoutParams).toString()}`
+    : "/checkout";
   return (
     <article className="border rounded-[24px] overflow-hidden flex flex-col">
       <ImageComponent

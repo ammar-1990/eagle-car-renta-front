@@ -14,6 +14,8 @@ export const useSearchCars  =()=>{
         const params = new URLSearchParams(searchParams)
         params.delete('seats')
         params.delete('fuel')
+        params.delete('carType')
+        params.delete('pageNumber')
 
         startTransition(()=>{
             router.push(`/cars?${params}`,{scroll:false})
