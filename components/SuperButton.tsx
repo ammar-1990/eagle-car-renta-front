@@ -37,11 +37,11 @@ const RenderButton = (props: SuperButtonProps) => {
 const RenderLinkButton = (
   props: LinkType & NormalButton & ButtonHTMLAttributes<HTMLButtonElement>
 ) => {
-  const { title, Icon, className, href, buttonType,variant, ...rest } = props;
+  const { title, Icon, className, href, buttonType,variant,scroll, ...rest } = props;
 
   return (
     <Button {...rest}  className={cn("", className)} variant={variant ?? "site"} asChild>
-      <Link scroll={false} className="flex items-center" href={href}>
+      <Link scroll={scroll} className="flex items-center" href={href} >
         {Icon && Icon}
         {title}
       </Link>
@@ -139,6 +139,7 @@ type NormalButton = {
 type LinkType = {
   buttonType: "linkButton";
   href: string;
+  scroll?:boolean
 };
 
 type PushType = {

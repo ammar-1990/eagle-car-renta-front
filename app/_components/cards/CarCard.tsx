@@ -96,6 +96,7 @@ const CarCard = ({
         </div>
         <SuperButton
           buttonType="linkButton"
+          scroll={true}
           href={url}
           className="mt-[12px] w-full rounded-full"
           title="Book Now"
