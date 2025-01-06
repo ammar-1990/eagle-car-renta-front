@@ -11,7 +11,7 @@ type Props = {};
 
 const OurCars = (props: Props) => {
   const searchParams = useSearchParams();
-  const chosenLocation = searchParams.get("location") ?? LOCATIONS_CONST[0];
+  const chosenLocation = searchParams.get("pickUpLocation") ?? LOCATIONS_CONST[0];
   return (
     <Container>
       <div>
@@ -21,7 +21,7 @@ const OurCars = (props: Props) => {
             <SuperButton
             key={`location-button-${index}`}
               buttonType="pushButton"
-              href={`/?location=${location}`}
+              href={`/?pickUpLocation=${location}`}
               title={LOCATIONS_MAP[location]}
               variant="site"
               className={cn(

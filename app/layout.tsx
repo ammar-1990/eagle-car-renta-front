@@ -6,6 +6,7 @@ import Banner from "./_components/Banner";
 import { Suspense } from "react";
 import Footer from "./_components/Footer";
 import { Toaster } from "@/components/ui/sonner";
+import { EdgeStoreProvider } from "@/lib/edgeStore";
 
 const poppins = Poppins({
   weight: ["400", "500", "700", "900"],
@@ -26,7 +27,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${poppins.className} antialiased`}>
         <Header />
-        <main className=" ">{children}</main>
+       <EdgeStoreProvider> <main className=" ">{children}</main></EdgeStoreProvider>
         <Footer/>
         <Toaster richColors />
       </body>

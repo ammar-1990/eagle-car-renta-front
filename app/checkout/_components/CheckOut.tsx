@@ -8,6 +8,7 @@ import { useCheckout } from "../hooks/useCheckout";
 import { cn } from "@/lib/utils";
 import { ReactNode } from "react";
 import Summary from "./Summary";
+import BookingForm from "./BookingForm";
 
 type Props = {
   car: CarsWithBookings[number];
@@ -20,12 +21,18 @@ const CheckOut = ({ car, endDate, startDate, totalPrice }: Props) => {
   const formattedStartDate = format(startDate, "EEE dd MMM, hh:mm a");
   const formattedEndDate = format(endDate, "EEE dd MMM, hh:mm a");
 
-  const { totalAmount } = useCheckout({ car, totalPrice });
+  const { totalAmount, form, onSubmit, pending, setIsBusinessFn } =
+    useCheckout({ car, totalPrice });
   return (
     <Container>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-[29px]">
-        <div></div>
-
+        {/* Booking Form */}
+        <BookingForm
+          form={form}
+          onSubmit={onSubmit}
+       
+          setIsBusinessFn={setIsBusinessFn}
+        />
         {/* Right Summary */}
         <Summary
           deposit={car.deposit}

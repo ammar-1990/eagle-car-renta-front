@@ -22,7 +22,7 @@ const Summary = ({
   totalAmount,
 }: Props) => {
   return (
-    <div className="rounded-[16px] p-[50px] border bg-white">
+    <div className="rounded-[16px] p-[50px] border bg-white self-start sticky top-[110px]">
       <SummaryBlockWrapper>
         <h3 className="font-[700] text-[24px] ">Booking Summary</h3>
       </SummaryBlockWrapper>

@@ -28,7 +28,7 @@ const CarCard = ({
   const price = totalPrice ? totalPrice : dayPrice;
   const duration = durationDescription ? `${durationDescription}` : "USD/day";
   const url = isMainPage
-    ? `/cars?location=${car.location}`
+    ? `/cars?pickUpLocation=${car.location}`
     : rest && "carsCheckoutParams" in rest
     ? `/checkout?slug=${car.slug}&${new URLSearchParams(rest.carsCheckoutParams).toString()}`
     : "/checkout";

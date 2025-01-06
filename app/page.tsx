@@ -15,11 +15,11 @@ import Blogs from "./_components/Blogs";
 import SectionHeader from "./_components/SectionHeader";
 
 type Props = {
-  searchParams: Promise<{ location: (typeof LOCATIONS_CONST)[number] }>;
+  searchParams: Promise<{ pickUpLocation: (typeof LOCATIONS_CONST)[number] }>;
 };
 
 export default async function Home({ searchParams }: Props) {
-  const location = (await searchParams).location;
+  const location = (await searchParams).pickUpLocation;
 
   return (
     <div>

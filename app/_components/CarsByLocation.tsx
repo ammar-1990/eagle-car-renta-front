@@ -34,7 +34,7 @@ const CarsByLocation = async ({ location }: Props) => {
       )}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[32px] px-8 sm:px-0">
         {cars.map((car) => (
-          <CarCard  key={car.id} car={car} isMainPage />
+          <CarCard key={car.id} car={car} isMainPage />
         ))}
       </div>
 
@@ -42,7 +42,7 @@ const CarsByLocation = async ({ location }: Props) => {
         className="mt-[68px] rounded-full mx-auto w-fit h-[56px] px-[40px]"
         buttonType="linkButton"
         Icon={<ArrowRight className="icon" />}
-        href={`/cars?location=${adjustedLocation}`}
+        href={`/cars?pickUpLocation=${adjustedLocation}`}
         title="See More"
       />
     </Container>
