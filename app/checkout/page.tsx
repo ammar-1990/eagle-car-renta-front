@@ -4,7 +4,9 @@ import { CheckoutParams, checkoutParamsSchema, PricingType } from "@/lib/Types";
 import Container from "../_components/Container";
 import {
   calculateDuration,
-  calculateTotalPrice,
+ 
+  calculateRentalPrice,
+ 
   combineDateAndTimeToUTC,
 } from "@/lib/utils";
 import prisma from "@/lib/prisma";
@@ -66,6 +68,7 @@ const CheckoutPage = async ({ searchParams }: Props) => {
           title: true,
         },
       },
+      extraOptions:true
     },
   });
 
@@ -100,7 +103,7 @@ const CheckoutPage = async ({ searchParams }: Props) => {
 
   const duration = calculateDuration(startDate, endDate);
   const pricing = car.pricing as unknown as PricingType;
-  const totalPrice = calculateTotalPrice(duration, pricing);
+  const rentalPrice = calculateRentalPrice(duration, pricing);
 
   return (
     <div className="pt-[125px] bg-[#F3F3F3] min-h-screen pb-12">
@@ -108,7 +111,7 @@ const CheckoutPage = async ({ searchParams }: Props) => {
         car={car}
         startDate={startDate}
         endDate={endDate}
-        totalPrice={totalPrice}
+        rentalPrice={rentalPrice}
 
       />
     </div>

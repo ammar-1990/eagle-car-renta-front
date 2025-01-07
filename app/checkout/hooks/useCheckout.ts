@@ -8,12 +8,12 @@ import { useState, useTransition } from "react";
 
 export const useCheckout = ({
   car,
-  totalPrice,
+  rentalPrice,
 }: {
   car: CarsWithBookings[number];
-  totalPrice: number;
+  rentalPrice: number;
 }) => {
-  const router = useRouter();
+ 
   const [pending, startTransition] = useTransition();
  
   const form = useForm<z.infer<typeof bookingSchema>>({
@@ -58,7 +58,11 @@ export const useCheckout = ({
     });
   }
 
-  const totalAmount = totalPrice + car.deposit;
+  const extraOptionsPrice = form.watch('extraOptions').reduce((acc,val)=>acc + Number(val.price),0)
 
-  return { totalAmount, form, onSubmit, pending ,setIsBusinessFn};
+  const payNow = car.deposit
+  const totalAmount = rentalPrice + payNow + extraOptionsPrice;
+  const payLater = totalAmount - payNow
+
+  return { totalAmount, form, onSubmit, pending ,setIsBusinessFn,payLater,payNow};
 };

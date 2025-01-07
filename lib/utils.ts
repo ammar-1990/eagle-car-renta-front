@@ -115,7 +115,7 @@ export function calculateDuration(startDate: Date, endDate: Date) {
 }
 
 
-export function calculateTotalPrice(duration: ReturnType<typeof calculateDuration>, pricing: PricingType) {
+export function calculateRentalPrice(duration: ReturnType<typeof calculateDuration>, pricing: PricingType) {
   const { months, weeks, days, hours } = duration;
 
   // Convert pricing strings to numbers

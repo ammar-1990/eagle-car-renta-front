@@ -23,13 +23,13 @@ type Props<T extends FieldValues> = {
   form: UseFormReturn<T>;
   name: Path<T>;
   label: string;
-
+placeHolder?:string
   labelStyles?: string;
 };
 export function FielField<T extends FieldValues>({
   form,
   label,
-
+placeHolder,
   name,
 
   labelStyles,
@@ -62,7 +62,7 @@ export function FielField<T extends FieldValues>({
           <FormControl>
             <div>
           {  !field.value &&   <MultiFileDropzone
-              formValue={field.value}
+            placeHolder={placeHolder}
                 value={fileStates}
                 onChange={(files) => {
                   setFileStates(files);

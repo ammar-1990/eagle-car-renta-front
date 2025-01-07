@@ -34,7 +34,7 @@ type InputProps = {
   value?: FileState[];
   onChange?: (files: FileState[]) => void | Promise<void>;
   onFilesAdded?: (addedFiles: FileState[]) => void | Promise<void>;
-  formValue:string | undefined;
+ placeHolder?:string,
   disabled?: boolean;
   dropzoneOptions?: Omit<DropzoneOptions, 'disabled'>;
 };
@@ -56,7 +56,7 @@ const ERROR_MESSAGES = {
 
 const MultiFileDropzone = React.forwardRef<HTMLInputElement, InputProps>(
   (
-    { dropzoneOptions, value, className, disabled, onFilesAdded, onChange ,formValue },
+    { dropzoneOptions, value, className, disabled, onFilesAdded, onChange ,placeHolder },
     ref,
   ) => {
     const [customError, setCustomError] = React.useState<string>();
@@ -148,7 +148,7 @@ const MultiFileDropzone = React.forwardRef<HTMLInputElement, InputProps>(
               <div className="flex flex-col items-center justify-center text-xs text-gray-400">
                 <UploadCloudIcon className="mb-1 h-7 w-7" />
                 <div className="text-gray-400">
-                  drag & drop or click to upload
+                  {placeHolder ?? "drag & drop or click to upload"}
                 </div>
               </div>
             </div>

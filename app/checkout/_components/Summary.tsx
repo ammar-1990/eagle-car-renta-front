@@ -7,17 +7,23 @@ type Props = {
   subTitle: string;
   formattedStartDate: string;
   formattedEndDate: string;
-  totalPrice: number;
+  rentalPrice: number;
   deposit: number;
+  payLater:number;
+  payNow:number;
   totalAmount: number;
+  extraOptions: { id: string; price: string; title: string }[];
 };
 
 const Summary = ({
   image,
+  extraOptions,
   subTitle,
   formattedEndDate,
   formattedStartDate,
-  totalPrice,
+  rentalPrice,
+  payLater,
+  payNow,
   deposit,
   totalAmount,
 }: Props) => {
@@ -48,23 +54,48 @@ const Summary = ({
       </SummaryBlockWrapper>
 
       <SummaryBlockWrapper>
-        <SummaryElement label="Rental Price" value={formatToDollar(totalPrice)} />
+        <SummaryElement
+          label="Rental Price"
+          value={formatToDollar(rentalPrice)}
+        />
         <SummaryElement label="Deposite" value={formatToDollar(deposit)} />
         <p className="text-[10px] text-[#ACACAC]">
           Non-Refundable if you dont show up in the show room
         </p>
       </SummaryBlockWrapper>
+      {!!extraOptions.length && (
+        <SummaryBlockWrapper>
+          {extraOptions.map((option) => (
+            <SummaryElement
+            key={`extra-option-summary-${option.id}`}
+              label={option.title}
+              value={formatToDollar(+option.price)}
+            />
+          ))}
+        </SummaryBlockWrapper>
+      )}
 
       <SummaryBlockWrapper>
-        <SummaryElement label="Total Amount" value={formatToDollar(totalAmount)} />
+        <SummaryElement
+          label="Total Amount"
+          value={formatToDollar(totalAmount)}
+        />
       </SummaryBlockWrapper>
 
       <SummaryBlockWrapper>
-        <SummaryElement label="Pay Now" value={formatToDollar(deposit)} isBold />
+        <SummaryElement
+          label="Pay Now"
+          value={formatToDollar(payNow)}
+          isBold
+        />
         <p className="text-[10px] text-[#ACACAC]">
           Overall price that you will pay now via checkout
         </p>
-        <SummaryElement label="Pay Later" value={formatToDollar(totalPrice)} isBold />
+        <SummaryElement
+          label="Pay Later"
+          value={formatToDollar(payLater)}
+          isBold
+        />
         <p className="text-[10px] text-[#ACACAC]">
           Overall price that you will pay at the rental company
         </p>

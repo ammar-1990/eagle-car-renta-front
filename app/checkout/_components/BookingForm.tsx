@@ -1,6 +1,6 @@
 import { TypeOf, z } from "zod";
 import { bookingSchema } from "../schema";
-import { UseFormReturn } from "react-hook-form";
+import { useFieldArray, UseFormReturn } from "react-hook-form";
 import {
   Form,
   FormControl,
@@ -16,15 +16,27 @@ import PhoneField from "@/components/PhoneField";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { FielField } from "@/components/FileField";
+import { ExtraOptions } from "@prisma/client";
+import { formatToDollar } from "@/lib/utils";
 
 type Props = {
   form: UseFormReturn<z.infer<typeof bookingSchema>>;
   onSubmit: (values: TypeOf<typeof bookingSchema>) => Promise<void>;
-
+  extraOptions: { id: string; price: number; title: string }[];
   setIsBusinessFn: () => void;
 };
 
-const BookingForm = ({ form, onSubmit, setIsBusinessFn }: Props) => {
+const BookingForm = ({
+  form,
+  onSubmit,
+  setIsBusinessFn,
+  extraOptions,
+}: Props) => {
+  const { fields, remove, append } = useFieldArray({
+    control: form.control,
+    name: "extraOptions", // The name of your array in the form schema
+  });
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -147,23 +159,66 @@ const BookingForm = ({ form, onSubmit, setIsBusinessFn }: Props) => {
           )}
         </FormWrapper>
         {/* Extra Options */}
+        {!!extraOptions.length && (
+          <FormWrapper title="Extra Options">
+            <div className="flex flex-col gap-1">
+              {extraOptions.map((option, index) => {
+                const currentOptions = form.watch("extraOptions") || [];
+                const optionIndex = currentOptions.findIndex(
+                  (el) => el.id === option.id
+                );
+                const isChecked = optionIndex !== -1;
+
+                const handleClick = () => {
+                  if (isChecked) {
+                    remove(optionIndex); // Correctly remove by the actual array index
+                  } else {
+                    append({ ...option, price: String(option.price) });
+                  }
+                };
+
+                return (
+                  <div
+                    key={option.id}
+                    className="bg-[#F5F6FA] p-6 rounded-md justify-between flex items-center"
+                  >
+                    <span className="flex items-center gap-2">
+                      <Checkbox
+                        id={`extra-option-${option.id}`}
+                        checked={isChecked}
+                        onCheckedChange={handleClick}
+                      />
+                      <Label htmlFor={`extra-option-${option.id}`} className="cursor-pointer">
+                        {option.title}
+                      </Label>
+                    </span>
+                    <span className="font-[600]">{formatToDollar(option.price)}</span>
+                  </div>
+                );
+              })}
+            </div>
+          </FormWrapper>
+        )}
 
         <FormWrapper title="Required Documents">
-            <FielField
+          <FielField
+            placeHolder="Upload License"
             form={form}
             name="license"
-            label="Upload License"         
-            />
-            <FielField
+            label="Upload License"
+          />
+          <FielField
+            placeHolder="Upload Insurance"
             form={form}
             name="insurance"
-            label="Upload Insurance"         
-            />
-            <FielField
+            label="Upload Insurance"
+          />
+          <FielField
+            placeHolder="Return Flight"
             form={form}
             name="returnFlight"
-            label="Return Flighte"         
-            />
+            label="Return Flighte"
+          />
         </FormWrapper>
       </form>
     </Form>
