@@ -12,7 +12,9 @@ import {
 } from "@/lib/Types";
 import {
   calculateDuration,
-  calculateTotalPrice,
+ 
+  calculateRentalPrice,
+ 
   combineDateAndTimeToUTC,
   formatDuration,
 } from "@/lib/utils";
@@ -94,7 +96,7 @@ const Cars = async ({ validParamsData }: Props) => {
 
   const refactoredCars = cars.map((car, i) => {
     const pricing = car.pricing as unknown as PricingType;
-    const totalPrice = calculateTotalPrice(duration, pricing);
+    const totalPrice = calculateRentalPrice(duration, pricing);
 
     const durationDescription = formatDuration(duration);
 
