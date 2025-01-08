@@ -112,7 +112,6 @@ const CheckoutPage = async ({ searchParams }: Props) => {
         startDate={startDate}
         endDate={endDate}
         rentalPrice={rentalPrice}
-
       />
     </div>
   );

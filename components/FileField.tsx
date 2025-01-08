@@ -18,6 +18,7 @@ import {
 import { cn } from "@/lib/utils";
 import { File, Trash } from "lucide-react";
 import { Button } from "./ui/button";
+import SuperButton from "./SuperButton";
 
 type Props<T extends FieldValues> = {
   form: UseFormReturn<T>;
@@ -100,7 +101,12 @@ placeHolder,
               />}
               {!!field.value && (
                 <div className="mt-4 w-full border rounded-md flex items-center justify-between p-3">
+                  <div className="flex items-center gap-1">
                   <File size={30} className="text-muted-foreground" />
+                  <SuperButton buttonType="linkButton" href={field.value} variant="link" title={fileStates[0].file.name}/>
+                  </div>
+
+            
                   <Button
                     type="button"
                     variant={"secondary"}

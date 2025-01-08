@@ -26,6 +26,11 @@ export const FUEL_MAP: Record<(typeof FUEL_CONST)[number], string> = {
   ELECTRIC: "electric",
   HYBRID: "hybrid",
 };
+export const PAYMENT_METHOD_CONST = ['CARD'] as const
+
+export const PAYMENT_METHOD_MAP:Record<typeof PAYMENT_METHOD_CONST[number],string> = {
+CARD:"Credit/Depit Card"
+}
 
 export type PricingType = {
   hour: string;

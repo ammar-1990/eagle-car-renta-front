@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { bookingSchema } from "../schema";
 import { useRouter } from "next/navigation";
-import { useState, useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 
 export const useCheckout = ({
   car,
@@ -61,8 +61,17 @@ export const useCheckout = ({
   const extraOptionsPrice = form.watch('extraOptions').reduce((acc,val)=>acc + Number(val.price),0)
 
   const payNow = car.deposit
-  const totalAmount = rentalPrice + payNow + extraOptionsPrice;
-  const payLater = totalAmount - payNow
+  const baseAmount = rentalPrice  + extraOptionsPrice
+  const totalAmount = Math.max(baseAmount, payNow); // incase deposite is greater than total
+  const payLater = Math.max(totalAmount - payNow, 0) // incase deposite is greater than rental price
+
+  useEffect(()=>{
+    
+    form.setValue('price', String(rentalPrice))
+    form.setValue('totalAmount',String(totalAmount))
+
+  },[extraOptionsPrice])
+
 
   return { totalAmount, form, onSubmit, pending ,setIsBusinessFn,payLater,payNow};
 };

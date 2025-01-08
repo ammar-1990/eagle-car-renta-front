@@ -18,6 +18,12 @@ import { Label } from "@/components/ui/label";
 import { FielField } from "@/components/FileField";
 import { ExtraOptions } from "@prisma/client";
 import { formatToDollar } from "@/lib/utils";
+import { PAYMENT_METHOD_CONST, PAYMENT_METHOD_MAP } from "@/lib/Types";
+import ImageComponent from "@/components/ImageComponent";
+import RadioField from "@/components/RadioField";
+import CheckboxField from "@/components/CheckBoxField";
+import SuperButton from "@/components/SuperButton";
+import { ArrowRight } from "lucide-react";
 
 type Props = {
   form: UseFormReturn<z.infer<typeof bookingSchema>>;
@@ -188,11 +194,16 @@ const BookingForm = ({
                         checked={isChecked}
                         onCheckedChange={handleClick}
                       />
-                      <Label htmlFor={`extra-option-${option.id}`} className="cursor-pointer">
+                      <Label
+                        htmlFor={`extra-option-${option.id}`}
+                        className="cursor-pointer"
+                      >
                         {option.title}
                       </Label>
                     </span>
-                    <span className="font-[600]">{formatToDollar(option.price)}</span>
+                    <span className="font-[600]">
+                      {formatToDollar(option.price)}
+                    </span>
                   </div>
                 );
               })}
@@ -220,6 +231,68 @@ const BookingForm = ({
             label="Return Flighte"
           />
         </FormWrapper>
+        <FormWrapper title="Payment Method">
+          <p className="font-[400] text-[14px]">How Would You Like To Pay ?</p>
+
+          <div className="flex flex-col gap-2">
+            {Object.entries(PAYMENT_METHOD_MAP).map(([key, value]) => (
+              <div
+                key={key}
+                className="py-4  border-y flex items-center justify-between"
+              >
+                <RadioField
+                  id={key}
+                  form={form}
+                  label={value}
+                  name="paymentMethod"
+                  key={key}
+                />
+                <ImageComponent
+                  src="/card.png"
+                  aspect="video"
+                  alt="payment-method"
+                  imgClassName="object-contain"
+                  className="h-[60px]"
+                />
+              </div>
+            ))}
+          </div>
+          <div className="mt-2 fled items-center gap3">
+            <CheckboxField
+              form={form}
+              label="I accept the terms and conditions of Eagle Car Rental"
+              name="terms"
+            />
+            <SuperButton
+              buttonType="linkButton"
+              href="terms-and-conditions"
+              variant="link"
+              title="Terms&Conditions"
+              className="text-blue-500"
+            />
+          </div>
+        </FormWrapper>
+        <div className="flex items-center justify-between">
+          <SuperButton
+            title="Back"
+            buttonType="linkButton"
+            variant="link"
+            className="text-site-primary"
+            href="/cars"
+
+          />
+
+          <SuperButton
+          variant="site"
+          type="submit"
+          buttonType="loadingButton"
+          loading={form.formState.isSubmitting}
+          title="Checkout"
+          className="rounded-full"
+          Icon={<ArrowRight className="icon" />}
+          />
+        </div>
+        {JSON.stringify(form.formState.errors)}
       </form>
     </Form>
   );
