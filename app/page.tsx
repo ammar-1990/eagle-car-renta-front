@@ -24,7 +24,7 @@ export default async function Home({ searchParams }: Props) {
   return (
     <div>
       <Banner
-        label="Descover Top Cars <br/> With Just One Click."
+        label="Discover Top Cars <br/> With Just One Click."
         className="justify-end"
         labelStyles=""
       />
