@@ -1,4 +1,4 @@
-import { CarsWithBookings } from "@/lib/Types";
+import { CarsWithBookings, LOCATIONS_CONST } from "@/lib/Types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -9,13 +9,20 @@ import { useEffect, useState, useTransition } from "react";
 export const useCheckout = ({
   car,
   rentalPrice,
+  startDate,
+  endDate,
+  pickupLocation
 }: {
   car: CarsWithBookings[number];
   rentalPrice: number;
+  startDate:Date,
+  endDate:Date,
+  pickupLocation:typeof LOCATIONS_CONST[number],
 }) => {
  
   const [pending, startTransition] = useTransition();
- 
+ console.log("START_DATE",startDate.toISOString())
+ console.log("END_DATE",endDate.toISOString())
   const form = useForm<z.infer<typeof bookingSchema>>({
     resolver: zodResolver(bookingSchema),
     defaultValues: {
@@ -35,7 +42,7 @@ export const useCheckout = ({
       license: "",
       companyName: "",
       companyVat: "",
-      pickupLocation: "",
+      pickupLocation: pickupLocation,
       dropoffLocation: "",
       price: "",
       totalAmount: "",
@@ -43,6 +50,9 @@ export const useCheckout = ({
       extraOptions: [],
       status: "PENDING",
       terms: false,
+      
+      startDate:startDate.toISOString(),
+      endDate:endDate.toISOString(),
     },
   });
 

@@ -12,9 +12,7 @@ import {
 } from "@/lib/Types";
 import {
   calculateDuration,
- 
   calculateRentalPrice,
- 
   combineDateAndTimeToUTC,
   formatDuration,
 } from "@/lib/utils";
@@ -37,12 +35,16 @@ const Cars = async ({ validParamsData }: Props) => {
   const carType = validParamsData.carType;
   const pageNumber = +validParamsData.pageNumber;
 
-  const carCheckoutParams:CarCheckoutParams= {
-    deliveryDate:validParamsData.deliveryDate,
-    deliveryTime:validParamsData.deliveryTime,
-    returnDate:validParamsData.returnDate,
-    returnTime:validParamsData.returnTime,
-  }
+  const carCheckoutParams: CarCheckoutParams = {
+    deliveryDate: validParamsData.deliveryDate,
+    deliveryTime: validParamsData.deliveryTime,
+    returnDate: validParamsData.returnDate,
+    returnTime: validParamsData.returnTime,
+    pickupLocation: validParamsData.pickUpLocation,
+    ...(validParamsData.dropOffLocation && {
+      dropoffLocation: validParamsData.dropOffLocation,
+    }),
+  };
 
   console.log("seats", seats);
 

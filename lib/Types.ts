@@ -17,7 +17,7 @@ export const LOCATIONS_MAP: Record<(typeof LOCATIONS_CONST)[number], string> = {
   LOS_ANGELES: "los angeles",
   ORLANDO: "orlando",
 };
-
+export type LocationType  = typeof LOCATIONS_CONST[number] 
 export const FUEL = ["GASOLINE", "DIESEL", "ELECTRIC", "HYBRID"];
 export const FUEL_CONST = ["GASOLINE", "DIESEL", "ELECTRIC", "HYBRID"] as const;
 export const FUEL_MAP: Record<(typeof FUEL_CONST)[number], string> = {
@@ -56,8 +56,8 @@ export const searchCarsSchema = z
     }),
     dropOffLocation: z
       .enum(LOCATIONS_CONST)
-      .optional() // Allow undefined or missing dropOffLocation
-      .or(z.literal("")), // Also allow an empty string if applicable
+      .optional()  
+      .or(z.literal("")), 
     deliveryDate: z.string().refine((date) => !isNaN(Date.parse(date)), {
       message: "Invalid delivery date format",
     }),
@@ -113,6 +113,11 @@ export const checkoutParamsSchema = z
     returnTime: z.string().regex(/^([0-1]\d|2[0-3]):([0-5]\d)$/, {
       message: "Invalid return time format (HH:mm)",
     }),
+    pickupLocation:z.enum(LOCATIONS_CONST,{message:"Invalid Location"}),
+
+    dropoffLocation:z.enum(LOCATIONS_CONST,{message:"Invalid Location"})
+    .optional()  
+    .or(z.literal(""))
   })
   .refine(
     (data) => {
@@ -140,6 +145,8 @@ export type CarCheckoutParams = {
   deliveryTime: string;
   returnDate: string;
   returnTime: string;
+  pickupLocation:LocationType
+  dropoffLocation?:LocationType | undefined | ''
 };
 
 const numberSchema = z

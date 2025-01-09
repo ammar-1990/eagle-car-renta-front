@@ -30,6 +30,7 @@ type Props = {
   onSubmit: (values: TypeOf<typeof bookingSchema>) => Promise<void>;
   extraOptions: { id: string; price: number; title: string }[];
   setIsBusinessFn: () => void;
+ 
 };
 
 const BookingForm = ({
@@ -37,6 +38,7 @@ const BookingForm = ({
   onSubmit,
   setIsBusinessFn,
   extraOptions,
+ 
 }: Props) => {
   const { fields, remove, append } = useFieldArray({
     control: form.control,

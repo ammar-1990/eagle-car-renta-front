@@ -1,6 +1,6 @@
 import React from "react";
 import CheckOut from "./_components/CheckOut";
-import { CheckoutParams, checkoutParamsSchema, PricingType } from "@/lib/Types";
+import { CheckoutParams, checkoutParamsSchema, LocationType, PricingType } from "@/lib/Types";
 import Container from "../_components/Container";
 import {
   calculateDuration,
@@ -112,6 +112,7 @@ const CheckoutPage = async ({ searchParams }: Props) => {
         startDate={startDate}
         endDate={endDate}
         rentalPrice={rentalPrice}
+        pickupLocation={validParams.data.pickupLocation as LocationType}
       />
     </div>
   );
