@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { bookingSchema } from "../schema";
 import { useRouter } from "next/navigation";
-import { useEffect, useState, useTransition } from "react";
+import { useTransition } from "react";
 import { errorToast, getTotalNowLaterPrices } from "@/lib/utils";
 import { bookCar } from "../actions/bookCar";
 import { toast } from "sonner";
@@ -26,8 +26,7 @@ export const useCheckout = ({
  
   const [pending, startTransition] = useTransition();
   const router = useRouter()
- console.log("START_DATE",startDate.toISOString())
- console.log("END_DATE",endDate.toISOString())
+
   const form = useForm<z.infer<typeof bookingSchema>>({
     resolver: zodResolver(bookingSchema),
     defaultValues: {
