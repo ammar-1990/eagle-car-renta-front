@@ -1,4 +1,5 @@
-import { z } from "zod";
+'use server'
+
 import { bookingSchema, BookingType } from "../schema";
 import CustomError from "@/lib/CustomError";
 import {

@@ -30,11 +30,13 @@ type Props = {
   onSubmit: (values: TypeOf<typeof bookingSchema>) => Promise<void>;
   extraOptions: { id: string; price: number; title: string }[];
   setIsBusinessFn: () => void;
+  pending:boolean
  
 };
 
 const BookingForm = ({
   form,
+  pending,
   onSubmit,
   setIsBusinessFn,
   extraOptions,
@@ -288,7 +290,7 @@ const BookingForm = ({
           variant="site"
           type="submit"
           buttonType="loadingButton"
-          loading={form.formState.isSubmitting}
+          loading={pending}
           title="Checkout"
           className="rounded-full"
           Icon={<ArrowRight className="icon" />}

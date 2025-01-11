@@ -5,14 +5,16 @@
       "warn",
       { "vars": "all", "args": "after-used", "ignoreRestSiblings": true }
     ],
-    "@typescript-eslint/no-empty-object-type": "off"
+    "@typescript-eslint/no-empty-object-type": "off",
+    "@typescript-eslint/no-explicit-any": "off"  // Allow `any` type
   },
   "overrides": [
     {
       "files": ["*.ts", "*.tsx"],
       "rules": {
         "@typescript-eslint/no-unused-vars": "off",
-        "@typescript-eslint/no-empty-object-type": "off"
+        "@typescript-eslint/no-empty-object-type": "off",
+        "@typescript-eslint/no-explicit-any": "off"  // Allow `any` type in ts/tsx files
       }
     }
   ]

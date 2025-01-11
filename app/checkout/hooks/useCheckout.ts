@@ -1,3 +1,4 @@
+'use client'
 import { CarsWithBookings, LOCATIONS_CONST } from "@/lib/Types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -5,8 +6,9 @@ import { z } from "zod";
 import { bookingSchema } from "../schema";
 import { useRouter } from "next/navigation";
 import { useEffect, useState, useTransition } from "react";
-import { getTotalNowLaterPrices } from "@/lib/utils";
+import { errorToast, getTotalNowLaterPrices } from "@/lib/utils";
 import { bookCar } from "../actions/bookCar";
+import { toast } from "sonner";
 
 export const useCheckout = ({
   car,
@@ -23,6 +25,7 @@ export const useCheckout = ({
 }) => {
  
   const [pending, startTransition] = useTransition();
+  const router = useRouter()
  console.log("START_DATE",startDate.toISOString())
  console.log("END_DATE",endDate.toISOString())
   const form = useForm<z.infer<typeof bookingSchema>>({
@@ -67,8 +70,13 @@ export const useCheckout = ({
     startTransition(async () => {
       try {
         const res = await bookCar(values,car.slug)
+        if(!res.success){
+          toast.error(res.message)
+        }else {
+        res.url &&   router.push(res.url)
+        }
       } catch (error) {
-        
+        errorToast()
       }
     });
   }

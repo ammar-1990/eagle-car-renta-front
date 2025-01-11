@@ -1,3 +1,4 @@
+
 import Stripe from "stripe";
 import { StripeMetaData } from "./Types";
 
@@ -47,9 +48,9 @@ export const startStripeSession = async ({
     metadata: metaData,
 
     success_url: `${process.env
-      .NEXT_PUBLIC_FRONTEND!}/checkout-result?bookingCode=${metaData.bookingID}`,
+      .NEXT_PUBLIC_BASE_URL!}/checkout-result?bookingCode=${metaData.bookingID}`,
     cancel_url: `${process.env
-      .NEXT_PUBLIC_FRONTEND!}/checkout-result?canceled=true`,
+      .NEXT_PUBLIC_BASE_URL!}/checkout-result?canceled=true`,
   });
 
   return session;

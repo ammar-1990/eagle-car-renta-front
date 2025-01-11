@@ -35,6 +35,7 @@ const CheckOut = ({ car, endDate, startDate, rentalPrice,pickupLocation }: Props
           form={form}
           onSubmit={onSubmit}
           setIsBusinessFn={setIsBusinessFn}
+          pending={pending}
        
         />
         {/* Right Summary */}
