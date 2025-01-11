@@ -173,3 +173,60 @@ export function formatToDollar(value: number): string {
     maximumFractionDigits: isWholeNumber ? 0 : 2,
   }).format(value);
 }
+
+
+
+export const getTotalNowLaterPrices = ({deposite, extraOptionsPrice,rentalPrice}:{deposite:number,rentalPrice:number,extraOptionsPrice:number})=>{
+
+  const payNow = deposite
+  const baseAmount = rentalPrice  + extraOptionsPrice
+  const totalAmount = Math.max(baseAmount, payNow); // incase deposite is greater than total
+  const payLater = Math.max(totalAmount - payNow, 0) // incase deposite is greater than rental price
+
+  return {payNow, payLater, totalAmount}
+}
+
+
+
+//generate booking code function
+export function generateCode() {
+  const numbers = Math.floor(Math.random() * 90000000) + 10000000; // Ensure 8 digits
+  const code = "A" + numbers;
+  return code;
+}
+
+export const generateBookingCode = async () => {
+  let attempts = 0;
+  let bookingCode = generateCode();
+  let existingBooking = await prisma.booking.findFirst({
+    where: {
+      bookingID: bookingCode,
+    },
+    select: { bookingID: true },
+  });
+
+  // Try up to 10 times
+  while (existingBooking && attempts < 10) {
+    attempts++;
+    bookingCode = generateCode();
+    existingBooking = await prisma.booking.findFirst({
+      where: {
+        bookingID: bookingCode,
+      },
+      select: { bookingID: true },
+    });
+  }
+
+  // If 10 attempts are made and bookingCode still exists, handle the case (optional)
+  if (attempts === 10 && existingBooking) {
+    throw new CustomError("Error Happened While Generating Bookin ID - Please COntact Customer Service ");
+  }
+
+  return bookingCode;
+};
+
+
+export const stripePaymentMethodMap:Record<string,"card" | "paypal"> = {
+  CARD:'card',
+  PAYPAL:'paypal'
+}

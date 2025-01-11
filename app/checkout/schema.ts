@@ -1,3 +1,4 @@
+import { LOCATIONS_CONST } from "@/lib/Types";
 import { BookingStatus, PaymentMethod } from "@prisma/client";
 import { z } from "zod";
 const requiredStringSchema = z.string().min(1, "Required");
@@ -69,13 +70,14 @@ const isBusiness = z
   });
 
 const location = z.object({
-  pickupLocation: requiredStringSchema,
-  dropoffLocation: z.string().optional().or(z.literal("")),
+  pickupLocation:z.enum(LOCATIONS_CONST,{message:"Invalid Location"}),
+
+  dropoffLocation:z.enum(LOCATIONS_CONST,{message:"Invalid Location"})
+  .optional()  
+  .or(z.literal("")),
 });
 
 const prices = z.object({
-  price: numberSchema,
-  totalAmount: numberSchema,
   paymentMethod: z.nativeEnum(PaymentMethod),
   extraOptions: z.array(
     z.object({
@@ -100,3 +102,7 @@ export const bookingSchema = drivingDetails
   .and(location)
   .and(prices)
   .and(status);
+
+
+
+  export type BookingType = z.infer<typeof bookingSchema>

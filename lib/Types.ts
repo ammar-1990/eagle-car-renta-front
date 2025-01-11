@@ -161,3 +161,17 @@ export const pricingSchema = z.object({
 });
 
 export const TAKE_CARS = 12;
+
+export type StripeMetaData = {
+  bookingId: string;
+  bookingID:string,
+  customerEmail: string;
+  startDate: string;
+  endDate: string;
+  carTitle: string;
+  payNow: number;
+  payLater: number;
+  totalAmount: number;
+  durationDescription: string;
+  [key: string]: any
+}

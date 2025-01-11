@@ -5,6 +5,8 @@ import { z } from "zod";
 import { bookingSchema } from "../schema";
 import { useRouter } from "next/navigation";
 import { useEffect, useState, useTransition } from "react";
+import { getTotalNowLaterPrices } from "@/lib/utils";
+import { bookCar } from "../actions/bookCar";
 
 export const useCheckout = ({
   car,
@@ -44,8 +46,7 @@ export const useCheckout = ({
       companyVat: "",
       pickupLocation: pickupLocation,
       dropoffLocation: "",
-      price: "",
-      totalAmount: "",
+  
       paymentMethod: undefined,
       extraOptions: [],
       status: "PENDING",
@@ -62,25 +63,23 @@ export const useCheckout = ({
   form.setValue('business',!isBusiness)
   }
 
-  async function onSubmit(values: z.infer<typeof bookingSchema>) {
+  async function onSubmit(values: z.infer<typeof bookingSchema>){
     startTransition(async () => {
-      alert(JSON.stringify(values));
+      try {
+        const res = await bookCar(values,car.slug)
+      } catch (error) {
+        
+      }
     });
   }
 
   const extraOptionsPrice = form.watch('extraOptions').reduce((acc,val)=>acc + Number(val.price),0)
 
-  const payNow = car.deposit
-  const baseAmount = rentalPrice  + extraOptionsPrice
-  const totalAmount = Math.max(baseAmount, payNow); // incase deposite is greater than total
-  const payLater = Math.max(totalAmount - payNow, 0) // incase deposite is greater than rental price
+  const {payLater, payNow, totalAmount} = getTotalNowLaterPrices({deposite:car.deposit,extraOptionsPrice,rentalPrice})
 
-  useEffect(()=>{
-    
-    form.setValue('price', String(rentalPrice))
-    form.setValue('totalAmount',String(totalAmount))
+ 
 
-  },[extraOptionsPrice])
+ 
 
 
   return { totalAmount, form, onSubmit, pending ,setIsBusinessFn,payLater,payNow};
