@@ -19,7 +19,7 @@ const Blogs = async(props: Props) => {
         }
     })
   return (
-    <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 mt-[13px] px-8 sm:px-0'>
+    <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 mt-[13px] px-1 sm:px-0'>
       {blogs.map(blog=><BlogCard key={blog.id}  blog={blog}/>)}
 
     </div>

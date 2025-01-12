@@ -17,7 +17,7 @@ const figtree = Figtree({
 
 const Banner = ({className,label,labelStyles}: Props) => {
   return (
-    <div className={cn('h-[600px] w-full relative flex items-center  justify-center')}>
+    <div className={cn('h-[350px] md:h-[600px] w-full relative flex items-center  justify-center')}>
         <ImageComponent className='absolute w-full h-full' imgClassName='object-cover object-bottom' alt='banner' src='/banner.jpg' aspect='video' />
         <div className='absolute w-full h-full top-0 left-0 bg-site-primary/60' />
         <Container className={cn("flex items-center  justify-center",className)}>
