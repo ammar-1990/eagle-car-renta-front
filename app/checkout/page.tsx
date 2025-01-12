@@ -3,15 +3,16 @@ import CheckOut from "./_components/CheckOut";
 import { CheckoutParams, checkoutParamsSchema, LocationType, PricingType } from "@/lib/Types";
 import Container from "../_components/Container";
 import {
-  calculateDuration,
+  
  
   calculateRentalPrice,
  
-  combineDateAndTimeToUTC,
+  
 } from "@/lib/utils";
 import prisma from "@/lib/prisma";
 import NoResult from "../_components/NoResult";
 import SuperButton from "@/components/SuperButton";
+import { calculateDuration, combineDateAndTimeToUTC } from "@/lib/date";
 
 type Props = { searchParams: Promise<CheckoutParams> };
 

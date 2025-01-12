@@ -3,7 +3,7 @@
 import { bookingSchema, BookingType } from "../schema";
 import CustomError from "@/lib/CustomError";
 import {
-  calculateDuration,
+ 
   calculateRentalPrice,
   generateBookingCode,
   getTotalNowLaterPrices,
@@ -14,6 +14,7 @@ import prisma from "@/lib/prisma";
 import { PricingType, StripeMetaData } from "@/lib/Types";
 import { startStripeSession } from "@/lib/stripe";
 import { endOfDay, formatDuration } from "date-fns";
+import { calculateDuration } from "@/lib/date";
 
 export const bookCar = async (data: BookingType, slug: string) :Promise<{success:false, message:string, url:undefined}|{success:true,message:string,url:string | null}> => {
   let booking;

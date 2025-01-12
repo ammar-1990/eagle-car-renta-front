@@ -2,6 +2,7 @@ import CarCard from "@/app/_components/cards/CarCard";
 import NoResult from "@/app/_components/NoResult";
 import Pagination from "@/app/_components/Pagination";
 import Scroller from "@/app/_components/Scroller";
+import { calculateDuration, combineDateAndTimeToUTC } from "@/lib/date";
 import prisma from "@/lib/prisma";
 import {
   CarCheckoutParams,
@@ -11,9 +12,9 @@ import {
   TAKE_CARS,
 } from "@/lib/Types";
 import {
-  calculateDuration,
+
   calculateRentalPrice,
-  combineDateAndTimeToUTC,
+
   formatDuration,
 } from "@/lib/utils";
 import React from "react";
