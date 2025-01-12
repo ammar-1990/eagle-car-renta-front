@@ -1,18 +1,11 @@
 import React, { Suspense } from "react";
 import Banner from "../_components/Banner";
-import SearchComponent from "../_components/SearchComponent";
 import SearchCars from "./_components/SearchCars";
-
-import prisma from "@/lib/prisma";
 import {
-  afterTomorrow,
-  DEFAULT_LOCATION,
-  DEFAULT_TIME,
   SearchCarsParams,
   searchCarsSchema,
-  tomorrow,
 } from "@/lib/Types";
-import { combineDateAndTimeToUTC, prepareCarsSearchParams } from "@/lib/utils";
+import {  prepareCarsSearchParams } from "@/lib/utils";
 import Container from "../_components/Container";
 
 type Props = {
@@ -23,7 +16,7 @@ const CarsPage = async ({ searchParams }: Props) => {
   const params = await searchParams;
   const preparedParams = prepareCarsSearchParams(params);
   const validParams = searchCarsSchema.safeParse(preparedParams);
-  console.log('SEARCH_PARAMS',searchParams)
+  console.log('SEARCH_PARAMS',params)
 
   // Invalid Params Component
   if (!validParams.success)

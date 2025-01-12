@@ -6,7 +6,7 @@ import { calculateDuration, combineDateAndTimeToUTC } from "@/lib/date";
 import prisma from "@/lib/prisma";
 import {
   CarCheckoutParams,
-  CarsWithBookings,
+ 
   PricingType,
   SearchCarsParams,
   TAKE_CARS,
