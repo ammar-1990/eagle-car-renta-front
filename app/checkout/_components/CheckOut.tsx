@@ -20,6 +20,9 @@ type Props = {
 };
 
 const CheckOut = ({ car, endDate, startDate, rentalPrice,pickupLocation }: Props) => {
+  
+  console.log('CHECKOUT-STARTDATE',startDate)
+  console.log('CHECKOUT-ENDDATE',endDate)
   const formattedStartDate = format(startDate, "EEE dd MMM, hh:mm a");
   const formattedEndDate = format(endDate, "EEE dd MMM, hh:mm a");
 

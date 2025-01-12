@@ -104,7 +104,12 @@ const CheckoutPage = async ({ searchParams }: Props) => {
   const duration = calculateDuration(startDate, endDate);
   const pricing = car.pricing as unknown as PricingType;
   const rentalPrice = calculateRentalPrice(duration, pricing);
-
+  console.log('PAGE-STARTDATE',startDate)
+  console.log('PAGE-ENDDATE',endDate)
+  console.log(" ")
+  console.log(endDate.toISOString(), startDate.toISOString())
+  console.log(" ")
+  console.log(" ")
   return (
     <div className="pt-[125px] bg-[#F3F3F3] min-h-screen pb-12">
       <CheckOut
