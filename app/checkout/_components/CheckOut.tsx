@@ -6,29 +6,45 @@ import { format } from "date-fns";
 import { useCheckout } from "../hooks/useCheckout";
 import Summary from "./Summary";
 import BookingForm from "./BookingForm";
-
+import { formatInTimeZone } from "date-fns-tz";
 
 type Props = {
   car: CarsWithBookings[number] & {
     extraOptions: { id: string; title: string; price: number }[];
-    
   };
   startDate: Date;
   endDate: Date;
   rentalPrice: number;
-  pickupLocation:LocationType
+  pickupLocation: LocationType;
 };
 
-const CheckOut = ({ car, endDate, startDate, rentalPrice,pickupLocation }: Props) => {
-  
-  console.log('CHECKOUT-STARTDATE',startDate)
-  console.log('CHECKOUT-ENDDATE',endDate)
-  const formattedStartDate = format(startDate, "EEE dd MMM, hh:mm a");
-  const formattedEndDate = format(endDate, "EEE dd MMM, hh:mm a");
-
-  const { totalAmount, form, onSubmit, pending, setIsBusinessFn,payLater, payNow } = useCheckout(
-    { car, rentalPrice,startDate,endDate ,pickupLocation}
+const CheckOut = ({
+  car,
+  endDate,
+  startDate,
+  rentalPrice,
+  pickupLocation,
+}: Props) => {
+  const formattedStartDate = formatInTimeZone(
+    startDate,
+    "UTC",
+    "EEE dd MMM, hh:mm a"
   );
+  const formattedEndDate = formatInTimeZone(
+    endDate,
+    "UTC",
+    "EEE dd MMM, hh:mm a"
+  );
+
+  const {
+    totalAmount,
+    form,
+    onSubmit,
+    pending,
+    setIsBusinessFn,
+    payLater,
+    payNow,
+  } = useCheckout({ car, rentalPrice, startDate, endDate, pickupLocation });
   return (
     <Container>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-[29px]">
@@ -39,12 +55,11 @@ const CheckOut = ({ car, endDate, startDate, rentalPrice,pickupLocation }: Props
           onSubmit={onSubmit}
           setIsBusinessFn={setIsBusinessFn}
           pending={pending}
-       
         />
         {/* Right Summary */}
         <Summary
-        payNow={payNow}
-        payLater={payLater}
+          payNow={payNow}
+          payLater={payLater}
           extraOptions={form
             .watch("extraOptions")
             .map((item) => ({ ...item, id: item.id as string }))}
