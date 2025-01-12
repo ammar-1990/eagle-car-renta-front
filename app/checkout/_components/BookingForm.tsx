@@ -269,6 +269,7 @@ const BookingForm = ({
             />
             <SuperButton
               buttonType="linkButton"
+              target="_blank"
               href="terms-and-conditions"
               variant="link"
               title="Terms&Conditions"

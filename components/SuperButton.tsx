@@ -7,7 +7,7 @@ import { Loader2, LogOut } from "lucide-react";
  
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ButtonHTMLAttributes, ReactNode, useTransition } from "react";
+import { ButtonHTMLAttributes, HTMLAttributeAnchorTarget, ReactNode, useTransition } from "react";
  
 
 const SuperButton = (props: SuperButtonProps) => {
@@ -37,11 +37,11 @@ const RenderButton = (props: SuperButtonProps) => {
 const RenderLinkButton = (
   props: LinkType & NormalButton & ButtonHTMLAttributes<HTMLButtonElement>
 ) => {
-  const { title, Icon, className, href, buttonType,variant,scroll, ...rest } = props;
+  const { title, Icon, className, href, buttonType,variant,scroll,replace,target, ...rest } = props;
 
   return (
-    <Button {...rest}  className={cn("", className)} variant={variant ?? "site"} asChild>
-      <Link scroll={scroll} className="flex items-center" href={href} >
+    <Button {...rest}  className={cn("", className)} variant={variant ?? "site"} asChild >
+      <Link scroll={scroll} className="flex items-center" href={href} replace={replace} target={target}>
         {Icon && Icon}
         {title}
       </Link>
@@ -139,7 +139,9 @@ type NormalButton = {
 type LinkType = {
   buttonType: "linkButton";
   href: string;
-  scroll?:boolean
+  scroll?:boolean,
+  replace?:boolean
+  target?: HTMLAttributeAnchorTarget
 };
 
 type PushType = {

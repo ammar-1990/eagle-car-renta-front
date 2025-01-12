@@ -1,3 +1,5 @@
+import { formatInTimeZone } from "date-fns-tz";
+
 export function convertDateToISOString(date: Date | undefined) {
     if (!date) {
       return undefined;
@@ -55,4 +57,10 @@ export function calculateDuration(startDate: Date, endDate: Date) {
     days,
     hours,
   };
+}
+
+
+
+export const formatDateUtc = (date:Date)=>{
+ return formatInTimeZone(date,'UTC','MMM, dd yyyy - HH:mm')
 }

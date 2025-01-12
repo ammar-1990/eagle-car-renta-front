@@ -1,20 +1,29 @@
 "use client";
 import { z } from "zod";
 import { useState, useTransition } from "react";
-import { wait } from "@/lib/utils";
+import { errorToast, wait } from "@/lib/utils";
+import { Booking } from "@prisma/client";
+import { loginBooking } from "../actions/loginBooking";
+import { toast } from "sonner";
+import { BookingWithCarName } from "@/lib/Types";
 
-export const useBookingLogin = () => {
+export const useBookingLogin = (
+  bookingIdParam: string | undefined,
+  emailParam: string | undefined
+) => {
   const loginSchema = z.object({
-    bookingCode: z
-      .string({ invalid_type_error: "Required" })
+    bookingId: z
+      .string({ invalid_type_error: "Bookin ID isRequired" })
       .min(8, { message: "At least 8 characters" }),
     email: z.string().email({ message: "Enter Valid E-mail Address" }),
   });
 
+
+  console.log("params",bookingIdParam, emailParam)
   const [pending, startTransition] = useTransition();
 
-  const [bookingCode, setBookingCode] = useState("");
-  const [email, setEmail] = useState("");
+  const [bookingId, setBookingId] = useState(bookingIdParam ?? '');
+  const [email, setEmail] = useState(emailParam ?? '');
   const [error, setError] = useState<
     | {
         [key: string]: string;
@@ -22,11 +31,11 @@ export const useBookingLogin = () => {
     | undefined
   >(undefined);
 
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [booking, setBooking] = useState<BookingWithCarName | null>(null);
 
-  const setBookingCodeFn = (value: string) => {
+  const setBookingIdFn = (value: string) => {
     setError(undefined);
-    setBookingCode(value);
+    setBookingId(value);
   };
   const setEmailFn = (value: string) => {
     setError(undefined);
@@ -48,28 +57,33 @@ export const useBookingLogin = () => {
     }
     startTransition(async () => {
       try {
-        await wait();
-        setLoggedIn(true);
-      } catch (error) {}
+        const res = await loginBooking(bookingId, email);
+        if (!res.success) {
+          toast.error(res.message);
+        } else {
+          setBooking(res.booking!);
+        }
+      } catch (error) {
+        errorToast();
+      }
     });
   };
 
-
-  const setLoggedInFn = ()=>{
-    setEmail('')
-    setBookingCode('')
-    setLoggedIn(false)
-}
+  const setBookingFn = () => {
+    setEmail("");
+    setBookingId("");
+    setBooking(null);
+  };
 
   return {
-    bookingCode,
+    bookingId,
     email,
-    setBookingCodeFn,
+    setBookingIdFn,
     setEmailFn,
     error,
     pending,
     handleLogin,
-    loggedIn,
-    setLoggedInFn
+    booking,
+    setBookingFn,
   };
 };

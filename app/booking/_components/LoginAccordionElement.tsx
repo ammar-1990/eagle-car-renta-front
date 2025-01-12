@@ -17,7 +17,7 @@ const LoginAccordionElement = ({ children, title, item }: Props) => {
       <AccordionTrigger className="text-[21px] font-[500] bg-[#F7F7F7] hover:no-underline px-[23px] py-[16px] border-b-none">
         {title}
       </AccordionTrigger>
-      <AccordionContent className="px-[23px] mt-[12px] ">
+      <AccordionContent className="  mt-[12px] ">
         {children}
       </AccordionContent>
     </AccordionItem>

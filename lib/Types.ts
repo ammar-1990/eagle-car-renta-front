@@ -1,4 +1,4 @@
-import { Car, Fuel } from "@prisma/client";
+import { Booking, Car, Fuel } from "@prisma/client";
 import { z } from "zod";
 
 export const SEATS = [2, 5, 7, 8];
@@ -175,3 +175,6 @@ export type StripeMetaData = {
   durationDescription: string;
   [key: string]: any
 }
+
+
+export type BookingWithCarName = Booking & {car:{subTitle:string,carType:{title:string}}}

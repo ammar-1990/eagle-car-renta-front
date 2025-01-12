@@ -1,21 +1,19 @@
 import React from "react";
+import CheckoutResultFeed from "./_components/CheckoutResultFeed";
 
 type Props = {
   searchParams: Promise<{
-    bookingCode: string | undefined;
+    bookingId: string | undefined;
     canceled: string | undefined;
   }>;
 };
 
 const CheckoutResultPage = async ({ searchParams }: Props) => {
-  const { bookingCode, canceled } = await searchParams;
+  const { bookingId, canceled } = await searchParams;
   return (
     <div className="min-h-screen flex items-center justify-center">
-      {bookingCode && (
-        <div className="px-40 py-20 bg-green-100 border-green-500 text-green-500 rounded-lg">
-          <p>Successfully Booked</p>
-          <p>Your Booking ID is {bookingCode}</p>
-        </div>
+      {bookingId && (
+        <CheckoutResultFeed bookingId={bookingId} />
       )}
       {canceled && (
         <div className="px-40 py-20 bg-red-100 border-red-500 text-red-500 rounded-lg">

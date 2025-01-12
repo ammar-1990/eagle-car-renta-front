@@ -79,3 +79,8 @@ body {
 .input-contact-us {
   @apply   border-none shadow-none bg-[#F5F5F7] placeholder:text-[#8B8FA8] h-[70px] 
 }
+
+
+.noScroll::-webkit-scrollbar {
+  display: none;
+}

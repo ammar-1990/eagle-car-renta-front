@@ -7,6 +7,7 @@ import { Suspense } from "react";
 import Footer from "./_components/Footer";
 import { Toaster } from "@/components/ui/sonner";
 import { EdgeStoreProvider } from "@/lib/edgeStore";
+import TanstackProvider from "./_components/TanstackProvider";
 
 const poppins = Poppins({
   weight: ["400", "500", "700", "900"],
@@ -26,10 +27,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${poppins.className} antialiased`}>
+        <TanstackProvider>
         <Header />
-       <EdgeStoreProvider> <main className=" ">{children}</main></EdgeStoreProvider>
+       <EdgeStoreProvider> <main className=" ">
+        {children}
+        </main></EdgeStoreProvider>
         <Footer/>
         <Toaster richColors />
+        </TanstackProvider>
       </body>
     </html>
   );

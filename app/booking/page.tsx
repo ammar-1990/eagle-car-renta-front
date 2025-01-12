@@ -2,9 +2,13 @@ import ImageComponent from "@/components/ImageComponent";
 import React from "react";
 import BookingLogin from "./_components/BookingLogin";
 
-type Props = {};
+type Props = {
+  searchParams:Promise<{bookingId:string | undefined,email:string | undefined}>
+};
 
-const AboutUsPage = (props: Props) => {
+const AboutUsPage = async ({searchParams}: Props) => {
+
+  const params = await searchParams
   return (
     <div className="fixed top-0 left-0 w-full h-full z-30 grid grid-cols-1 lg:grid-cols-4 bg-white">
       <div className="col-span-2 relative h-full hidden lg:block">
@@ -25,7 +29,7 @@ const AboutUsPage = (props: Props) => {
         />
       </div>
       <div className="col-span-2">
-        <BookingLogin />
+        <BookingLogin  bookingIdParam={params.bookingId} emailParam={params.email}/>
       </div>
     </div>
   );

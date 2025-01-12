@@ -37,7 +37,7 @@ const DateField = ({ placeholder, setValue, value, stateLabel }: Props) => {
             )}
           >
             <CalendarIcon className="mr-2 h-4 w-4" />
-            {value ? format(value, "dd/MM/yyyy") : <span>{placeholder}</span>}
+            {value ? format(value, "MMM, dd yyyy") : <span>{placeholder}</span>}
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-auto p-0">
