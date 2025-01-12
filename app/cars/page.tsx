@@ -42,7 +42,7 @@ const CarsPage = async ({ searchParams }: Props) => {
       <Banner label="Cars" />
       <div className="-mt-[72.5px]">
         <Suspense>
-          <SearchCars validParamsData={validParams.data} />
+          <SearchCars validParamsData={validParamsData} />
         </Suspense>
       </div>
     </div>

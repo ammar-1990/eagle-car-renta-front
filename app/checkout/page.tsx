@@ -93,9 +93,9 @@ const CheckoutPage = async ({ searchParams }: Props) => {
           />
           <SuperButton
             className="mx-auto w-fit"
-            title="Back To Home Page"
+            title="View Other Cars"
             buttonType="linkButton"
-            href="/"
+            href="/cars"
           />
         </Container>
       </div>

@@ -34,6 +34,7 @@ const Cars = async ({ validParamsData }: Props) => {
   const refinedSeats = Array.isArray(seats) ? seats : seats?.split(",");
   const fuel = validParamsData.fuel;
   const carType = validParamsData.carType;
+  const carYear = validParamsData.carYear
   const pageNumber = +validParamsData.pageNumber;
 
   const carCheckoutParams: CarCheckoutParams = {
@@ -47,12 +48,13 @@ const Cars = async ({ validParamsData }: Props) => {
     }),
   };
 
-  console.log("seats", seats);
+  
 
   const carsRes = prisma.car.findMany({
     where: {
       location: validParamsData.pickUpLocation,
       disabled: false,
+      ...(carYear && {carYear:+carYear}),
       ...(carType && { carTypeId: carType }),
       ...(refinedSeats && { seats: { in: refinedSeats.map((seat) => +seat) } }),
       ...(fuel &&
@@ -117,6 +119,7 @@ const Cars = async ({ validParamsData }: Props) => {
                 car;
               return (
                 <CarCard
+                booked={bookings.length > 0}
                   carsCheckoutParams={carCheckoutParams}
                   key={restCar.id}
                   car={restCar}

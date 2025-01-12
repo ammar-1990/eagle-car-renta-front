@@ -4,11 +4,12 @@ import { FUEL_MAP, SEATS_MAP } from "@/lib/Types";
 import { useSearchCars } from "../hooks/useSearchCars";
 import FilterItem from "./FilterItem";
 import { Button } from "@/components/ui/button";
+import InputFilterItem from "./InputFilterItem";
 
 type Props = {};
 
 const Filter = (props: Props) => {
-  const { seats, fuel, handleReset, pending } = useSearchCars();
+  const { seats, fuel, carYear, handleReset, pending } = useSearchCars();
   return (
     <div
    
@@ -23,8 +24,15 @@ const Filter = (props: Props) => {
       </div>
 
       <div className="mt-[22px] pt-[22px] border-t">
+        {/* Year */}
+        <h3 className="text-[#606060]">Year</h3>
+        <div className="pt-[8px] " />
+        <InputFilterItem
+        initialValue={carYear ?? ''}
+        param="carYear"
+        />
         {/* SEATS */}
-        <h3 className="text-[#606060]">Seats</h3>
+        <h3 className="text-[#606060] mt-[22px]">Seats</h3>
         <div className="pt-[8px] " />
         {Object.entries(SEATS_MAP).map(([key, value], index) => {
           return (

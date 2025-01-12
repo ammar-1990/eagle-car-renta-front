@@ -1,6 +1,9 @@
 import { Booking, Car, Fuel } from "@prisma/client";
 import { z } from "zod";
 
+
+//number schema
+const numberSchema = z.string().min(1,'Required').refine(data=>/^[0-9.]*$/.test(data),{message:'Only Numbers'}) 
 export const SEATS = [2, 5, 7, 8];
 export const SEATS_CONST = [2, 5, 7, 8] as const;
 export const SEATS_MAP: Record<(typeof SEATS_CONST)[number], string> = {
@@ -49,6 +52,9 @@ tomorrow.setDate(tomorrow.getDate() + 1);
 export const afterTomorrow = new Date();
 afterTomorrow.setDate(afterTomorrow.getDate() + 2);
 
+
+
+
 export const searchCarsSchema = z
   .object({
     pickUpLocation: z.enum(LOCATIONS_CONST, {
@@ -86,6 +92,7 @@ export const searchCarsSchema = z
       .optional(),
     carType: z.string().optional(),
     pageNumber: z.string(),
+    carYear:numberSchema.optional()
   })
   .refine(
     (data) => {
@@ -149,10 +156,7 @@ export type CarCheckoutParams = {
   dropoffLocation?:LocationType | undefined | ''
 };
 
-const numberSchema = z
-  .string()
-  .min(1, "Required")
-  .refine((data) => /^[0-9.]*$/.test(data), { message: "Only Numbers" });
+ 
 export const pricingSchema = z.object({
   hour: numberSchema,
   days: z.array(numberSchema).length(6, "Enter 6 Days"),

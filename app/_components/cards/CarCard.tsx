@@ -10,6 +10,7 @@ type Props = {
   car: Car & { carType: { title: string } };
   totalPrice?: string;
   durationDescription?: string;
+  booked?:boolean
 } & (
   | {
       isMainPage: true;
@@ -22,6 +23,7 @@ const CarCard = ({
   totalPrice,
   durationDescription,
   isMainPage = false,
+  booked,
   ...rest
 }: Props) => {
   const dayPrice = (car.pricing as PricingType).days[0];
@@ -33,7 +35,7 @@ const CarCard = ({
     ? `/checkout?slug=${car.slug}&${new URLSearchParams(rest.carsCheckoutParams).toString()}`
     : "/checkout";
   return (
-    <article className="border rounded-[24px] overflow-hidden flex flex-col">
+    <article className={cn("border rounded-[24px] overflow-hidden flex flex-col",booked  && 'grayscale-[90%] opacity-80 pointer-events-none')}>
       <ImageComponent
         alt="car"
         src={car.image}
@@ -44,10 +46,16 @@ const CarCard = ({
       <div className="p-[24px] bg-white flex-1 flex flex-col ">
         {/* first block */}
         {/* car name and price */}
-        <p className="flex items-start  capitalize gap-1 leading-[15.5px] mb-[5px]">
-          <span className="text-[20px] font-[600]">{car.carType.title}</span>
+        <div className="flex justify-between gap-3 items-start">
+        <p className="flex items-start flex-col  capitalize gap-1  ">
+          <span className="text-[20px] font-[600] leading-[18px]">{car.carType.title}</span>
           <span className="text-[10px] ">{`(${car.subTitle})`}</span>
         </p>
+        <div>
+        <p className="font-[600] text-xs">YEAR {car.carYear}</p>
+        </div>  
+        </div>
+    
         <div className="flex justify-between items-center mt-auto">
           <div className="flex flex-col justify-center gap-[15px] items-center">
             <p
@@ -99,7 +107,7 @@ const CarCard = ({
           scroll={true}
           href={url}
           className="mt-[12px] w-full rounded-full"
-          title="Book Now"
+          title={ booked ? "Not Available" : "Book Now"}
         />
       </div>
     </article>

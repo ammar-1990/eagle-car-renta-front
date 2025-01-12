@@ -8,6 +8,7 @@ export const useSearchCars  =()=>{
 
     const seats = searchParams.getAll('seats').flatMap((s) => s.split(','));
     const fuel = searchParams.getAll('fuel').flatMap((f) => f.split(','))
+    const carYear = searchParams.get('carYear')
   
 
     const handleReset = ()=>{
@@ -16,6 +17,7 @@ export const useSearchCars  =()=>{
         params.delete('fuel')
         params.delete('carType')
         params.delete('pageNumber')
+        params.delete('carYear')
 
         startTransition(()=>{
             router.push(`/cars?${params}`,{scroll:false})
@@ -26,5 +28,5 @@ export const useSearchCars  =()=>{
  
 
 
-    return { seats, fuel, handleReset,pending}
+    return { seats, fuel, carYear, handleReset,pending}
 }
