@@ -56,7 +56,7 @@ const Reviews = (props: Props) => {
         title="This is what our clients says about us"
         description="Reviews"
       />
-      <Container className="mt-24 px-8">
+      <Container className="mt-24 px-12">
         <Carousel
           opts={{
             align: "start",

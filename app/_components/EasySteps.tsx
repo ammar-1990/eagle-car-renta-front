@@ -38,7 +38,7 @@ const EASY_STEPS = [
 
 const EasySteps = (props: Props) => {
   return (
-    <section className="px-8 sm:px-0">
+    <section className=" ">
         <SectionHeader title="In 4 easy steps this is" description=" How to rent a car with Eagle Car Rental" />
     
       <Container className="mt-[130px]">
@@ -86,8 +86,8 @@ const EasyStepCard = ({
       )}
     >
       <span
-        className={`absolute -z-[1] -top-[100px] ${
-          index % 2 !== 0 ? "-right-[24px]" : "-left-[25px]"
+        className={`absolute -z-[1] -top-[125px] ${
+          index % 2 !== 0 ? "lg:-right-[24px] right:0" : "lg:-left-[25px] left-0"
         } text-[120px] text-stroke font-[700] text-white`}
       >
         {index + 1}
@@ -98,10 +98,10 @@ const EasyStepCard = ({
       </div>
 
       <div className="max-w-[300px] ">
-        <p className="text-[24px] font-[700] text-site capitalize text-site-primary line-clamp-1">
+        <p className="text-md lg:text-[24px] font-[700] text-site capitalize text-site-primary line-clamp-1">
           {easyStep.title}
         </p>
-        <p className="text-[#5E5E5E] text-[16px] font-[500]">
+        <p className="text-[#5E5E5E] text-xs lg:text-[16px] font-[500]">
           {easyStep.description}
         </p>
       </div>

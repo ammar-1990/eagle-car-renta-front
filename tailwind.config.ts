@@ -11,6 +11,7 @@ export default {
   	extend: {
   		colors: {
   			'site-primary': '#12264a',
+  			'site-secondary': '#DE2127',
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			card: {

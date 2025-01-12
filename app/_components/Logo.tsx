@@ -7,8 +7,8 @@ type Props = { className?:string}
 
 const Logo = ({className}: Props) => {
   return (
-    <Link href={'/'}>
-        <ImageComponent className={cn('w-[141px] h-[40px]',className)} alt='logo' aspect='video' src='/Logo.png' imgClassName='object-contain' />
+    <Link href={'/'} className=''>
+        <ImageComponent className={cn('w-[141px] h-[40px] ',className)} alt='logo' aspect='video' src='/Logo.png' imgClassName='object-contain' />
     </Link>
   )
 }

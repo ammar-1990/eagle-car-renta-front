@@ -37,7 +37,7 @@ const SearchComponent = ({ className,isSearchCars }: Props) => {
     handlePush
   } = useSearchComponent(isSearchCars);
   return (
-    <div className={cn("px-4", className)}>
+    <div className={cn("", className)}>
       <Container>
         <div className="w-full   flex  gap-[16px] flex-col lg:flex-row  px-[24px] py-[32px] rounded-[16px] bg-[#FCFDFD] shadow-lg relative  items-center ">
           <div className="w-full flex flex-col">
@@ -114,6 +114,7 @@ const SearchComponent = ({ className,isSearchCars }: Props) => {
           </div>
 
           <SuperButton
+          variant={!isSearchCars ? 'site' : 'siteActive'}
             className="w-full lg:w-auto  h-[80px]"
             buttonType="loadingButton"
             loading={pending}

@@ -5,19 +5,21 @@ import { useSearchCars } from "../hooks/useSearchCars";
 import FilterItem from "./FilterItem";
 import { Button } from "@/components/ui/button";
 import InputFilterItem from "./InputFilterItem";
+import { cn } from "@/lib/utils";
+ 
 
-type Props = {};
+type Props = {sheet?:boolean};
 
-const Filter = (props: Props) => {
+const Filter = ({sheet}: Props) => {
   const { seats, fuel, carYear, handleReset, pending } = useSearchCars();
   return (
     <div
    
       data-load={pending ? "true" : undefined}
-      className="bg-white border rounded-[14px] p-[24px] sticky top-[120px] w-full"
+      className={cn("bg-white  rounded-[14px] p-[24px] sticky top-[120px] w-full",!sheet && "border")}
     >
       <div className="flex items-center justify-between ">
-        <h3 className="font-[600] text-[20px]">Filters</h3>
+        {!sheet && <h3 className="font-[600] text-[20px]">Filters</h3>}
         <Button onClick={handleReset} className="text-xs" variant={"link"}>
           Reset Filters
         </Button>

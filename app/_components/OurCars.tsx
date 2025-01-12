@@ -16,7 +16,7 @@ const OurCars = (props: Props) => {
     <Container>
       <div>
     <SectionHeader title="Review Our Cars" description="Our Cars" />
-        <div className="mt-[52px] flex items-center justify-center gap-[16px]">
+        <div className="mt-[52px] flex items-center justify-center gap-[16px] flex-wrap">
           {LOCATIONS_CONST.map((location,index) => (
             <SuperButton
             key={`location-button-${index}`}

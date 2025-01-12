@@ -22,7 +22,7 @@ export default async function Home({ searchParams }: Props) {
   const location = (await searchParams).pickUpLocation;
 
   return (
-    <div>
+    <div className="pb-8">
       <Banner
         label="Discover Top Cars <br/> With Just One Click."
         className="justify-end"
