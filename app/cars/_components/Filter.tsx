@@ -20,7 +20,7 @@ const Filter = ({sheet}: Props) => {
     >
       <div className="flex items-center justify-between ">
         {!sheet && <h3 className="font-[600] text-[20px]">Filters</h3>}
-        <Button onClick={handleReset} className="text-xs" variant={"link"}>
+        <Button onClick={handleReset} className={cn("text-xs text-site-primary",sheet && 'text-lg')} variant={sheet ? 'secondary':"link"}>
           Reset Filters
         </Button>
       </div>
@@ -32,6 +32,7 @@ const Filter = ({sheet}: Props) => {
         <InputFilterItem
         initialValue={carYear ?? ''}
         param="carYear"
+        placeholder="Car Year"
         />
         {/* SEATS */}
         <h3 className="text-[#606060] mt-[22px]">Seats</h3>

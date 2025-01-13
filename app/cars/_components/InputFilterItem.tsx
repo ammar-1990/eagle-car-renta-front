@@ -7,9 +7,10 @@ import { useState, useEffect, useTransition, useRef } from "react";
 type Props = {
   param: string;
   initialValue?: string;
+  placeholder?:string
 };
 
-const InputFilterItem = ({ initialValue, param }: Props) => {
+const InputFilterItem = ({ initialValue, param,placeholder }: Props) => {
   const router = useRouter();
   const searchParams = useSearchParams();
     const [pending, startTransition] = useTransition()
@@ -63,7 +64,7 @@ const InputFilterItem = ({ initialValue, param }: Props) => {
       <Input
         value={value}
         onChange={(e) => setValue(e.target.value)}
-        placeholder={`Filter by ${param}`}
+        placeholder={`Filter by ${ placeholder ?? param}`}
       />
     </div>
   );

@@ -114,7 +114,7 @@ const SearchComponent = ({ className,isSearchCars }: Props) => {
           </div>
 
           <SuperButton
-          variant={!isSearchCars ? 'site' : 'siteActive'}
+          variant={'site'}
             className="w-full lg:w-auto  h-[80px]"
             buttonType="loadingButton"
             loading={pending}
