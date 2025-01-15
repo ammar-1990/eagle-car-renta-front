@@ -1,9 +1,8 @@
-'use server'
+"use server";
 
 import { bookingSchema, BookingType } from "../schema";
 import CustomError from "@/lib/CustomError";
 import {
- 
   calculateRentalPrice,
   generateBookingCode,
   getTotalNowLaterPrices,
@@ -14,9 +13,15 @@ import prisma from "@/lib/prisma";
 import { PricingType, StripeMetaData } from "@/lib/Types";
 import { startStripeSession } from "@/lib/stripe";
 import { endOfDay, formatDuration } from "date-fns";
-import { calculateDuration } from "@/lib/date";
+import { calculateDuration, checkBookingAvailability } from "@/lib/date";
 
-export const bookCar = async (data: BookingType, slug: string) :Promise<{success:false, message:string, url:undefined}|{success:true,message:string,url:string | null}> => {
+export const bookCar = async (
+  data: BookingType,
+  slug: string
+): Promise<
+  | { success: false; message: string; url: undefined }
+  | { success: true; message: string; url: string | null }
+> => {
   let booking;
   try {
     if (!slug) return throwCustomError("Slug Required");
@@ -65,15 +70,28 @@ export const bookCar = async (data: BookingType, slug: string) :Promise<{success
 
     if (!car) return throwCustomError("Car Does Not Exist");
 
+    const startDate = new Date(validData.data.startDate);
+    const endDate = new Date(validData.data.endDate);
+
     //check if it has bookings for coming dates - then it is booked already
-    const bookings = car.bookings.length;
-    if (bookings)
-      return throwCustomError("Sorry..., Car Has Been Booked Already");
+    const isAvailabe = checkBookingAvailability(
+      car?.bookings,
+      startDate,
+      endDate,
+      car.availableCars
+    );
+
+ 
+    if (!isAvailabe){
+       throwCustomError("Sorry...Car Has Been Booked Already")
+      }
+ 
     //check extraOptions
     const validExtraOptions = car.extraOptions;
     const isValid = validData.data.extraOptions.every((clientOption) =>
       validExtraOptions.some((dbOption) => dbOption.id === clientOption.id)
     );
+
 
     if (!isValid)
       return throwCustomError(
@@ -81,10 +99,7 @@ export const bookCar = async (data: BookingType, slug: string) :Promise<{success
       );
 
     //calculate price
-    const duration = calculateDuration(
-      new Date(validData.data.startDate),
-      new Date(validData.data.endDate)
-    );
+    const duration = calculateDuration(startDate, endDate);
     const durationDescription = formatDuration(duration);
     const pricing = car.pricing as unknown as PricingType;
 
@@ -94,7 +109,7 @@ export const bookCar = async (data: BookingType, slug: string) :Promise<{success
       0
     );
 
-    const {payLater, payNow, totalAmount } = getTotalNowLaterPrices({
+    const { payLater, payNow, totalAmount } = getTotalNowLaterPrices({
       deposite: car.deposit,
       extraOptionsPrice,
       rentalPrice,
@@ -121,48 +136,49 @@ export const bookCar = async (data: BookingType, slug: string) :Promise<{success
     const paymentMethod = stripePaymentMethodMap[booking.paymentMethod];
 
     //meta data
-    const metaData:StripeMetaData = {
+    const metaData: StripeMetaData = {
       bookingId: booking.id,
-      bookingID:booking.bookingID,
+      bookingID: booking.bookingID,
       customerEmail: booking.email,
       startDate: validData.data.startDate,
       endDate: validData.data.endDate,
       carTitle: carCompleteTitle,
-      payNow:payNow,
-      payLater:payLater,
-      totalAmount:totalAmount,
-      durationDescription:durationDescription
+      payNow: payNow,
+      payLater: payLater,
+      totalAmount: totalAmount,
+      durationDescription: durationDescription,
     };
     //create session
     const session = await startStripeSession({
-        metaData,
-        image:car.image,
-        myPayment:paymentMethod
+      metaData,
+      image: car.image,
+      myPayment: paymentMethod,
     });
 
-
     return {
-        success:true,
-        url:session.url,
-        message:"Session Successfull created"
-    }
-
+      success: true,
+      url: session.url,
+      message: "Session Successfull created",
+    };
   } catch (error) {
 
-    await prisma.booking.delete({
-        where:{
-          id:booking?.id 
-        }
-      })
-  
+    if(booking){
+      await prisma.booking.delete({
+        where: {
+          id: booking?.id,
+        },
+      });
+    }
+   
+
     console.error(error);
     if (error instanceof CustomError) {
       return {
         success: false,
         message: error.message,
-        url:undefined
+        url: undefined,
       };
     }
-    return { success: false, message: "Internal Server Error", url:undefined };
+    return { success: false, message: "Internal Server Error", url: undefined };
   }
 };

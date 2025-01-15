@@ -67,14 +67,17 @@ export const useCheckout = ({
 
   async function onSubmit(values: z.infer<typeof bookingSchema>){
     startTransition(async () => {
+  
       try {
         const res = await bookCar(values,car.slug)
+     
         if(!res.success){
           toast.error(res.message)
         }else {
         res.url &&   router.push(res.url)
         }
       } catch (error) {
+ 
         errorToast()
       }
     });

@@ -2,7 +2,7 @@ import CarCard from "@/app/_components/cards/CarCard";
 import NoResult from "@/app/_components/NoResult";
 import Pagination from "@/app/_components/Pagination";
 import Scroller from "@/app/_components/Scroller";
-import { calculateDuration, combineDateAndTimeToUTC } from "@/lib/date";
+import { calculateDuration, checkBookingAvailability, combineDateAndTimeToUTC } from "@/lib/date";
 import prisma from "@/lib/prisma";
 import {
   CarCheckoutParams,
@@ -117,9 +117,11 @@ const Cars = async ({ validParamsData }: Props) => {
             {refactoredCars.map((car) => {
               const { bookings, totalPrice, durationDescription, ...restCar } =
                 car;
+
+                const isAvailabe = checkBookingAvailability(bookings,startDate,endDate,restCar.availableCars)
               return (
                 <CarCard
-                booked={bookings.length > 0}
+                booked={!isAvailabe}
                   carsCheckoutParams={carCheckoutParams}
                   key={restCar.id}
                   car={restCar}

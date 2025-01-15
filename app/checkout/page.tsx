@@ -12,7 +12,7 @@ import {
 import prisma from "@/lib/prisma";
 import NoResult from "../_components/NoResult";
 import SuperButton from "@/components/SuperButton";
-import { calculateDuration, combineDateAndTimeToUTC } from "@/lib/date";
+import { calculateDuration, checkBookingAvailability, combineDateAndTimeToUTC } from "@/lib/date";
 
 type Props = { searchParams: Promise<CheckoutParams> };
 
@@ -73,6 +73,8 @@ const CheckoutPage = async ({ searchParams }: Props) => {
     },
   });
 
+
+
   if (!car) {
     return (
       <div className="pt-[100px] pb-12 bg-[#F3F3F3]">
@@ -82,8 +84,8 @@ const CheckoutPage = async ({ searchParams }: Props) => {
       </div>
     );
   }
-
-  if (!!car.bookings.length) {
+  const isAvailabe = checkBookingAvailability(car?.bookings,startDate,endDate,car.availableCars)
+  if (!isAvailabe) {
     return (
       <div className="pt-[100px] pb-12 bg-[#F3F3F3]">
         <Container className="min-h-screen flex flex-col">
