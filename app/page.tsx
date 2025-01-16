@@ -13,6 +13,11 @@ import EasySteps from "./_components/EasySteps";
 import Reviews from "./_components/Reviews";
 import Blogs from "./_components/Blogs";
 import SectionHeader from "./_components/SectionHeader";
+ 
+import dynamic from "next/dynamic";
+import Map from "./_components/MapContainer";
+
+const Locations = dynamic(()=>import('./_components/Locations'))
 
 type Props = {
   searchParams: Promise<{ pickUpLocation: (typeof LOCATIONS_CONST)[number] }>;
@@ -60,6 +65,11 @@ export default async function Home({ searchParams }: Props) {
       <div className="py-[52px]">
         <EasySteps />
       </div>
+      {/* Locations */}
+      <div className="py-[52px]">
+      <Map />
+      </div>
+
       {/* Reviews */}
       <div className="mt-[52px]">
         <Reviews />

@@ -14,7 +14,7 @@ const Header = async(props: Props) => {
 
   const carTypes = await getCarTypes() 
   return (
-    <header className="fixed top-0 left-0 w-full  z-10 ">
+    <header className="fixed top-0 left-0 w-full  z-50 ">
       <Container className="w-full md:w-[95vw] md:mx-auto mx-0">
         <Suspense>
         <div className="  flex items-center bg-white/85 backdrop-blur-md border-b   md:border border-t-0 p-[16px] w-full  md:p-[32px] md:rounded-bl-[16px] md:rounded-br-[16px] justify-between">

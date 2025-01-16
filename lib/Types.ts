@@ -182,3 +182,11 @@ export type StripeMetaData = {
 
 
 export type BookingWithCarName = Booking & {car:{subTitle:string,carType:{title:string}}}
+
+
+
+export const TEST_LOCATIONS = [
+  { id: 1, name: "Los Angeles", lat: 34.052235, lng: -118.243683 },
+  { id: 2, name: "Las Vegas", lat: 36.169941, lng: -115.139830 },
+  { id: 3, name: "Orlando", lat: 28.538336, lng: -81.379234 }
+];
