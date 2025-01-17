@@ -1,9 +1,11 @@
 import { Booking, Car, Fuel } from "@prisma/client";
 import { z } from "zod";
 
-
 //number schema
-const numberSchema = z.string().min(1,'Required').refine(data=>/^[0-9.]*$/.test(data),{message:'Only Numbers'}) 
+const numberSchema = z
+  .string()
+  .min(1, "Required")
+  .refine((data) => /^[0-9.]*$/.test(data), { message: "Only Numbers" });
 export const SEATS = [2, 5, 7, 8];
 export const SEATS_CONST = [2, 5, 7, 8] as const;
 export const SEATS_MAP: Record<(typeof SEATS_CONST)[number], string> = {
@@ -20,7 +22,7 @@ export const LOCATIONS_MAP: Record<(typeof LOCATIONS_CONST)[number], string> = {
   LOS_ANGELES: "los angeles",
   ORLANDO: "orlando",
 };
-export type LocationType  = typeof LOCATIONS_CONST[number] 
+export type LocationType = (typeof LOCATIONS_CONST)[number];
 export const FUEL = ["GASOLINE", "DIESEL", "ELECTRIC", "HYBRID"];
 export const FUEL_CONST = ["GASOLINE", "DIESEL", "ELECTRIC", "HYBRID"] as const;
 export const FUEL_MAP: Record<(typeof FUEL_CONST)[number], string> = {
@@ -29,11 +31,14 @@ export const FUEL_MAP: Record<(typeof FUEL_CONST)[number], string> = {
   ELECTRIC: "electric",
   HYBRID: "hybrid",
 };
-export const PAYMENT_METHOD_CONST = ['CARD'] as const
+export const PAYMENT_METHOD_CONST = ["CARD"] as const;
 
-export const PAYMENT_METHOD_MAP:Record<typeof PAYMENT_METHOD_CONST[number],string> = {
-CARD:"Credit/Depit Card"
-}
+export const PAYMENT_METHOD_MAP: Record<
+  (typeof PAYMENT_METHOD_CONST)[number],
+  string
+> = {
+  CARD: "Credit/Depit Card",
+};
 
 export type PricingType = {
   hour: string;
@@ -52,18 +57,12 @@ tomorrow.setDate(tomorrow.getDate() + 1);
 export const afterTomorrow = new Date();
 afterTomorrow.setDate(afterTomorrow.getDate() + 2);
 
-
-
-
 export const searchCarsSchema = z
   .object({
     pickUpLocation: z.enum(LOCATIONS_CONST, {
       message: "Invalid pick-up location",
     }),
-    dropOffLocation: z
-      .enum(LOCATIONS_CONST)
-      .optional()  
-      .or(z.literal("")), 
+    dropOffLocation: z.enum(LOCATIONS_CONST).optional().or(z.literal("")),
     deliveryDate: z.string().refine((date) => !isNaN(Date.parse(date)), {
       message: "Invalid delivery date format",
     }),
@@ -92,7 +91,7 @@ export const searchCarsSchema = z
       .optional(),
     carType: z.string().optional(),
     pageNumber: z.string(),
-    carYear:numberSchema.optional()
+    carYear: numberSchema.optional(),
   })
   .refine(
     (data) => {
@@ -102,7 +101,10 @@ export const searchCarsSchema = z
       const returnDateTime = new Date(`${data.returnDate}T${data.returnTime}`);
       return returnDateTime > deliveryDateTime;
     },
-    { message: "Return date and time must be after delivery date and time",path:['deliveryDate'] }
+    {
+      message: "Return date and time must be after delivery date and time",
+      path: ["deliveryDate"],
+    }
   );
 
 export const checkoutParamsSchema = z
@@ -120,11 +122,12 @@ export const checkoutParamsSchema = z
     returnTime: z.string().regex(/^([0-1]\d|2[0-3]):([0-5]\d)$/, {
       message: "Invalid return time format (HH:mm)",
     }),
-    pickupLocation:z.enum(LOCATIONS_CONST,{message:"Invalid Location"}),
+    pickupLocation: z.enum(LOCATIONS_CONST, { message: "Invalid Location" }),
 
-    dropoffLocation:z.enum(LOCATIONS_CONST,{message:"Invalid Location"})
-    .optional()  
-    .or(z.literal(""))
+    dropoffLocation: z
+      .enum(LOCATIONS_CONST, { message: "Invalid Location" })
+      .optional()
+      .or(z.literal("")),
   })
   .refine(
     (data) => {
@@ -134,7 +137,10 @@ export const checkoutParamsSchema = z
       const returnDateTime = new Date(`${data.returnDate}T${data.returnTime}`);
       return returnDateTime > deliveryDateTime;
     },
-    { message: "Return date and time must be after delivery date and time",path:['deliveryDate'] }
+    {
+      message: "Return date and time must be after delivery date and time",
+      path: ["deliveryDate"],
+    }
   );
 
 // Export Type
@@ -143,8 +149,7 @@ export type CarsWithBookings = (Car & {
   bookings: { startDate: Date; endDate: Date }[];
   carType: { title: string };
 })[];
-export type CheckoutParams = z.infer<typeof checkoutParamsSchema>
-
+export type CheckoutParams = z.infer<typeof checkoutParamsSchema>;
 
 //to pass to card card
 export type CarCheckoutParams = {
@@ -152,11 +157,10 @@ export type CarCheckoutParams = {
   deliveryTime: string;
   returnDate: string;
   returnTime: string;
-  pickupLocation:LocationType
-  dropoffLocation?:LocationType | undefined | ''
+  pickupLocation: LocationType;
+  dropoffLocation?: LocationType | undefined | "";
 };
 
- 
 export const pricingSchema = z.object({
   hour: numberSchema,
   days: z.array(numberSchema).length(6, "Enter 6 Days"),
@@ -168,7 +172,7 @@ export const TAKE_CARS = 12;
 
 export type StripeMetaData = {
   bookingId: string;
-  bookingID:string,
+  bookingID: string;
   customerEmail: string;
   startDate: string;
   endDate: string;
@@ -177,16 +181,40 @@ export type StripeMetaData = {
   payLater: number;
   totalAmount: number;
   durationDescription: string;
-  [key: string]: any
-}
+  [key: string]: any;
+};
 
-
-export type BookingWithCarName = Booking & {car:{subTitle:string,carType:{title:string}}}
-
-
+export type BookingWithCarName = Booking & {
+  car: { subTitle: string; carType: { title: string } };
+};
 
 export const TEST_LOCATIONS = [
-  { id: 1, name: "Los Angeles", lat: 34.052235, lng: -118.243683 },
-  { id: 2, name: "Las Vegas", lat: 36.169941, lng: -115.139830 },
-  { id: 3, name: "Orlando", lat: 28.538336, lng: -81.379234 }
+  {
+    id: 1,
+    name: "Los Angeles",
+    lat: 33.96110546035406,
+    lng: -118.37540930060293,
+    phone: "+14243315040",
+    address:'1100 W Florence Ave suite b, Inglewood, CA 90301, United States',
+    href:'https://www.google.com/maps/place/Eagle+Car+Rental/@33.9610171,-118.3749691,19.25z/data=!4m12!1m5!3m4!2zMzPCsDU3JzQwLjAiTiAxMTjCsDIyJzMxLjUiVw!8m2!3d33.9611055!4d-118.3754093!3m5!1s0x80c2b7c8434bd57d:0x823a6aef629edc80!8m2!3d33.9610909!4d-118.3755302!16s%2Fg%2F11gxfp0yds?entry=ttu&g_ep=EgoyMDI1MDExNC4wIKXMDSoASAFQAw%3D%3D'
+ 
+  },
+  {
+    id: 2,
+    name: "Las Vegas",
+    lat: 36.056620509375875,
+    lng: -115.1624571711647,
+    phone: "+17025333116",
+    address:'205 E Warm Springs Rd office 106, Las Vegas, NV 89119, United States',
+    href:'https://www.google.com/maps/place/Eagle+Car+Rental/@36.0566205,-115.1621883,19.5z/data=!3m1!5s0x80c8cf664f9d80bf:0xe755e10074e10bdf!4m12!1m5!3m4!2zMzbCsDAzJzIzLjgiTiAxMTXCsDA5JzQ0LjkiVw!8m2!3d36.0566205!4d-115.1624572!3m5!1s0x80c8cf8a4afded7f:0xf7b4b5726d0ea699!8m2!3d36.0565251!4d-115.1624679!16s%2Fg%2F11jgc17003?entry=ttu&g_ep=EgoyMDI1MDExNC4wIKXMDSoASAFQAw%3D%3D'
+  },
+  {
+    id: 3,
+    name: "Orlando",
+    lat: 28.457288450132072,
+    lng: -81.31079694048232,
+    phone: "+16897774078",
+    address:'5463 Gateway Village Cir SUITE 103, Orlando, FL 32812, United States',
+    href:'https://www.google.com/maps/place/EAGLE+CAR+RENTAL+ORLANDO/@28.4571637,-81.31037,19.25z/data=!4m12!1m5!3m4!2zMjjCsDI3JzI2LjIiTiA4McKwMTgnMzguOSJX!8m2!3d28.4572885!4d-81.3107969!3m5!1s0x88e76301db9d1299:0xbc3e10064fc81878!8m2!3d28.4570998!4d-81.3108935!16s%2Fg%2F11tf9hfp6n?entry=ttu&g_ep=EgoyMDI1MDExNC4wIKXMDSoASAFQAw%3D%3D'
+  },
 ];

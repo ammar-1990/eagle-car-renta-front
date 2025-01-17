@@ -12,7 +12,9 @@ import markerShadow from "leaflet/dist/images/marker-shadow.png";
 import L from "leaflet";
 import { TEST_LOCATIONS } from "@/lib/Types";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { cn, formatPhoneNumber } from "@/lib/utils";
+import { Phone } from "lucide-react";
+import SuperButton from "@/components/SuperButton";
 const MapContainer = dynamic(
   () => import("react-leaflet").then((mod) => mod.MapContainer),
   {
@@ -27,8 +29,6 @@ const TileLayer = dynamic(
   }
 );
 
- 
-
 type Props = {};
 
 const Locations = (props: Props) => {
@@ -38,10 +38,16 @@ const Locations = (props: Props) => {
     center: LatLngExpression;
     id: number;
     name: string;
+    phone: string;
+    addrees: string;
+    href: string;
   }>({
     center: [DEFAULT_LOCATION.lat, DEFAULT_LOCATION.lng],
     id: DEFAULT_LOCATION.id,
     name: DEFAULT_LOCATION.name,
+    phone: DEFAULT_LOCATION.phone,
+    addrees: DEFAULT_LOCATION.address,
+    href: DEFAULT_LOCATION.href,
   });
 
   const [custom, setCustom] = useState<
@@ -92,6 +98,9 @@ const Locations = (props: Props) => {
                   center: [location.lat, location.lng],
                   id: location.id,
                   name: location.name,
+                  phone: location.phone,
+                  addrees: location.address,
+                  href: location.href,
                 })
               }
               key={`botton-location-${location.id}`}
@@ -101,14 +110,14 @@ const Locations = (props: Props) => {
           ))}
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-2 mt-[24px]">
-          <div className="w-full min-h-[500px] rounded-md overflow-hidden  ">
+          <div className="w-full aspect-square rounded-md overflow-hidden  ">
             <MapContainer
-            className="z-[1]"
-            key={center.id}
+              scrollWheelZoom={false} // Disable scroll wheel zoom
+              className="z-[1]"
+              key={center.id}
               center={center.center}
               zoom={18}
               style={{ height: "100%", width: "100%" }}
-              
             >
               <TileLayer
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -116,12 +125,38 @@ const Locations = (props: Props) => {
               />
 
               <Marker position={center.center} icon={custom}>
-                <Popup>{center.name}</Popup>
+                <Popup>{center.addrees}</Popup>
               </Marker>
             </MapContainer>
           </div>
 
-          <div></div>
+          <div className="p-[60px] flex   justify-center flex-col gap-[25px]">
+            <h3 className="text-site-primary font-600 text-[28px]">
+              Eagle Car Rental
+            </h3>
+            <p className="text-[#000000B2]">{center.addrees}</p>
+            <Phone className="text-site-primary w-[33px] h-[33px]" />
+            <p className="text-[#000000B2] text-[14px]">
+              Office: {formatPhoneNumber(center.phone)}
+            </p>
+            <div className="flex items-center gap-[12.5px]">
+              <SuperButton
+                buttonType="linkButton"
+                target="_blank"
+                className=" rounded-[16px] h-[47px] w-[154px]"
+                title="Get Directions"
+                variant="site"
+                href={center.href}
+              />
+              <SuperButton
+                buttonType="linkButton"
+                className=" rounded-[16px] h-[47px] bg-site-secondary hover:bg-site-secondary/85 w-[154px]"
+                title="Reserve a Car"
+                variant="site"
+                href={"/cars"}
+              />
+            </div>
+          </div>
         </div>
       </Container>
     </div>
