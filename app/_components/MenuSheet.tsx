@@ -36,7 +36,7 @@ const menuLinks = [
 const contentLinks  =[
     {
         label: "blog",
-        href: "/blogs",
+        href: "/blog",
       },
     {
         label: "FAQs",
