@@ -1,22 +1,21 @@
 import CarCard from "@/app/_components/cards/CarCard";
+import FramerComponent from "@/app/_components/FramerComponent";
 import NoResult from "@/app/_components/NoResult";
 import Pagination from "@/app/_components/Pagination";
 import Scroller from "@/app/_components/Scroller";
-import { calculateDuration, checkBookingAvailability, combineDateAndTimeToUTC } from "@/lib/date";
+import {
+  calculateDuration,
+  checkBookingAvailability,
+  combineDateAndTimeToUTC,
+} from "@/lib/date";
 import prisma from "@/lib/prisma";
 import {
   CarCheckoutParams,
- 
   PricingType,
   SearchCarsParams,
   TAKE_CARS,
 } from "@/lib/Types";
-import {
-
-  calculateRentalPrice,
-
-  formatDuration,
-} from "@/lib/utils";
+import { calculateRentalPrice, formatDuration } from "@/lib/utils";
 import React from "react";
 
 type Props = { validParamsData: SearchCarsParams };
@@ -34,7 +33,7 @@ const Cars = async ({ validParamsData }: Props) => {
   const refinedSeats = Array.isArray(seats) ? seats : seats?.split(",");
   const fuel = validParamsData.fuel;
   const carType = validParamsData.carType;
-  const carYear = validParamsData.carYear
+  const carYear = validParamsData.carYear;
   const pageNumber = +validParamsData.pageNumber;
 
   const carCheckoutParams: CarCheckoutParams = {
@@ -48,13 +47,11 @@ const Cars = async ({ validParamsData }: Props) => {
     }),
   };
 
-  
-
   const carsRes = prisma.car.findMany({
     where: {
       location: validParamsData.pickUpLocation,
       disabled: false,
-      ...(carYear && {carYear:+carYear}),
+      ...(carYear && { carYear: +carYear }),
       ...(carType && { carTypeId: carType }),
       ...(refinedSeats && { seats: { in: refinedSeats.map((seat) => +seat) } }),
       ...(fuel &&
@@ -118,16 +115,40 @@ const Cars = async ({ validParamsData }: Props) => {
               const { bookings, totalPrice, durationDescription, ...restCar } =
                 car;
 
-                const isAvailabe = checkBookingAvailability(bookings,startDate,endDate,restCar.availableCars)
+              const isAvailabe = checkBookingAvailability(
+                bookings,
+                startDate,
+                endDate,
+                restCar.availableCars
+              );
               return (
-                <CarCard
-                booked={!isAvailabe}
-                  carsCheckoutParams={carCheckoutParams}
+                <FramerComponent
+                  viewport={{
+                    amount: 0.4,
+                    once: true,
+                  }}
+                  variants={{
+                    hidden: { opacity: 0, y: 10 },
+                    visible: { opacity: 1, y: 0 },
+                  }}
+                  initial={"hidden"}
+                  whileInView={"visible"}
+                  transition={{
+                    type: "spring",
+                    bounce: 0.6,
+                    damping:6, 
+                    stiffness: 150,
+                  }}
                   key={restCar.id}
-                  car={restCar}
-                  durationDescription={durationDescription}
-                  totalPrice={String(totalPrice)}
-                />
+                >
+                  <CarCard
+                    booked={!isAvailabe}
+                    carsCheckoutParams={carCheckoutParams}
+                    car={restCar}
+                    durationDescription={durationDescription}
+                    totalPrice={String(totalPrice)}
+                  />
+                </FramerComponent>
               );
             })}
           </div>

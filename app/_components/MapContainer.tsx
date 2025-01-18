@@ -20,7 +20,7 @@ const Map = (props: Props) => {
       console.log('^^^COMPONENT',locationsRef.current)
       if (locationsRef.current) {
         console.log('^^^COMPONENT_EXIST',locationsRef.current)
-        locationsRef.current.scrollIntoView({ behavior: "smooth",block:'start' });
+        locationsRef.current.scrollIntoView({block:'start' });
       }
     }
   },[locationsRef.current])

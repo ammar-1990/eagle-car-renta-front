@@ -13,11 +13,12 @@ import EasySteps from "./_components/EasySteps";
 import Reviews from "./_components/Reviews";
 import Blogs from "./_components/Blogs";
 import SectionHeader from "./_components/SectionHeader";
- 
+
 import dynamic from "next/dynamic";
 import Map from "./_components/MapContainer";
+import FramerComponent from "./_components/FramerComponent";
 
-const Locations = dynamic(()=>import('./_components/Locations'))
+const Locations = dynamic(() => import("./_components/Locations"));
 
 type Props = {
   searchParams: Promise<{ pickUpLocation: (typeof LOCATIONS_CONST)[number] }>;
@@ -45,11 +46,15 @@ export default async function Home({ searchParams }: Props) {
       </div>
       {/* Benefits */}
       <div className="mt-[41px] pb-[95px]">
-        <Benefits />
+        <FramerComponent>
+          <Benefits />
+        </FramerComponent>
       </div>
       {/* Our Cars */}
       <div className="py-[95px] bg-[#F5F5F5]">
-        <OurCars />
+        <FramerComponent>
+          <OurCars />
+        </FramerComponent>
 
         <div className="mt-[52px]">
           <Suspense
@@ -57,31 +62,44 @@ export default async function Home({ searchParams }: Props) {
               <Skeleton className="w-full h-[400px] rounded-md bg-muted-foreground" />
             }
           >
-            <CarsByLocation location={location} />
+            <FramerComponent>
+              <CarsByLocation location={location} />
+            </FramerComponent>
           </Suspense>
         </div>
       </div>
       {/* Easy Steps */}
       <div className="py-[52px]">
-        <EasySteps />
+        <FramerComponent>
+          <EasySteps />
+        </FramerComponent>
       </div>
       {/* Locations */}
       <div id="locations" className="py-[52px]">
-      <Map />
+        <FramerComponent>
+          <Map />
+        </FramerComponent>
       </div>
 
       {/* Reviews */}
       <div className="mt-[52px]">
-        <Reviews />
+        <FramerComponent>
+          <Reviews />
+        </FramerComponent>
       </div>
       {/* Blogs */}
       <div className="mt-[52px]">
         <Container>
           <SectionHeader description="Blog" title="Review our blogs" />
-          <Suspense fallback={<Skeleton className="bg-muted-foreground rounded-md min-h-[400px]" />}>
-          <Blogs />
+          <Suspense
+            fallback={
+              <Skeleton className="bg-muted-foreground rounded-md min-h-[400px]" />
+            }
+          >
+            <FramerComponent>
+              <Blogs />
+            </FramerComponent>
           </Suspense>
-    
         </Container>
       </div>
     </div>
