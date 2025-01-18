@@ -9,7 +9,7 @@ type Props = {
   carTypes: CarType[];
 };
 
-const links = [
+export const links = [
   {
     label: "home",
     href: "/",

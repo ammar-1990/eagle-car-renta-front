@@ -4,6 +4,7 @@ import { afterTomorrow, DEFAULT_LOCATION, DEFAULT_TIME, LOCATIONS_CONST, LOCATIO
 import { generateTimeSlots } from "@/lib/utils";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState, useTransition } from "react";
+import { toast } from "sonner";
 
 export const useSearchComponent = (isSearchCars?: boolean) => {
   // Hooks
@@ -81,6 +82,29 @@ export const useSearchComponent = (isSearchCars?: boolean) => {
 
   // Push query params to URL only if changes are detected
   const handlePush = () => {
+    const fields = [
+      { value: pickUpLocation, name: "Pick Up Location" },
+      { value: deliveryDate, name: "Delivery Date" },
+      { value: deliveryTime, name: "Delivery Time" },
+      { value: returnDate, name: "Return Date" },
+      { value: returnTime, name: "Return Time" },
+    ];
+    
+    if (isDropOff) {
+      fields.push({ value: dropOffLocation, name: "Drop Off Location" });
+    }
+    
+    const missingFields = fields.filter(field => !field.value).map(field => field.name);
+    
+    if (missingFields.length > 0) {
+      toast.warning("Please Choose All Required Fields", {
+        description: missingFields.join(", "),
+        duration:8000,
+        closeButton:true,
+        position:'top-center'
+      });
+      return;
+    }
     const params = new URLSearchParams(searchParams); // Get current params
 
     // Create queryParams object based on state

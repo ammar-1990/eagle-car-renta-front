@@ -9,8 +9,8 @@ type Props = {
   formattedEndDate: string;
   rentalPrice: number;
   deposit: number;
-  payLater:number;
-  payNow:number;
+  payLater: number;
+  payNow: number;
   totalAmount: number;
   extraOptions: { id: string; price: string; title: string }[];
 };
@@ -35,12 +35,22 @@ const Summary = ({
 
       <SummaryBlockWrapper>
         <div className=" flex gap-[23px] items-center ">
-          <ImageComponent
-            src={image}
-            alt="car-image"
-            aspect="square"
-            className="w-[120px] h-[101px] rounded-[12px] overflow-hidden"
-          />
+          <div className="w-[120px] h-[101px] relative">
+            <ImageComponent
+              src={image}
+              alt="car-image"
+              aspect="square"
+              imgClassName="object-contain"
+              className="w-full h-full rounded-[12px] overflow-hidden  z-10"
+            />
+            <ImageComponent
+              src={image}
+              alt="car-image"
+              aspect="square"
+              className="w-full h-full rounded-[12px] overflow-hidden  absolute top-0 left-0 blur-[1px]"
+            />
+          </div>
+
           <div className="">
             <h3 className="fint-[500] text-[16px]">{subTitle}</h3>
             <p className="text-[14px] text-muted-foreground">
@@ -67,7 +77,7 @@ const Summary = ({
         <SummaryBlockWrapper>
           {extraOptions.map((option) => (
             <SummaryElement
-            key={`extra-option-summary-${option.id}`}
+              key={`extra-option-summary-${option.id}`}
               label={option.title}
               value={formatToDollar(+option.price)}
             />
@@ -83,11 +93,7 @@ const Summary = ({
       </SummaryBlockWrapper>
 
       <SummaryBlockWrapper>
-        <SummaryElement
-          label="Pay Now"
-          value={formatToDollar(payNow)}
-          isBold
-        />
+        <SummaryElement label="Pay Now" value={formatToDollar(payNow)} isBold />
         <p className="text-[10px] text-[#ACACAC]">
           Overall price that you will pay now via checkout
         </p>

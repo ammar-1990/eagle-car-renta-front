@@ -50,6 +50,7 @@ const SearchComponent = ({ className,isSearchCars }: Props) => {
               <ComboBoxField
                 items={locations}
                 param="pickUpLocation"
+                placeholder="Choose Location"
                 push={false}
                 setValue={(val: string) => setPickUpLocation(val)}
                 value={pickUpLocation}
@@ -59,6 +60,7 @@ const SearchComponent = ({ className,isSearchCars }: Props) => {
                 <ComboBoxField
                   items={locations}
                   param="dropOffLocation"
+                  placeholder="Choose Location"
                   push={false}
                   setValue={(val: string) => setDropOffLocation(val)}
                   value={dropOffLocation}

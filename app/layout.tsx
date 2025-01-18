@@ -8,6 +8,7 @@ import Footer from "./_components/Footer";
 import { Toaster } from "@/components/ui/sonner";
 import { EdgeStoreProvider } from "@/lib/edgeStore";
 import TanstackProvider from "./_components/TanstackProvider";
+import HeaderScroller from "./_components/HeaderScroller";
 
 const poppins = Poppins({
   weight: ["400", "500", "700", "900"],
@@ -28,7 +29,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${poppins.className} antialiased`}>
         <TanstackProvider>
+          <HeaderScroller>
         <Header />
+          </HeaderScroller>
        <EdgeStoreProvider> <main className=" ">
         {children}
         </main></EdgeStoreProvider>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Container from "./Container";
 import SectionHeader from "./SectionHeader";
 import { Marker, Popup } from "react-leaflet";
@@ -60,7 +60,8 @@ const Locations = (props: Props) => {
       }>
     | undefined
   >(undefined);
-
+  
+ 
   useEffect(() => {
     setMount(true);
     if (typeof window !== undefined) {
@@ -73,7 +74,13 @@ const Locations = (props: Props) => {
       });
       setCustom(customInstance);
     }
+
+    
   }, []);
+
+
+
+
 
   if (!mount) return null;
 
@@ -89,7 +96,7 @@ const Locations = (props: Props) => {
           {TEST_LOCATIONS.map((location) => (
             <Button
               className={cn(
-                "bg-white hover:bg-white border-site-primary text-site-primary border shadow-none",
+                "bg-white hover:bg-white border-site-primary text-site-primary border shadow-none rounded-full",
                 center.id === location.id &&
                   "text-white bg-site-primary hover:bg-site-primary"
               )}
@@ -130,7 +137,7 @@ const Locations = (props: Props) => {
             </MapContainer>
           </div>
 
-          <div className="p-[60px] flex   justify-center flex-col gap-[25px]">
+          <div className="p-[20px] flex   justify-center flex-col items-center gap-[25px]">
             <h3 className="text-site-primary font-600 text-[28px]">
               Eagle Car Rental
             </h3>

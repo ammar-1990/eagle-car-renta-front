@@ -61,9 +61,9 @@ const Reviews = (props: Props) => {
           opts={{
             align: "start",
           }}
-          className="w-full "
+          className="w-full  "
         >
-          <CarouselContent className="w-full ">
+          <CarouselContent className="w-full py-[10px]">
             {REVIEWS.map((review, index) => (
               <CarouselItem
                 key={`Review-${index}`}

@@ -66,7 +66,7 @@ export default async function Home({ searchParams }: Props) {
         <EasySteps />
       </div>
       {/* Locations */}
-      <div className="py-[52px]">
+      <div id="locations" className="py-[52px]">
       <Map />
       </div>
 

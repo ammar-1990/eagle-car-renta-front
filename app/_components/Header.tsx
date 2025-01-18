@@ -6,6 +6,7 @@ import Container from "./Container";
 import { getCarTypes } from "@/lib/getters";
 import Link from "next/link";
 import { Menu, User, UserRound } from "lucide-react";
+import MenuSheet from "./MenuSheet";
 
 type Props = {};
 
@@ -14,7 +15,7 @@ const Header = async(props: Props) => {
 
   const carTypes = await getCarTypes() 
   return (
-    <header className="fixed top-0 left-0 w-full  z-50 ">
+    <header className=" w-full   ">
       <Container className="w-full md:w-[95vw] md:mx-auto mx-0">
         <Suspense>
         <div className="  flex items-center bg-white/85 backdrop-blur-md border-b   md:border border-t-0 p-[16px] w-full  md:p-[32px] md:rounded-bl-[16px] md:rounded-br-[16px] justify-between">
@@ -45,7 +46,7 @@ const Header = async(props: Props) => {
           </Link>
         
          
-            <Menu className="w-10 h-10 text-site-primary" />
+       <MenuSheet />
          
       
 
