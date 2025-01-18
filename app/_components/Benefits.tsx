@@ -33,7 +33,7 @@ const Benefits = (props: Props) => {
         <div className="mt-[57px] w-full grid grid-cols-1 lg:grid-cols-3 gap-[27px]">
           {CARDS.map((card, index) => (
       
-              <article className="rounded-[24px] px-[29px] py-[32px] border flex gap-[20px]">
+              <article key={`benefit-${index}`} className="rounded-[24px] px-[29px] py-[32px] border flex gap-[20px]">
                 <span className="bg-[#F5F5F5] rounded-[16px] flex items-center justify-center w-[54px] shrink-0">
                   {card.Icon}
                 </span>
