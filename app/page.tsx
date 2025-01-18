@@ -52,7 +52,7 @@ export default async function Home({ searchParams }: Props) {
       </div>
       {/* Our Cars */}
       <div className="py-[95px] bg-[#F5F5F5]">
-        <FramerComponent>
+        <FramerComponent >
           <OurCars />
         </FramerComponent>
 
@@ -62,8 +62,8 @@ export default async function Home({ searchParams }: Props) {
               <Skeleton className="w-full h-[400px] rounded-md bg-muted-foreground" />
             }
           >
-            <FramerComponent>
-              <CarsByLocation location={location} />
+            <FramerComponent key={location}>
+              <CarsByLocation  location={location} />
             </FramerComponent>
           </Suspense>
         </div>
