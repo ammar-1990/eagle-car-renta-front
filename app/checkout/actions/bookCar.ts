@@ -127,6 +127,7 @@ export const bookCar = async (
         price: rentalPrice,
         totalAmount,
         bookingID,
+        payNow,
         status: "PENDING",
       },
     });

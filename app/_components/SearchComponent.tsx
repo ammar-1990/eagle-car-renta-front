@@ -86,6 +86,7 @@ const SearchComponent = ({ className,isSearchCars }: Props) => {
                 setValue={(val: string) => setReturnDate(val)}
                 placeholder="Return Date"
                 stateLabel="Return Date"
+                startDate={deliveryDate}
               />
               <PopOverField
                 items={hours}

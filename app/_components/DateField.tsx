@@ -18,12 +18,12 @@ import { convertDateToISOString } from "@/lib/date";
 type Props = {
   value: string;
   setValue: (val: string) => void;
-
+  startDate?:string;
   stateLabel?: string;
   placeholder: string;
 };
 
-const DateField = ({ placeholder, setValue, value, stateLabel }: Props) => {
+const DateField = ({ placeholder, setValue, value, stateLabel,startDate }: Props) => {
   const [open, setOpen] = React.useState(false);
   return (
     <div>
@@ -42,11 +42,17 @@ const DateField = ({ placeholder, setValue, value, stateLabel }: Props) => {
         </PopoverTrigger>
         <PopoverContent className="w-auto p-0">
           <Calendar
-            disabled={(date) => {
-                const today = new Date(); 
-                today.setHours(0, 0, 0, 0); 
-                return date < today
-            }}
+          defaultMonth={value ? new Date(value) : new Date()}
+          disabled={(date) => {
+            const today = new Date();
+            today.setHours(0, 0, 0, 0); // Normalize to midnight
+            const deliveryDate = startDate ? new Date(startDate).setHours(0, 0, 0, 0) : null;
+          
+            return (
+              date < today || 
+              (deliveryDate !== null && date < new Date(deliveryDate))
+            );
+          }}
             classNames={{day_selected:'bg-site-primary text-white'}}
             mode="single"
             selected={new Date(value)}
