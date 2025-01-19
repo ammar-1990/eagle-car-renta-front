@@ -6,10 +6,11 @@ const numberSchema = z
   .string()
   .min(1, "Required")
   .refine((data) => /^[0-9.]*$/.test(data), { message: "Only Numbers" });
-export const SEATS = [2, 5, 7, 8];
-export const SEATS_CONST = [2, 5, 7, 8] as const;
+export const SEATS = [2,4, 5, 7, 8];
+export const SEATS_CONST = [2,4, 5, 7, 8] as const;
 export const SEATS_MAP: Record<(typeof SEATS_CONST)[number], string> = {
   "2": "2 Seats",
+  "4":"4 Seats",
   "5": "5 Seats",
   "7": "7 Seats",
   "8": "8 Seats",
