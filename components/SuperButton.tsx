@@ -37,11 +37,11 @@ const RenderButton = (props: SuperButtonProps) => {
 const RenderLinkButton = (
   props: LinkType & NormalButton & ButtonHTMLAttributes<HTMLButtonElement>
 ) => {
-  const { title, Icon, className, href, buttonType,variant,scroll,replace,target, ...rest } = props;
+  const { title, Icon, className, href, buttonType,variant,scroll,replace,target,download, ...rest } = props;
 
   return (
     <Button {...rest}  className={cn("", className)} variant={variant ?? "site"} asChild >
-      <Link scroll={scroll} className="flex items-center" href={href} replace={replace} target={target}>
+      <Link scroll={scroll} download={download} className="flex items-center" href={href} replace={replace} target={target} >
         {Icon && Icon}
         {title}
       </Link>
@@ -142,6 +142,7 @@ type LinkType = {
   scroll?:boolean,
   replace?:boolean
   target?: HTMLAttributeAnchorTarget
+  download?:boolean
 };
 
 type PushType = {

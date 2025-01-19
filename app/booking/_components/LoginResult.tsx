@@ -73,6 +73,40 @@ const LoginResult = ({ setBooking, booking }: Props) => {
               value={`+${booking.billingContactNumber}`}
            
             />
+             <BookingItem
+              label="Billing Address"
+              value={`${booking.address}`}
+           
+            />
+             <BookingItem
+              label="Billing City"
+              value={`${booking.City}`}
+           
+            />
+             <BookingItem
+              label="Billing State"
+              value={`${booking.State}`}
+           
+            />
+             <BookingItem
+              label="Billing Zipcode"
+              value={`${booking.Zipcode}`}
+           
+            />
+            {
+              booking.companyName &&  <BookingItem
+              label="Company Name"
+              value={`${booking.companyName}`}
+           
+            />
+            }
+            {
+              booking.companyVat &&  <BookingItem
+              label="Company Name"
+              value={`${booking.companyVat}`}
+           
+            />
+            }
           </LoginAccordionElement>
           {/* Payment Details */}
           <LoginAccordionElement item="item-4" title=" Payment Details">
