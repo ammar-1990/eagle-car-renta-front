@@ -3,6 +3,7 @@ import Banner from "../_components/Banner";
 import Container from "../_components/Container";
 import { cn } from "@/lib/utils";
 import ContactUsForm from "./_components/ContactUsForm";
+import Map from "../_components/MapContainer";
 
 type Props = {};
 
@@ -11,7 +12,7 @@ const ContactUsPage = (props: Props) => {
     <div>
       <Banner label="Contact Us" />
       <Container className="mt-[57px]">
-        <h3 className="text-[48px] font-[700]">Get in Touch</h3>
+        {/* <h3 className="text-[48px] font-[700]">Get in Touch</h3>
         <p className="mt-[32px] font-[700] text-[24px]">
           Customer Service Hours
         </p>
@@ -24,7 +25,8 @@ const ContactUsPage = (props: Props) => {
         <p className="mt-[32px] font-[700] text-[24px]">Contact Information</p>
         <Item title="Phone:" content="+123-456-7890" className="mt-[32px]" />
         <Item title="Email:" content="info@eaglecarrental.com" />
-        <Item title="Address:" content=" 123 Luxury Drive, City, Countr" />
+        <Item title="Address:" content=" 123 Luxury Drive, City, Countr" /> */}
+        <Map />
         <p className="mt-[32px] font-[700] text-[24px]">Reach Out</p>
         <p className="mt-[32px] text-[18px] font-[400]">
           Have any questions or need assistance? Please fill out the form below,
