@@ -13,6 +13,7 @@ export const loginBooking = async (bookingID:string, email:string)=>{
 
             const booking = await prisma.booking.findUnique({
                 where:{
+                  status:'PAID',
                     bookingID,
                     email,
                     
