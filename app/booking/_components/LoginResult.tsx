@@ -86,6 +86,11 @@ const LoginResult = ({ setBooking, booking }: Props) => {
               value={formatToDollar(booking.totalAmount)}
             
             />
+            <BookingItem
+              label="Pay Now"
+              value={formatToDollar(booking.payNow)}
+            
+            />
           </LoginAccordionElement>
         </Accordion>
       </div>
