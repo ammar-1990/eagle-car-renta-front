@@ -25,7 +25,7 @@ const LoginResult = ({ setBooking, booking }: Props) => {
            
             <BookingItem
               label="Car Name"
-              value={booking.car.subTitle}
+              value={`${booking.car.carType.title} (${booking.car.subTitle})`}
              
             />
             <BookingItem
