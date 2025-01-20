@@ -139,10 +139,12 @@ export function formatToDollar(value: number): string {
 
 export const getTotalNowLaterPrices = ({deposite, extraOptionsPrice,rentalPrice}:{deposite:number,rentalPrice:number,extraOptionsPrice:number})=>{
 
+  // const baseAmount = rentalPrice  + extraOptionsPrice
+  // const totalAmount = Math.max(baseAmount, payNow); // incase deposite is greater than total
+  // const payLater = Math.max(totalAmount - payNow, 0) 
   const payNow = deposite
-  const baseAmount = rentalPrice  + extraOptionsPrice
-  const totalAmount = Math.max(baseAmount, payNow); // incase deposite is greater than total
-  const payLater = Math.max(totalAmount - payNow, 0) // incase deposite is greater than rental price
+  const totalAmount = rentalPrice + deposite + extraOptionsPrice
+  const payLater = rentalPrice + extraOptionsPrice
 
   return {payNow, payLater, totalAmount}
 }
