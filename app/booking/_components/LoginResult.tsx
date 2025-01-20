@@ -8,7 +8,7 @@ import { BookingWithCarName } from "@/lib/Types";
 import { format } from "date-fns";
 import { formatInTimeZone } from "date-fns-tz";
 import { formatDateUtc } from "@/lib/date";
-import { formatToDollar } from "@/lib/utils";
+import { formatPhoneNumber, formatToDollar } from "@/lib/utils";
 
 type Props = {
   setBooking: () => void;
@@ -55,7 +55,7 @@ const LoginResult = ({ setBooking, booking }: Props) => {
             />
             <BookingItem
               label="Client Contact Number"
-              value={`+${booking.contactNumber}`}
+              value={`${formatPhoneNumber(booking.contactNumber)}`}
               
             />
             
@@ -70,7 +70,7 @@ const LoginResult = ({ setBooking, booking }: Props) => {
             />
              <BookingItem
               label="Billing Contact Number"
-              value={`+${booking.billingContactNumber}`}
+              value={`${formatPhoneNumber(booking.billingContactNumber)}`}
            
             />
              <BookingItem
