@@ -17,12 +17,25 @@ import SectionHeader from "./_components/SectionHeader";
 import dynamic from "next/dynamic";
 import Map from "./_components/MapContainer";
 import FramerComponent from "./_components/FramerComponent";
+import { Metadata } from "next";
 
 const Locations = dynamic(() => import("./_components/Locations"));
 
 type Props = {
   searchParams: Promise<{ pickUpLocation: (typeof LOCATIONS_CONST)[number] }>;
 };
+
+export const metadata:Metadata ={
+  title:"Eagle Car Rental",
+  description:"Best car rental service",
+  openGraph:{
+    title:"Eagle Car Rental",
+    description:"Best car rental service",
+  },
+  icons: {
+    icon: '/icon.png',  
+  },
+}
 
 export default async function Home({ searchParams }: Props) {
   const location = (await searchParams).pickUpLocation;
