@@ -9,6 +9,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { EdgeStoreProvider } from "@/lib/edgeStore";
 import TanstackProvider from "./_components/TanstackProvider";
 import HeaderScroller from "./_components/HeaderScroller";
+import CrispChat from "./_components/CrispComponent";
 
 const poppins = Poppins({
   weight: ["400", "500", "700", "900"],
@@ -33,6 +34,7 @@ export default function RootLayout({
         <Header />
           </HeaderScroller>
        <EdgeStoreProvider> <main className=" ">
+        <CrispChat />
         {children}
         </main></EdgeStoreProvider>
         <Footer/>
