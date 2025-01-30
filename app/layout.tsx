@@ -10,6 +10,7 @@ import { EdgeStoreProvider } from "@/lib/edgeStore";
 import TanstackProvider from "./_components/TanstackProvider";
 import HeaderScroller from "./_components/HeaderScroller";
 import CrispChat from "./_components/CrispComponent";
+import ComingSoon from "@/components/ComingSoon";
 
 const poppins = Poppins({
   weight: ["400", "500", "700", "900"],
@@ -29,7 +30,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${poppins.className} antialiased`}>
-        <TanstackProvider>
+       <ComingSoon/>
+        {/* <TanstackProvider>
           <HeaderScroller>
         <Header />
           </HeaderScroller>
@@ -39,7 +41,7 @@ export default function RootLayout({
         </main></EdgeStoreProvider>
         <Footer/>
         <Toaster richColors />
-        </TanstackProvider>
+        </TanstackProvider> */}
       </body>
     </html>
   );
