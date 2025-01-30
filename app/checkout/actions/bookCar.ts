@@ -14,6 +14,7 @@ import { PricingType, StripeMetaData } from "@/lib/Types";
 import { startStripeSession } from "@/lib/stripe";
 import { endOfDay, formatDuration } from "date-fns";
 import { calculateDuration, checkBookingAvailability } from "@/lib/date";
+import sendEmail from "@/SendGrid";
 
 export const bookCar = async (
   data: BookingType,
@@ -81,17 +82,15 @@ export const bookCar = async (
       car.availableCars
     );
 
- 
-    if (!isAvailabe){
-       throwCustomError("Sorry...Car Has Been Booked Already")
-      }
- 
+    if (!isAvailabe) {
+      throwCustomError("Sorry...Car Has Been Booked Already");
+    }
+
     //check extraOptions
     const validExtraOptions = car.extraOptions;
     const isValid = validData.data.extraOptions.every((clientOption) =>
       validExtraOptions.some((dbOption) => dbOption.id === clientOption.id)
     );
-
 
     if (!isValid)
       return throwCustomError(
@@ -156,21 +155,30 @@ export const bookCar = async (
       myPayment: paymentMethod,
     });
 
+   const emailRes = await sendEmail({
+      to: "ammar.ali.haidar.1990@gmail.com",
+      subject: "test",
+      text: "text pending",
+      html: "html pending",
+    });
+
+    if(!emailRes.success){
+      console.error(emailRes.error)
+    }
+
     return {
       success: true,
       url: session.url,
       message: "Session Successfull created",
     };
   } catch (error) {
-
-    if(booking){
+    if (booking) {
       await prisma.booking.delete({
         where: {
           id: booking?.id,
         },
       });
     }
-   
 
     console.error(error);
     if (error instanceof CustomError) {

@@ -5,6 +5,7 @@ import { NextResponse } from "next/server";
 import { stripe } from "@/lib/stripe";
 import prisma from "@/lib/prisma";
 import { StripeMetaData } from "@/lib/Types";
+import sendEmail from "@/SendGrid";
  
 
 export async function POST(req: Request) {
@@ -45,7 +46,16 @@ export async function POST(req: Request) {
           
           });
 
-
+          const emailRes = await sendEmail({
+            to: "ammar.ali.haidar.1990@gmail.com",
+            subject: "test",
+            text: "text paid",
+            html: "html paid",
+          });
+      
+          if(!emailRes.success){
+            console.error(emailRes.error)
+          }
        
         }
       } catch (error) {
@@ -67,7 +77,15 @@ export async function POST(req: Request) {
           },
       
         });
-
+        const emailRes = await sendEmail({
+          to: "ammar.ali.haidar.1990@gmail.com",
+          subject: "test",
+          text: "text expired",
+          html: "html expired",
+        });
+        if(!emailRes.success){
+          console.error(emailRes.error)
+        }
      
       } catch (error) {
         console.error(error);
