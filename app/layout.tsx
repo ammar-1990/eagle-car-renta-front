@@ -30,8 +30,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${poppins.className} antialiased`}>
-       <ComingSoon/>
-        {/* <TanstackProvider>
+    
+        <TanstackProvider>
           <HeaderScroller>
         <Header />
           </HeaderScroller>
@@ -41,7 +41,7 @@ export default function RootLayout({
         </main></EdgeStoreProvider>
         <Footer/>
         <Toaster richColors />
-        </TanstackProvider> */}
+        </TanstackProvider>
       </body>
     </html>
   );
