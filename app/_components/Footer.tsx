@@ -83,7 +83,7 @@ const Footer = (props: Props) => {
           {LINKS.map((link)=><Link  className="text-border capitalize" key={`footer-link-${link.title}`} href={link.href}>{link.title}</Link>)}
         </article>
         <article className="lg:justify-self-end text-border">
-           3RD SECTION
+        <Link  className="text-border capitalize"   href={'/terms-and-conditions'}>Terms & Conditions</Link>
         </article>
       </div>
 
