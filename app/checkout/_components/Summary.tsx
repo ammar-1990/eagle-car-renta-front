@@ -28,7 +28,7 @@ const Summary = ({
   totalAmount,
 }: Props) => {
   return (
-    <div className="rounded-[16px] p-[50px] border bg-white self-start sticky top-[110px]">
+    <div className="rounded-[16px] p-[50px] border bg-white self-start sticky top-[30px] max-h-[670px] overflow-y-auto smoothScroll">
       <SummaryBlockWrapper>
         <h3 className="font-[700] text-[24px] ">Booking Summary</h3>
       </SummaryBlockWrapper>
