@@ -10,6 +10,7 @@ export const sendEmail = async ({subject,text,to,html}:{to: string, subject: str
             subject,
             text,
             html,
+            
         });
 
         console.log(`📨 Email sent to ${to}`);
