@@ -15,6 +15,7 @@ import { startStripeSession } from "@/lib/stripe";
 import { endOfDay, formatDuration } from "date-fns";
 import { calculateDuration, checkBookingAvailability, isDurationMoreThan48Hours } from "@/lib/date";
 import sendEmail from "@/SendGrid";
+import { formatInTimeZone } from "date-fns-tz";
 
 export const bookCar = async (
   data: BookingType,
@@ -157,11 +158,35 @@ export const bookCar = async (
       myPayment: paymentMethod,
     });
 
-   const emailRes = await sendEmail({
+    const emailRes = await sendEmail({
       to: "ammar.ali.haidar.1990@gmail.com",
-      subject: "test",
-      text: "text pending",
-      html: "html pending",
+      subject: "Booking Confirmation",
+      text: "text paid",
+      html: "html paid",
+      dynamicData:{
+        bookingDate:formatInTimeZone(
+          new Date(booking.createdAt),
+          "UTC",
+          "MMM, dd yyyy - HH:mm"
+        ),
+        bookingID:booking.bookingID,
+        carName:metaData.carTitle,
+        email:booking.email,
+        endDate:formatInTimeZone(
+          new Date(booking.endDate),
+          "UTC",
+          "MMM, dd yyyy - HH:mm"
+        ),
+        fullName:`${booking.firstName} ${booking.middleName} ${booking.lastName}`,
+        paid:`$${booking.payNow.toFixed(2)}`,
+        paymentMethod:booking.paymentMethod,
+        startDate:formatInTimeZone(
+          new Date(booking.startDate),
+          "UTC",
+          "MMM, dd yyyy - HH:mm"
+        ),
+        totalAmount:`$${booking.totalAmount.toFixed(2)}`
+      }
     });
 
     if(!emailRes.success){
