@@ -39,8 +39,8 @@ const Locations = (props: Props) => {
     id: number;
     name: string;
     phone: string;
-    Landline:string,
-    bookingEmail:string,
+    Landline: string;
+    bookingEmail: string;
     addrees: string;
     href: string;
   }>({
@@ -48,8 +48,8 @@ const Locations = (props: Props) => {
     id: DEFAULT_LOCATION.id,
     name: DEFAULT_LOCATION.name,
     phone: DEFAULT_LOCATION.phone,
-    Landline:DEFAULT_LOCATION.Landline,
-    bookingEmail:DEFAULT_LOCATION.bookingEmail,
+    Landline: DEFAULT_LOCATION.Landline,
+    bookingEmail: DEFAULT_LOCATION.bookingEmail,
     addrees: DEFAULT_LOCATION.address,
     href: DEFAULT_LOCATION.href,
   });
@@ -64,8 +64,7 @@ const Locations = (props: Props) => {
       }>
     | undefined
   >(undefined);
-  
- 
+
   useEffect(() => {
     setMount(true);
     if (typeof window !== undefined) {
@@ -78,13 +77,7 @@ const Locations = (props: Props) => {
       });
       setCustom(customInstance);
     }
-
-    
   }, []);
-
-
-
-
 
   if (!mount) return null;
 
@@ -111,8 +104,8 @@ const Locations = (props: Props) => {
                   name: location.name,
                   phone: location.phone,
                   addrees: location.address,
-                  bookingEmail:location.bookingEmail,
-                  Landline:location.Landline,
+                  bookingEmail: location.bookingEmail,
+                  Landline: location.Landline,
                   href: location.href,
                 })
               }
@@ -148,18 +141,28 @@ const Locations = (props: Props) => {
               Eagle Car Rental
             </h3>
             <p className="text-[#000000B2]">{center.addrees}</p>
-            <Phone className="text-site-primary w-[33px] h-[33px]" />
-            <p className="text-[#000000B2] text-[14px]">
-              WhatsApp: {formatPhoneNumber(center.phone)}
-            </p>
-            {center.Landline && <p className="text-[#000000B2] text-[14px]">
-              Office: {formatPhoneNumber(center.Landline)}
-            </p> }
-            <div className="flex items-center gap-3">
-              <Mail className="text-site-primary" />
-              <div className="text-[#000000B2] text-[14px]">
-            {center.bookingEmail}
-                </div> </div>
+            <div>
+              <div className="flex items-center gap-3">
+                <Phone className="text-site-primary w-[33px] h-[33px]" />
+                <div>
+                  <p className="text-[#000000B2] text-[14px]">
+                    WhatsApp: {formatPhoneNumber(center.phone)}
+                  </p>
+                  {center.Landline && (
+                    <p className="text-[#000000B2] text-[14px]">
+                      Office: {formatPhoneNumber(center.Landline)}
+                    </p>
+                  )}
+                </div>
+              </div>
+              <div className="flex items-center gap-3 mt-4">
+                <Mail className="text-site-primary w-[33px] h-[33px]" />
+                <div className="text-[#000000B2] text-[14px]">
+                  {center.bookingEmail}
+                </div>{" "}
+              </div>
+            </div>
+
             <div className="flex items-center gap-[12.5px]">
               <SuperButton
                 buttonType="linkButton"
