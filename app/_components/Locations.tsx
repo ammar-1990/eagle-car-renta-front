@@ -13,7 +13,7 @@ import L from "leaflet";
 import { TEST_LOCATIONS } from "@/lib/Types";
 import { Button } from "@/components/ui/button";
 import { cn, formatPhoneNumber } from "@/lib/utils";
-import { Phone } from "lucide-react";
+import { Mail, Phone } from "lucide-react";
 import SuperButton from "@/components/SuperButton";
 const MapContainer = dynamic(
   () => import("react-leaflet").then((mod) => mod.MapContainer),
@@ -39,6 +39,8 @@ const Locations = (props: Props) => {
     id: number;
     name: string;
     phone: string;
+    Landline:string,
+    bookingEmail:string,
     addrees: string;
     href: string;
   }>({
@@ -46,6 +48,8 @@ const Locations = (props: Props) => {
     id: DEFAULT_LOCATION.id,
     name: DEFAULT_LOCATION.name,
     phone: DEFAULT_LOCATION.phone,
+    Landline:DEFAULT_LOCATION.Landline,
+    bookingEmail:DEFAULT_LOCATION.bookingEmail,
     addrees: DEFAULT_LOCATION.address,
     href: DEFAULT_LOCATION.href,
   });
@@ -107,6 +111,8 @@ const Locations = (props: Props) => {
                   name: location.name,
                   phone: location.phone,
                   addrees: location.address,
+                  bookingEmail:location.bookingEmail,
+                  Landline:location.Landline,
                   href: location.href,
                 })
               }
@@ -144,8 +150,16 @@ const Locations = (props: Props) => {
             <p className="text-[#000000B2]">{center.addrees}</p>
             <Phone className="text-site-primary w-[33px] h-[33px]" />
             <p className="text-[#000000B2] text-[14px]">
-              Office: {formatPhoneNumber(center.phone)}
+              WhatsApp: {formatPhoneNumber(center.phone)}
             </p>
+            {center.Landline && <p className="text-[#000000B2] text-[14px]">
+              Office: {formatPhoneNumber(center.Landline)}
+            </p> }
+            <div className="flex items-center gap-3">
+              <Mail className="text-site-primary" />
+              <div className="text-[#000000B2] text-[14px]">
+            {center.bookingEmail}
+                </div> </div>
             <div className="flex items-center gap-[12.5px]">
               <SuperButton
                 buttonType="linkButton"

@@ -56,7 +56,7 @@ export const DEFAULT_TIME = "12:00";
 export const tomorrow = new Date();
 tomorrow.setDate(tomorrow.getDate() + 1);
 export const afterTomorrow = new Date();
-afterTomorrow.setDate(afterTomorrow.getDate() + 2);
+afterTomorrow.setDate(afterTomorrow.getDate() + 4);
 
 export const searchCarsSchema = z
   .object({
@@ -92,7 +92,7 @@ export const searchCarsSchema = z
       .optional(),
     carType: z.string().optional(),
     pageNumber: z.string(),
-    carYear: numberSchema.optional(),
+  
   })
   .refine(
     (data) => {
@@ -195,8 +195,10 @@ export const TEST_LOCATIONS = [
     name: "Los Angeles",
     lat: 33.96110546035406,
     lng: -118.37540930060293,
-    phone: "+14243315040",
-    address:'1100 W Florence Ave suite b, Inglewood, CA 90301, United States',
+    phone: "3102946980",
+    Landline: "4243315040",
+    bookingEmail:'eaglebookingreserve@gmail.com',
+    address:'1009 W Arbor Vitae st Inglewood ca 90301 ',
     href:'https://www.google.com/maps/place/Eagle+Car+Rental/@33.9610171,-118.3749691,19.25z/data=!4m12!1m5!3m4!2zMzPCsDU3JzQwLjAiTiAxMTjCsDIyJzMxLjUiVw!8m2!3d33.9611055!4d-118.3754093!3m5!1s0x80c2b7c8434bd57d:0x823a6aef629edc80!8m2!3d33.9610909!4d-118.3755302!16s%2Fg%2F11gxfp0yds?entry=ttu&g_ep=EgoyMDI1MDExNC4wIKXMDSoASAFQAw%3D%3D'
  
   },
@@ -205,8 +207,10 @@ export const TEST_LOCATIONS = [
     name: "Las Vegas",
     lat: 36.056620509375875,
     lng: -115.1624571711647,
-    phone: "+17025333116",
-    address:'205 E Warm Springs Rd office 106, Las Vegas, NV 89119, United States',
+    phone: "7025333116",
+    Landline : "7022022678",
+    bookingEmail:'eaglebookingreserve@gmail.com',
+    address:'205 E Warm spring Rd suite 106 Las Vegas vegas NV 89119',
     href:'https://www.google.com/maps/place/Eagle+Car+Rental/@36.0566205,-115.1621883,19.5z/data=!3m1!5s0x80c8cf664f9d80bf:0xe755e10074e10bdf!4m12!1m5!3m4!2zMzbCsDAzJzIzLjgiTiAxMTXCsDA5JzQ0LjkiVw!8m2!3d36.0566205!4d-115.1624572!3m5!1s0x80c8cf8a4afded7f:0xf7b4b5726d0ea699!8m2!3d36.0565251!4d-115.1624679!16s%2Fg%2F11jgc17003?entry=ttu&g_ep=EgoyMDI1MDExNC4wIKXMDSoASAFQAw%3D%3D'
   },
   {
@@ -214,8 +218,10 @@ export const TEST_LOCATIONS = [
     name: "Orlando",
     lat: 28.457288450132072,
     lng: -81.31079694048232,
-    phone: "+16897774078",
-    address:'5463 Gateway Village Cir SUITE 103, Orlando, FL 32812, United States',
+    phone: " 2136285498",
+    Landline : "",
+    bookingEmail:'eaglebookingreserve@gmail.com',
+    address:'5453 Gataway Village Cir Suite 103 Orlando  Florida 32812',
     href:'https://www.google.com/maps/place/EAGLE+CAR+RENTAL+ORLANDO/@28.4571637,-81.31037,19.25z/data=!4m12!1m5!3m4!2zMjjCsDI3JzI2LjIiTiA4McKwMTgnMzguOSJX!8m2!3d28.4572885!4d-81.3107969!3m5!1s0x88e76301db9d1299:0xbc3e10064fc81878!8m2!3d28.4570998!4d-81.3108935!16s%2Fg%2F11tf9hfp6n?entry=ttu&g_ep=EgoyMDI1MDExNC4wIKXMDSoASAFQAw%3D%3D'
   },
 ];

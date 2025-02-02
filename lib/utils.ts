@@ -94,8 +94,13 @@ export function calculateRentalPrice(duration: ReturnType<typeof calculateDurati
   total += weeks * weekRate;
 
   // Calculate price for days
-  for (let i = 0; i < days; i++) {
-    total += i < dayRates.length ? dayRates[i] : dayRates[dayRates.length - 1];
+  // for (let i = 0; i < days; i++) {
+  //   total += i < dayRates.length ? dayRates[i] : dayRates[dayRates.length - 1];
+  // }
+
+  if (days > 0) {
+ 
+    total += dayRates[days - 1];
   }
 
   // Calculate price for hours 

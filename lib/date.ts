@@ -34,6 +34,32 @@ export function convertDateToISOString(date: Date | undefined) {
 }
 
 
+// export function calculateDuration(startDate: Date, endDate: Date) {
+//   const msInHour = 1000 * 60 * 60;
+//   const msInDay = msInHour * 24;
+//   const msInWeek = msInDay * 7;
+
+//   let diff = endDate.getTime() - startDate.getTime();
+
+//   const months = Math.floor(diff / (30 * msInDay));
+//   diff -= months * (30 * msInDay);  // Subtract months
+
+//   const weeks = Math.floor(diff / msInWeek);
+//   diff -= weeks * msInWeek;  // Subtract weeks
+
+//   const days = Math.floor(diff / msInDay);
+//   diff -= days * msInDay;  // Subtract days
+
+//   const hours = Math.floor(diff / msInHour);
+
+//   return {
+//     months,
+//     weeks,
+//     days,
+//     hours,
+//   };
+// }
+
 export function calculateDuration(startDate: Date, endDate: Date) {
   const msInHour = 1000 * 60 * 60;
   const msInDay = msInHour * 24;
@@ -41,23 +67,49 @@ export function calculateDuration(startDate: Date, endDate: Date) {
 
   let diff = endDate.getTime() - startDate.getTime();
 
-  const months = Math.floor(diff / (30 * msInDay));
-  diff -= months * (30 * msInDay);  // Subtract months
+  let months = Math.floor(diff / (30 * msInDay));
+  diff -= months * (30 * msInDay); // Subtract months
 
-  const weeks = Math.floor(diff / msInWeek);
-  diff -= weeks * msInWeek;  // Subtract weeks
+  let weeks = Math.floor(diff / msInWeek);
+  diff -= weeks * msInWeek; // Subtract weeks
 
-  const days = Math.floor(diff / msInDay);
-  diff -= days * msInDay;  // Subtract days
+  let days = Math.floor(diff / msInDay);
+  diff -= days * msInDay; // Subtract days
 
-  const hours = Math.floor(diff / msInHour);
+  let remainingHours = diff / msInHour; // Remaining hours as decimal
+
+  // If there are extra hours or minutes, round up the days
+  if (remainingHours > 0) {
+    days += 1;
+    remainingHours = 0; // Since we added the hours into days, remaining hours should be 0
+  }
+
+  // If days become a full week, convert to weeks
+  if (days >= 7) {
+    weeks += Math.floor(days / 7);
+    days = days % 7; // Keep remaining days
+  }
+
+  // If weeks become a full month (assuming 4 weeks = 1 month), convert to months
+  if (weeks >= 4) {
+    months += Math.floor(weeks / 4);
+    weeks = weeks % 4; // Keep remaining weeks
+  }
 
   return {
     months,
     weeks,
     days,
-    hours,
+    hours:remainingHours, // Always 0 after rounding
   };
+}
+
+
+export function isDurationMoreThan48Hours(startDate: Date, endDate: Date): boolean {
+  const msInHour = 1000 * 60 * 60;
+  const durationInHours = (endDate.getTime() - startDate.getTime()) / msInHour;
+
+  return durationInHours > 48;
 }
 
 

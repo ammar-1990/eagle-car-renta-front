@@ -15,7 +15,7 @@ type Props = {
   | {
       isMainPage: true;
     }
-  | { isMainPage?: false; carsCheckoutParams: CarCheckoutParams }
+  | { isMainPage?: false; carsCheckoutParams: CarCheckoutParams,validDuration:boolean }
 );
 
 const CarCard = ({
@@ -29,13 +29,18 @@ const CarCard = ({
   const dayPrice = (car.pricing as PricingType).days[0];
   const price = totalPrice ? totalPrice : dayPrice;
   const duration = durationDescription ? `${durationDescription}` : "USD/day";
+  const validDuration = rest && 'validDuration' in rest ? rest.validDuration : undefined
   const url = isMainPage
     ? `/cars?pickUpLocation=${car.location}`
     : rest && "carsCheckoutParams" in rest
     ? `/checkout?slug=${car.slug}&${new URLSearchParams(rest.carsCheckoutParams).toString()}`
     : "/checkout";
+    const preventBooking =(!isMainPage && !validDuration)
+    
+    
   return (
-    <article className={cn("border rounded-[24px] overflow-hidden flex flex-col",booked  && 'grayscale-[90%] opacity-80 pointer-events-none')}>
+    <article className={cn("border rounded-[24px] overflow-hidden flex flex-col relative",(booked || preventBooking)  && 'grayscale-[90%] opacity-80 pointer-events-none' )}>
+     {preventBooking &&  <p className="bg-black text-white text-center capitalize w-full absolute top-0 left-0 p-2 text-xs z-10">Rental Range Should Be More Than 48 Hours</p>}
       <ImageComponent
         alt="car"
         src={car.image}
@@ -51,9 +56,9 @@ const CarCard = ({
           <span className="text-[20px] font-[600] leading-[18px]">{car.carType.title}</span>
           <span className="text-[10px] ">{`(${car.subTitle})`}</span>
         </p>
-        <div>
+        {/* <div>
         <p className="font-[600] text-xs">YEAR {car.carYear}</p>
-        </div>  
+        </div>   */}
         </div>
     
         <div className="flex justify-between items-center mt-auto">
@@ -103,6 +108,7 @@ const CarCard = ({
           </span>
         </div>
         <SuperButton
+
           buttonType="linkButton"
           scroll={true}
           href={url}

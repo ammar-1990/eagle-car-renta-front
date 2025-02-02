@@ -11,7 +11,7 @@ import { cn } from "@/lib/utils";
 type Props = {sheet?:boolean};
 
 const Filter = ({sheet}: Props) => {
-  const { seats, fuel, carYear, handleReset, pending } = useSearchCars();
+  const { seats, fuel, handleReset, pending } = useSearchCars();
   return (
     <div
    
@@ -26,14 +26,7 @@ const Filter = ({sheet}: Props) => {
       </div>
 
       <div className="mt-[22px] pt-[22px] border-t">
-        {/* Year */}
-        <h3 className="text-[#606060]">Year</h3>
-        <div className="pt-[8px] " />
-        <InputFilterItem
-        initialValue={carYear ?? ''}
-        param="carYear"
-        placeholder="Car Year"
-        />
+   
         {/* SEATS */}
         <h3 className="text-[#606060] mt-[22px]">Seats</h3>
         <div className="pt-[8px] " />

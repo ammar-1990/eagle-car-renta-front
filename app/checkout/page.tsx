@@ -12,7 +12,7 @@ import {
 import prisma from "@/lib/prisma";
 import NoResult from "../_components/NoResult";
 import SuperButton from "@/components/SuperButton";
-import { calculateDuration, checkBookingAvailability, combineDateAndTimeToUTC } from "@/lib/date";
+import { calculateDuration, checkBookingAvailability, combineDateAndTimeToUTC, isDurationMoreThan48Hours } from "@/lib/date";
 
 type Props = { searchParams: Promise<CheckoutParams> };
 
@@ -113,6 +113,22 @@ const CheckoutPage = async ({ searchParams }: Props) => {
   console.log(endDate.toISOString(), startDate.toISOString())
   console.log(" ")
   console.log(" ")
+
+const isValidRange = isDurationMoreThan48Hours(startDate, endDate)
+  if(!isValidRange) return      <div className="pt-[100px] pb-12 bg-[#F3F3F3]">
+  <Container className="min-h-screen flex flex-col">
+    <NoResult
+      className="min-h-[200px]"
+      title="Rent Duration Should More Than 48 Hours"
+    />
+    <SuperButton
+      className="mx-auto w-fit"
+      title="View Other Cars"
+      buttonType="linkButton"
+      href="/cars"
+    />
+  </Container>
+</div>
   return (
     <div className="pt-[125px] bg-[#F3F3F3] min-h-screen pb-12">
       <CheckOut

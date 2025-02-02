@@ -7,6 +7,7 @@ import {
   calculateDuration,
   checkBookingAvailability,
   combineDateAndTimeToUTC,
+  isDurationMoreThan48Hours,
 } from "@/lib/date";
 import prisma from "@/lib/prisma";
 import {
@@ -33,7 +34,7 @@ const Cars = async ({ validParamsData }: Props) => {
   const refinedSeats = Array.isArray(seats) ? seats : seats?.split(",");
   const fuel = validParamsData.fuel;
   const carType = validParamsData.carType;
-  const carYear = validParamsData.carYear;
+  
   const pageNumber = +validParamsData.pageNumber;
 
   const carCheckoutParams: CarCheckoutParams = {
@@ -51,7 +52,7 @@ const Cars = async ({ validParamsData }: Props) => {
     where: {
       location: validParamsData.pickUpLocation,
       disabled: false,
-      ...(carYear && { carYear: +carYear }),
+    
       ...(carType && { carTypeId: carType }),
       ...(refinedSeats && { seats: { in: refinedSeats.map((seat) => +seat) } }),
       ...(fuel &&
@@ -142,6 +143,7 @@ const Cars = async ({ validParamsData }: Props) => {
                   key={restCar.id}
                 >
                   <CarCard
+                  validDuration={isDurationMoreThan48Hours(startDate, endDate)}
                     booked={!isAvailabe}
                     carsCheckoutParams={carCheckoutParams}
                     car={restCar}

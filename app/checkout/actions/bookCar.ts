@@ -13,7 +13,7 @@ import prisma from "@/lib/prisma";
 import { PricingType, StripeMetaData } from "@/lib/Types";
 import { startStripeSession } from "@/lib/stripe";
 import { endOfDay, formatDuration } from "date-fns";
-import { calculateDuration, checkBookingAvailability } from "@/lib/date";
+import { calculateDuration, checkBookingAvailability, isDurationMoreThan48Hours } from "@/lib/date";
 import sendEmail from "@/SendGrid";
 
 export const bookCar = async (
@@ -99,6 +99,8 @@ export const bookCar = async (
 
     //calculate price
     const duration = calculateDuration(startDate, endDate);
+    const validRange = isDurationMoreThan48Hours(startDate, endDate)
+    if(!validRange) return throwCustomError("Rent Duration Should Be More Than 48 Hours")
     const durationDescription = formatDuration(duration);
     const pricing = car.pricing as unknown as PricingType;
 
