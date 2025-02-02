@@ -48,12 +48,14 @@ export async function POST(req: Request) {
           
           });
 
+          console.log(JSON.stringify(metaData))
+
           const emailRes = await sendEmail({
             to: "ammar.ali.haidar.1990@gmail.com",
             subject: "Booking Confirmation",
             text: "text paid",
             html: "html paid",
-            template:true,
+       
             dynamicData:{
               bookingDate:format(
                 new Date(order.createdAt),
