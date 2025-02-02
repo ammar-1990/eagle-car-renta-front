@@ -6,6 +6,7 @@ import { stripe } from "@/lib/stripe";
 import prisma from "@/lib/prisma";
 import { StripeMetaData } from "@/lib/Types";
 import sendEmail from "@/SendGrid";
+import { formatInTimeZone } from "date-fns-tz";
  
 
 export async function POST(req: Request) {
@@ -48,9 +49,33 @@ export async function POST(req: Request) {
 
           const emailRes = await sendEmail({
             to: "ammar.ali.haidar.1990@gmail.com",
-            subject: "test",
+            subject: "Booking Confirmation",
             text: "text paid",
             html: "html paid",
+            dynamicData:{
+              bookingDate:formatInTimeZone(
+                new Date(order.createdAt),
+                "UTC",
+                "MMM, dd yyyy - HH:mm"
+              ),
+              bookingID:order.bookingID,
+              carName:metaData.carTitle,
+              email:order.email,
+              endDate:formatInTimeZone(
+                new Date(order.endDate),
+                "UTC",
+                "MMM, dd yyyy - HH:mm"
+              ),
+              fullName:`${order.firstName} ${order.middleName} ${order.lastName}`,
+              paid:`$${order.payNow.toFixed(2)}`,
+              paymentMethod:order.paymentMethod,
+              startDate:formatInTimeZone(
+                new Date(order.startDate),
+                "UTC",
+                "MMM, dd yyyy - HH:mm"
+              ),
+              totalAmount:`$${order.totalAmount.toFixed(2)}`
+            }
           });
       
           if(!emailRes.success){
@@ -77,15 +102,15 @@ export async function POST(req: Request) {
           },
       
         });
-        const emailRes = await sendEmail({
-          to: "ammar.ali.haidar.1990@gmail.com",
-          subject: "test",
-          text: "text expired",
-          html: "html expired",
-        });
-        if(!emailRes.success){
-          console.error(emailRes.error)
-        }
+        // const emailRes = await sendEmail({
+        //   to: "ammar.ali.haidar.1990@gmail.com",
+        //   subject: "test",
+        //   text: "text expired",
+        //   html: "html expired",
+        // });
+        // if(!emailRes.success){
+        //   console.error(emailRes.error)
+        // }
      
       } catch (error) {
         console.error(error);

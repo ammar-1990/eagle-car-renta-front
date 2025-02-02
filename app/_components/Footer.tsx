@@ -44,12 +44,12 @@ const LINKS = [
 ]
 const Footer = (props: Props) => {
   return (
-    <footer className="min-h-[432px] bg-site-primary py-[56px] px-[24px]">
+    <footer className="min-h-[300px] bg-site-primary pb-[56px] pt-12 px-[24px]">
         <div className="max-w-[1120px] mx-auto">
 
    
       {/* First Row */}
-      <div className="p-[16px] rounded-[16px] border border-separate">
+      {/* <div className="p-[16px] rounded-[16px] border border-separate">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
           {ELEMENTS.map(({ Icon, info, title }) => (
             <article key={`footer-element-card-${title}`} className="flex items-center gap-[16px] px[36.8.px] lg:justify-self-center  text-border">
@@ -63,9 +63,9 @@ const Footer = (props: Props) => {
             </article>
           ))}
         </div>
-      </div>
+      </div> */}
       {/* Second Row */}
-      <div className="mt-[42px] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[40px] justify-between">
+      <div className="mt-[12px] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[40px] justify-between">
         <article className="flex flex-col gap-[24px]">
           <ImageComponent
             src={"/Logo_White.png"}
