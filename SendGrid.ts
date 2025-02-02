@@ -2,7 +2,7 @@ import sendgrid from "@sendgrid/mail";
 
 sendgrid.setApiKey(process.env.SENDGRID_API_KEY as string);
 
-export const sendEmail = async ({subject,text,to,html,dynamicData}:{to: string, subject: string, text: string, html?: string,dynamicData?:DynamicData}) => {
+export const sendEmail = async ({subject,text,to,html,dynamicData,template}:{to: string, subject: string, text: string, html?: string,dynamicData?:DynamicData,template:boolean}) => {
     try {
         await sendgrid.send({
             to,
@@ -10,7 +10,7 @@ export const sendEmail = async ({subject,text,to,html,dynamicData}:{to: string, 
             subject,
             text,
             html,
-            templateId:"d-40e9cf6286454b92a49466c315e071dd",
+          ...(template && {templateId:"d-40e9cf6286454b92a49466c315e071dd"})  ,
             dynamicTemplateData:dynamicData
             
         });

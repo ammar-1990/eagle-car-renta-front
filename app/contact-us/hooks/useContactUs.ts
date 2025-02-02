@@ -8,7 +8,6 @@ import { useTransition } from "react"
 import { errorToast, wait } from "@/lib/utils"
 import { sendMessage } from "../actions/sendMessageAction"
 import { toast } from "sonner"
-import sendEmail from "@/SendGrid"
 
 export const useContactUs = ()=>{
 
@@ -31,17 +30,12 @@ export const useContactUs = ()=>{
         startTransition(async()=>{
 
          try {
-         const res = await sendEmail({subject:values.subject??"Contact Message" ,to:'ammar.ali.haidar.1990@gmail.com',text:'contact message',html:`
-          message sent from ${values.email}
-          full name: ${values.firstName} ${values.lastName}
-
-          ${values.message}
-          `})
+         const res = await sendMessage(values)
          if(!res.success){
-          toast.error("error happened")
+          toast.error(res.message)
          }else{
           toast.success("Sent Successfully")
-        
+         
           form.reset({})
          }
            

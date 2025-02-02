@@ -52,6 +52,7 @@ export async function POST(req: Request) {
             subject: "Booking Confirmation",
             text: "text paid",
             html: "html paid",
+            template:true,
             dynamicData:{
               bookingDate:formatInTimeZone(
                 new Date(order.createdAt),

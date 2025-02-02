@@ -163,6 +163,7 @@ export const bookCar = async (
       subject: "Booking Confirmation",
       text: "text paid",
       html: "html paid",
+      template:true,
       dynamicData:{
         bookingDate:formatInTimeZone(
           new Date(booking.createdAt),
