@@ -158,41 +158,41 @@ export const bookCar = async (
       myPayment: paymentMethod,
     });
 
-    const emailRes = await sendEmail({
-      to: "ammar.ali.haidar.1990@gmail.com",
-      subject: "Booking Confirmation",
-      text: "text paid",
-      html: "html paid",
-      template:true,
-      dynamicData:{
-        bookingDate:formatInTimeZone(
-          new Date(booking.createdAt),
-          "UTC",
-          "MMM, dd yyyy - HH:mm"
-        ),
-        bookingID:booking.bookingID,
-        carName:metaData.carTitle,
-        email:booking.email,
-        endDate:formatInTimeZone(
-          new Date(booking.endDate),
-          "UTC",
-          "MMM, dd yyyy - HH:mm"
-        ),
-        fullName:`${booking.firstName} ${booking.middleName} ${booking.lastName}`,
-        paid:`$${booking.payNow.toFixed(2)}`,
-        paymentMethod:booking.paymentMethod,
-        startDate:formatInTimeZone(
-          new Date(booking.startDate),
-          "UTC",
-          "MMM, dd yyyy - HH:mm"
-        ),
-        totalAmount:`$${booking.totalAmount.toFixed(2)}`
-      }
-    });
+    // const emailRes = await sendEmail({
+    //   to: "ammar.ali.haidar.1990@gmail.com",
+    //   subject: "Booking Confirmation",
+    //   text: "text paid",
+    //   html: "html paid",
+    //   template:true,
+    //   dynamicData:{
+    //     bookingDate:formatInTimeZone(
+    //       new Date(booking.createdAt),
+    //       "UTC",
+    //       "MMM, dd yyyy - HH:mm"
+    //     ),
+    //     bookingID:booking.bookingID,
+    //     carName:metaData.carTitle,
+    //     email:booking.email,
+    //     endDate:formatInTimeZone(
+    //       new Date(booking.endDate),
+    //       "UTC",
+    //       "MMM, dd yyyy - HH:mm"
+    //     ),
+    //     fullName:`${booking.firstName} ${booking.middleName} ${booking.lastName}`,
+    //     paid:`$${booking.payNow.toFixed(2)}`,
+    //     paymentMethod:booking.paymentMethod,
+    //     startDate:formatInTimeZone(
+    //       new Date(booking.startDate),
+    //       "UTC",
+    //       "MMM, dd yyyy - HH:mm"
+    //     ),
+    //     totalAmount:`$${booking.totalAmount.toFixed(2)}`
+    //   }
+    // });
 
-    if(!emailRes.success){
-      console.error(emailRes.error)
-    }
+    // if(!emailRes.success){
+    //   console.error(emailRes.error)
+    // }
 
     return {
       success: true,
