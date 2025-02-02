@@ -7,6 +7,7 @@ import prisma from "@/lib/prisma";
 import { StripeMetaData } from "@/lib/Types";
 import sendEmail from "@/SendGrid";
 import { formatInTimeZone } from "date-fns-tz";
+import { format } from "date-fns";
  
 
 export async function POST(req: Request) {
@@ -54,9 +55,9 @@ export async function POST(req: Request) {
             html: "html paid",
             template:true,
             dynamicData:{
-              bookingDate:formatInTimeZone(
+              bookingDate:format(
                 new Date(order.createdAt),
-                "UTC",
+              
                 "MMM, dd yyyy - HH:mm"
               ),
               bookingID:order.bookingID,
