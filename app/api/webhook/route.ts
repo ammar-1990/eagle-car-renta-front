@@ -56,9 +56,9 @@ export async function POST(req: Request) {
             text: "text paid",
             html: "html paid",
             dynamicData:{
-              bookingDate:format(
+              bookingDate:formatInTimeZone(
                 new Date(order.createdAt),
-              
+                "America/New_York",
                 "MMM, dd yyyy - HH:mm"
               ),
               bookingID:order.bookingID,
