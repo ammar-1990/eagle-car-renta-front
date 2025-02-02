@@ -27,6 +27,7 @@ export const sendEmail = async ({
     });
 
     console.log(`📨 Email sent to ${to}`);
+    console.log(`Template ID::d-40e9cf6286454b92a49466c315e071dd}`);
     return { success: true };
   } catch (error) {
     console.error("❌ Error sending email:", error);
