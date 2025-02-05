@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import { format } from "date-fns";
+import { formatDateUtc } from "@/lib/date";
 import { Calendar as CalendarIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
@@ -14,6 +15,7 @@ import {
 } from "@/components/ui/popover";
 import StateLabel from "./StateLabel";
 import { convertDateToISOString } from "@/lib/date";
+import { formatInTimeZone } from "date-fns-tz";
 
 type Props = {
   value: string;
@@ -37,7 +39,7 @@ const DateField = ({ placeholder, setValue, value, stateLabel,startDate }: Props
             )}
           >
             <CalendarIcon className="mr-2 h-4 w-4" />
-            {value ? format(value, "MMM, dd yyyy") : <span>{placeholder}</span>}
+            {value ? formatInTimeZone(value,"UTC", "MMM, dd yyyy") : <span>{placeholder}</span>}
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-auto p-0">
