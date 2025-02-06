@@ -26,7 +26,7 @@ const EASY_STEPS = [
   {
     title: "Payment",
     description:
-      "You can pay the rent through the online wallet or Shatab network member cards.",
+      "You can pay the rent through online wallet, Apple Pay, Debit Card and other form of payment.",
     Icon: <CreditCard className="text-[#494949] w-[41px] h-[45px] " />,
   },
   {

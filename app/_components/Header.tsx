@@ -27,7 +27,8 @@ const Header = async(props: Props) => {
           </div>
          
           {/* My Booking */}
-          <div  className="lg:block hidden">
+          <div  className="lg:block hidden relative">
+            <span className="absolute     text-[10px] -top-[20px] font-[500] text-site-primary whitespace-nowrap left-1/2 translate-x-[-50%]">Call Us: {`+1(310)-294-6980`}</span>
           <SuperButton
             buttonType="linkButton"
             href="/booking"
