@@ -10,7 +10,7 @@ import { formatInTimeZone } from "date-fns-tz";
 
 type Props = {
   car: CarsWithBookings[number] & {
-    extraOptions: { id: string; title: string; price: number }[];
+    extraOptions: { id: string; title: string; price: number,daily:boolean }[];
   };
   startDate: Date;
   endDate: Date;
@@ -44,6 +44,7 @@ const CheckOut = ({
     setIsBusinessFn,
     payLater,
     payNow,
+    totalDays
   } = useCheckout({ car, rentalPrice, startDate, endDate, pickupLocation });
   return (
     <Container>
@@ -70,6 +71,7 @@ const CheckOut = ({
           subTitle={car.subTitle}
           totalAmount={totalAmount}
           rentalPrice={rentalPrice}
+          totalDays={totalDays}
         />
       </div>
     </Container>

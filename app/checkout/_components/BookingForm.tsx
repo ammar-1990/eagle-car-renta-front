@@ -28,7 +28,7 @@ import { ArrowRight } from "lucide-react";
 type Props = {
   form: UseFormReturn<z.infer<typeof bookingSchema>>;
   onSubmit: (values: TypeOf<typeof bookingSchema>) => Promise<void>;
-  extraOptions: { id: string; price: number; title: string }[];
+  extraOptions: { id: string; price: number; title: string,daily:boolean }[];
   setIsBusinessFn: () => void;
   pending:boolean
  
@@ -205,9 +205,12 @@ const BookingForm = ({
                         {option.title}
                       </Label>
                     </span>
-                    <span className="font-[600]">
+                    <span className="font-[600] flex items-center gap-2">
+                    {option.daily && <span className="text-xs text-muted-foreground px-3 py-1 border rounded-full font-[400]">Daily</span>}
                       {formatToDollar(option.price)}
+                      
                     </span>
+                   
                   </div>
                 );
               })}

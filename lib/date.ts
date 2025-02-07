@@ -96,11 +96,14 @@ export function calculateDuration(startDate: Date, endDate: Date) {
     weeks = weeks % 4; // Keep remaining weeks
   }
 
+  const totalDays = months * 30 + weeks * 7 + days;
+
   return {
     months,
     weeks,
     days,
     hours:remainingHours, // Always 0 after rounding
+    totalDays
   };
 }
 

@@ -5,6 +5,7 @@ import CustomError from "@/lib/CustomError";
 import {
   calculateRentalPrice,
   generateBookingCode,
+  getExtraOptionsPrice,
   getTotalNowLaterPrices,
   stripePaymentMethodMap,
   throwCustomError,
@@ -65,6 +66,7 @@ export const bookCar = async (
             id: true,
             price: true,
             title: true,
+            daily:true
           },
         },
       },
@@ -106,10 +108,10 @@ export const bookCar = async (
     const pricing = car.pricing as unknown as PricingType;
 
     const rentalPrice = calculateRentalPrice(duration, pricing);
-    const extraOptionsPrice = car.extraOptions.reduce(
-      (acc, val) => acc + Number(val.price),
-      0
-    );
+
+    const totalDays = duration.totalDays
+   
+    const extraOptionsPrice = getExtraOptionsPrice(car.extraOptions, totalDays)
 
     const { payLater, payNow, totalAmount } = getTotalNowLaterPrices({
       deposite: car.deposit,
