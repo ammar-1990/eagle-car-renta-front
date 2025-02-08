@@ -117,6 +117,7 @@ export const bookCar = async (
       deposite: car.deposit,
       extraOptionsPrice,
       rentalPrice,
+      oneWayFee:validData.data.oneWayFee
     });
 
     // generate booking ID

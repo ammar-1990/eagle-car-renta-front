@@ -72,6 +72,7 @@ const CheckOut = ({
           totalAmount={totalAmount}
           rentalPrice={rentalPrice}
           totalDays={totalDays}
+          oneWayFee={form.watch('oneWayFee')}
         />
       </div>
     </Container>

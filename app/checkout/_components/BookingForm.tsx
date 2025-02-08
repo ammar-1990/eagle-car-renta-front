@@ -169,9 +169,35 @@ const BookingForm = ({
           )}
         </FormWrapper>
         {/* Extra Options */}
-        {!!extraOptions.length && (
+   
           <FormWrapper title="Extra Options">
             <div className="flex flex-col gap-1">
+            <div
+                  
+                    className="bg-[#F5F6FA] p-6 rounded-md justify-between flex items-center"
+                  >
+                    <span className="flex items-center gap-2">
+                      <Checkbox
+                        id={`oneWayFee`}
+                        checked={form.watch('oneWayFee')}
+                        onCheckedChange={()=>{
+                          form.setValue('oneWayFee',!form.watch('oneWayFee'))
+                        }}
+                      />
+                      <Label
+                        htmlFor={`oneWayFee`}
+                        className="cursor-pointer"
+                      >
+                       One Way Fee
+                      </Label>
+                    </span>
+                    <span className="font-[600] flex items-center gap-2">
+             
+                      {formatToDollar(500)}
+                      
+                    </span>
+                   
+                  </div>
               {extraOptions.map((option, index) => {
                 const currentOptions = form.watch("extraOptions") || [];
                 const optionIndex = currentOptions.findIndex(
@@ -216,7 +242,7 @@ const BookingForm = ({
               })}
             </div>
           </FormWrapper>
-        )}
+   
 
         <FormWrapper title="Required Documents">
           <FielField

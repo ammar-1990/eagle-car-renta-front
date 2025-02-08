@@ -155,17 +155,20 @@ export const getTotalNowLaterPrices = ({
   deposite,
   extraOptionsPrice,
   rentalPrice,
+  oneWayFee
 }: {
   deposite: number;
   rentalPrice: number;
   extraOptionsPrice: number;
+  oneWayFee:boolean
 }) => {
   // const baseAmount = rentalPrice  + extraOptionsPrice
   // const totalAmount = Math.max(baseAmount, payNow); // incase deposite is greater than total
   // const payLater = Math.max(totalAmount - payNow, 0)
+  const ONE_WAY_FEE  = 500
   const payNow = deposite;
-  const totalAmount = rentalPrice + deposite + extraOptionsPrice;
-  const payLater = rentalPrice + extraOptionsPrice;
+  const totalAmount = rentalPrice + deposite + extraOptionsPrice + (oneWayFee ? ONE_WAY_FEE : 0);
+  const payLater = rentalPrice + extraOptionsPrice + (oneWayFee ? ONE_WAY_FEE : 0);
 
   return { payNow, payLater, totalAmount };
 };

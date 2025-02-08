@@ -96,6 +96,10 @@ const status = z.object({
     terms:z.boolean().refine(value=>!!value ,{message:"You Must Accept Terms & Conditions."})
 })
 
+const extraFees = z.object({
+  oneWayFee:z.boolean()
+})
+
  
 export const bookingSchema = drivingDetails
   .and(billingAddress)
@@ -104,7 +108,9 @@ export const bookingSchema = drivingDetails
   .and(isBusiness)
   .and(location)
   .and(prices)
-  .and(status);
+  .and(status)
+  .and(extraFees)
+  
 
 
 

@@ -14,6 +14,7 @@ type Props = {
   totalAmount: number;
   extraOptions: { id: string; price: string; title: string,daily:boolean }[];
   totalDays:number
+  oneWayFee:boolean
 };
 
 const Summary = ({
@@ -27,7 +28,8 @@ const Summary = ({
   payNow,
   deposit,
   totalAmount,
-  totalDays
+  totalDays,
+  oneWayFee
 }: Props) => {
   return (
     <div className="rounded-[16px] p-[50px] border bg-white self-start sticky top-[30px] max-h-[670px] overflow-y-auto smoothScroll">
@@ -75,8 +77,14 @@ const Summary = ({
           Non-Refundable if you dont show up in the show room
         </p>
       </SummaryBlockWrapper>
-      {!!extraOptions.length && (
-        <SummaryBlockWrapper>
+ 
+        {extraOptions.length || oneWayFee && <SummaryBlockWrapper>
+          {oneWayFee &&   <SummaryElement
+            
+              label={"One Way Fee"}
+              value={formatToDollar(500)}
+             
+            />}
           {extraOptions.map((option) => (
             <SummaryElement
               key={`extra-option-summary-${option.id}`}
@@ -85,8 +93,8 @@ const Summary = ({
               suffix={option.daily? `x${totalDays}` : undefined}
             />
           ))}
-        </SummaryBlockWrapper>
-      )}
+        </SummaryBlockWrapper>}
+     
 
       <SummaryBlockWrapper>
         <SummaryElement

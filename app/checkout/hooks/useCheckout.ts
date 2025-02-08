@@ -52,7 +52,7 @@ export const useCheckout = ({
       companyVat: "",
       pickupLocation: pickupLocation,
       dropoffLocation: "",
-
+      oneWayFee: false,
       paymentMethod: undefined,
       extraOptions: [],
       status: "PENDING",
@@ -87,12 +87,10 @@ export const useCheckout = ({
   const { totalDays } = calculateDuration(startDate, endDate);
 
   const extraOptionsPrice = getExtraOptionsPrice(
-    form
-      .watch("extraOptions")
-      .map((extraOption) => ({
-        ...extraOption,
-        price: Number(extraOption.price),
-      })),
+    form.watch("extraOptions").map((extraOption) => ({
+      ...extraOption,
+      price: Number(extraOption.price),
+    })),
     totalDays
   );
 
@@ -100,6 +98,7 @@ export const useCheckout = ({
     deposite: car.deposit,
     extraOptionsPrice,
     rentalPrice,
+    oneWayFee:form.watch('oneWayFee')
   });
 
   return {
