@@ -78,8 +78,8 @@ const Summary = ({
         </p>
       </SummaryBlockWrapper>
  
-        {extraOptions.length || oneWayFee && <SummaryBlockWrapper>
-          {oneWayFee &&   <SummaryElement
+        {!!(!!extraOptions.length || !!oneWayFee) && <SummaryBlockWrapper>
+          {!!oneWayFee &&   <SummaryElement
             
               label={"One Way Fee"}
               value={formatToDollar(500)}
