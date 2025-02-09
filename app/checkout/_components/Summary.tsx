@@ -1,4 +1,5 @@
 import ImageComponent from "@/components/ImageComponent";
+import { LocationType } from "@/lib/Types";
 import { cn, formatToDollar } from "@/lib/utils";
 import React, { ReactNode } from "react";
 
@@ -14,7 +15,9 @@ type Props = {
   totalAmount: number;
   extraOptions: { id: string; price: string; title: string,daily:boolean }[];
   totalDays:number
-  oneWayFee:boolean
+  oneWayFee:boolean,
+  pickUpLocation:LocationType,
+  dropOffLocation:LocationType | undefined
 };
 
 const Summary = ({
@@ -29,8 +32,12 @@ const Summary = ({
   deposit,
   totalAmount,
   totalDays,
-  oneWayFee
+  oneWayFee,
+  pickUpLocation,
+  dropOffLocation
 }: Props) => {
+
+  console.log("SUMMARY_ONE_WAY_FEE",oneWayFee)
   return (
     <div className="rounded-[16px] p-[50px] border bg-white self-start sticky top-[30px] max-h-[670px] overflow-y-auto smoothScroll">
       <SummaryBlockWrapper>

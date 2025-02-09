@@ -8,6 +8,7 @@ import {
   afterTomorrow,
   DEFAULT_LOCATION,
   DEFAULT_TIME,
+  LocationType,
   PricingType,
   SearchCarsParams,
   tomorrow,
@@ -155,34 +156,34 @@ export const getTotalNowLaterPrices = ({
   deposite,
   extraOptionsPrice,
   rentalPrice,
-  oneWayFee
+  oneWayFeePrice,
 }: {
   deposite: number;
   rentalPrice: number;
   extraOptionsPrice: number;
-  oneWayFee:boolean
+  oneWayFeePrice: number;
 }) => {
   // const baseAmount = rentalPrice  + extraOptionsPrice
   // const totalAmount = Math.max(baseAmount, payNow); // incase deposite is greater than total
   // const payLater = Math.max(totalAmount - payNow, 0)
-  const ONE_WAY_FEE  = 500
+  
   const payNow = deposite;
-  const totalAmount = rentalPrice + deposite + extraOptionsPrice + (oneWayFee ? ONE_WAY_FEE : 0);
-  const payLater = rentalPrice + extraOptionsPrice + (oneWayFee ? ONE_WAY_FEE : 0);
+  const totalAmount =
+    rentalPrice + deposite + extraOptionsPrice + oneWayFeePrice;
+  const payLater =
+    rentalPrice + extraOptionsPrice + oneWayFeePrice;
 
   return { payNow, payLater, totalAmount };
 };
 
 export const getExtraOptionsPrice = (
   extraOptions: { price: number; daily: boolean }[],
-  totalDays:number
+  totalDays: number
 ) => {
-
- return  extraOptions.reduce((acc,val)=>{
-    const value = val.daily ? Number(val.price) * totalDays : Number(val.price)
-    return acc + value
-  
-  },0)
+  return extraOptions.reduce((acc, val) => {
+    const value = val.daily ? Number(val.price) * totalDays : Number(val.price);
+    return acc + value;
+  }, 0);
 };
 
 //generate booking code function
@@ -236,3 +237,17 @@ export function formatPhoneNumber(phone: string) {
   // Format the number into (xxx) xxx-xxxx
   return cleaned.replace(/(\d{3})(\d{3})(\d{4})/, "($1) $2-$3");
 }
+
+export const getOneWayFee = ({
+  pickupLocation,
+  dropOffLocation,
+}: {
+  pickupLocation: LocationType;
+  dropOffLocation: LocationType | undefined;
+}): { isOneWayFee: boolean; oneWayFeePrice: number } => {
+  const isOneWayFee =
+    !!dropOffLocation && !!(dropOffLocation !== pickupLocation);
+  const oneWayFeePrice = isOneWayFee ? 500 : 0;
+
+  return { isOneWayFee, oneWayFeePrice };
+};

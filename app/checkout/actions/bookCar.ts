@@ -6,6 +6,7 @@ import {
   calculateRentalPrice,
   generateBookingCode,
   getExtraOptionsPrice,
+  getOneWayFee,
   getTotalNowLaterPrices,
   stripePaymentMethodMap,
   throwCustomError,
@@ -95,6 +96,9 @@ export const bookCar = async (
       validExtraOptions.some((dbOption) => dbOption.id === clientOption.id)
     );
 
+    const pickupLocation = validData.data.pickupLocation
+    const dropOffLocation = validData.data.dropoffLocation
+
     if (!isValid)
       return throwCustomError(
         "Extra Options Added Not Found, Please Contact Customer Service"
@@ -111,13 +115,14 @@ export const bookCar = async (
 
     const totalDays = duration.totalDays
    
+    const {isOneWayFee,oneWayFeePrice} = getOneWayFee({dropOffLocation,pickupLocation})
     const extraOptionsPrice = getExtraOptionsPrice(car.extraOptions, totalDays)
 
     const { payLater, payNow, totalAmount } = getTotalNowLaterPrices({
       deposite: car.deposit,
       extraOptionsPrice,
       rentalPrice,
-      oneWayFee:validData.data.oneWayFee
+      oneWayFeePrice
     });
 
     // generate booking ID

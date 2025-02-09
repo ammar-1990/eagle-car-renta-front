@@ -132,6 +132,7 @@ const isValidRange = isDurationMoreThan48Hours(startDate, endDate)
         endDate={endDate}
         rentalPrice={rentalPrice}
         pickupLocation={validParams.data.pickupLocation as LocationType}
+        dropOffLocation={validParams.data.dropoffLocation}
       />
     </div>
   );

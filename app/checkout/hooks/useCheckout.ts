@@ -1,14 +1,15 @@
 "use client";
-import { CarsWithBookings, LOCATIONS_CONST } from "@/lib/Types";
+import { CarsWithBookings, LOCATIONS_CONST, LocationType } from "@/lib/Types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { bookingSchema } from "../schema";
 import { useRouter } from "next/navigation";
-import { useTransition } from "react";
+import { useEffect, useTransition } from "react";
 import {
   errorToast,
   getExtraOptionsPrice,
+  getOneWayFee,
   getTotalNowLaterPrices,
 } from "@/lib/utils";
 import { bookCar } from "../actions/bookCar";
@@ -21,12 +22,14 @@ export const useCheckout = ({
   startDate,
   endDate,
   pickupLocation,
+  dropOffLocation
 }: {
   car: CarsWithBookings[number];
   rentalPrice: number;
   startDate: Date;
   endDate: Date;
-  pickupLocation: (typeof LOCATIONS_CONST)[number];
+  pickupLocation: LocationType;
+  dropOffLocation:LocationType | undefined
 }) => {
   const [pending, startTransition] = useTransition();
   const router = useRouter();
@@ -51,7 +54,7 @@ export const useCheckout = ({
       companyName: "",
       companyVat: "",
       pickupLocation: pickupLocation,
-      dropoffLocation: "",
+      dropoffLocation: undefined,
       oneWayFee: false,
       paymentMethod: undefined,
       extraOptions: [],
@@ -85,6 +88,20 @@ export const useCheckout = ({
   }
 
   const { totalDays } = calculateDuration(startDate, endDate);
+let oneWayFee = false
+let oneWayFeePrice = 0
+  useEffect(()=>{
+
+     oneWayFee = getOneWayFee({pickupLocation,dropOffLocation}).isOneWayFee
+     oneWayFeePrice =   getOneWayFee({pickupLocation,dropOffLocation}).oneWayFeePrice
+    form.setValue('oneWayFee',oneWayFee)
+
+  },[dropOffLocation,pickupLocation])
+
+
+  console.log("PICKUP_LOCATION",pickupLocation)
+  console.log("DROPPOFF_LOCATION",dropOffLocation)
+  console.log("ONE_WAY_FEE",oneWayFee)
 
   const extraOptionsPrice = getExtraOptionsPrice(
     form.watch("extraOptions").map((extraOption) => ({
@@ -98,7 +115,7 @@ export const useCheckout = ({
     deposite: car.deposit,
     extraOptionsPrice,
     rentalPrice,
-    oneWayFee:form.watch('oneWayFee')
+    oneWayFeePrice
   });
 
   return {

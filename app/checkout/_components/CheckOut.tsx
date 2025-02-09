@@ -16,6 +16,7 @@ type Props = {
   endDate: Date;
   rentalPrice: number;
   pickupLocation: LocationType;
+  dropOffLocation:LocationType | undefined
 };
 
 const CheckOut = ({
@@ -24,6 +25,7 @@ const CheckOut = ({
   startDate,
   rentalPrice,
   pickupLocation,
+  dropOffLocation
 }: Props) => {
   const formattedStartDate = formatInTimeZone(
     startDate,
@@ -45,7 +47,7 @@ const CheckOut = ({
     payLater,
     payNow,
     totalDays
-  } = useCheckout({ car, rentalPrice, startDate, endDate, pickupLocation });
+  } = useCheckout({ car, rentalPrice, startDate, endDate, pickupLocation,dropOffLocation });
   return (
     <Container>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-[29px]">
@@ -73,6 +75,8 @@ const CheckOut = ({
           rentalPrice={rentalPrice}
           totalDays={totalDays}
           oneWayFee={form.watch('oneWayFee')}
+          pickUpLocation={pickupLocation}
+          dropOffLocation={dropOffLocation}
         />
       </div>
     </Container>
