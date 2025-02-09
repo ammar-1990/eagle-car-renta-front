@@ -56,7 +56,7 @@ export const useCheckout = ({
       companyName: "",
       companyVat: "",
       pickupLocation: pickupLocation,
-      dropoffLocation: undefined,
+      dropoffLocation: dropOffLocation,
       oneWayFee: false,
       paymentMethod: undefined,
       extraOptions: [],
