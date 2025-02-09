@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { bookingSchema } from "../schema";
 import { useRouter } from "next/navigation";
-import { useEffect, useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 import {
   errorToast,
   getExtraOptionsPrice,
@@ -33,6 +33,8 @@ export const useCheckout = ({
 }) => {
   const [pending, startTransition] = useTransition();
   const router = useRouter();
+  const [oneWayFee, setOneWayFee] = useState(false);
+  const [oneWayFeePrice, setOneWayFeePrice] = useState(0);
 
   const form = useForm<z.infer<typeof bookingSchema>>({
     resolver: zodResolver(bookingSchema),
@@ -88,13 +90,14 @@ export const useCheckout = ({
   }
 
   const { totalDays } = calculateDuration(startDate, endDate);
-let oneWayFee = false
-let oneWayFeePrice = 0
+ 
   useEffect(()=>{
-
-     oneWayFee = getOneWayFee({pickupLocation,dropOffLocation}).isOneWayFee
-     oneWayFeePrice =   getOneWayFee({pickupLocation,dropOffLocation}).oneWayFeePrice
-    form.setValue('oneWayFee',oneWayFee)
+    const { isOneWayFee, oneWayFeePrice } = getOneWayFee({ pickupLocation, dropOffLocation });
+  
+    setOneWayFee(isOneWayFee);
+    setOneWayFeePrice(oneWayFeePrice);
+    
+    form.setValue('oneWayFee', isOneWayFee)
 
   },[dropOffLocation,pickupLocation])
 

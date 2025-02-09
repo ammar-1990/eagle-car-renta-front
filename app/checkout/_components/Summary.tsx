@@ -1,6 +1,6 @@
 import ImageComponent from "@/components/ImageComponent";
 import { LocationType } from "@/lib/Types";
-import { cn, formatToDollar } from "@/lib/utils";
+import { cn, formatToDollar, getOneWayFee } from "@/lib/utils";
 import React, { ReactNode } from "react";
 
 type Props = {
@@ -38,6 +38,7 @@ const Summary = ({
 }: Props) => {
 
   console.log("SUMMARY_ONE_WAY_FEE",oneWayFee)
+  const {oneWayFeePrice} = getOneWayFee({pickupLocation:pickUpLocation, dropOffLocation})
   return (
     <div className="rounded-[16px] p-[50px] border bg-white self-start sticky top-[30px] max-h-[670px] overflow-y-auto smoothScroll">
       <SummaryBlockWrapper>
@@ -89,7 +90,7 @@ const Summary = ({
           {!!oneWayFee &&   <SummaryElement
             
               label={"One Way Fee"}
-              value={formatToDollar(500)}
+              value={formatToDollar(oneWayFeePrice)}
              
             />}
           {extraOptions.map((option) => (
