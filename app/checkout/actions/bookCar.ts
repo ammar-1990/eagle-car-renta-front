@@ -150,6 +150,7 @@ export const bookCar = async (
         bookingID,
         payNow,
         status: "PENDING",
+      
       },
     });
 

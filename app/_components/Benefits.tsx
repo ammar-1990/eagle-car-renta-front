@@ -6,21 +6,22 @@ import FramerComponent from "./FramerComponent";
 type Props = {};
 
 const CARDS = [
-  // {
-  //   title: "Risk-Free Rental",
-  //   description: "Rent confidently with our money-back guarantee.",
-  //   Icon: <ShieldCheck className="text-site-primary" />,
-  // },
   {
-    title: "Premium Cars Selection",
-    description: "Discover and compare USA top rental cars.",
+    title: "Wide Range of Vehiclesl",
+    description: "Eagle Car Rental offers a diverse fleet of vehicles, from compact cars to SUVs and luxury vehicles, ensuring you find the perfect ride for your needs.",
+    Icon: <ShieldCheck className="text-site-primary" />,
+  },
+  {
+    title: "Wide Range of Vehiclesl",
+    description: "Eagle Car Rental offers a diverse fleet of vehicles, from compact cars to SUVs and luxury vehicles, ensuring you find the perfect ride for your needs.",
+    Icon: <ShieldCheck className="text-site-primary" />,
+  },
+  {
+    title: "Credit/Debit card",
+    description: "Our system accepts all major debit and credit cards, ensuring a hassle-free booking experience.",
     Icon: <Sparkle className="text-site-primary" />,
   },
-  {
-    title: "Exceptional Service",
-    description: "No hidden costs, trustworthy, Stress-free",
-    Icon: <Medal className="text-site-primary" />,
-  },
+ 
 ];
 
 const Benefits = (props: Props) => {
@@ -30,7 +31,7 @@ const Benefits = (props: Props) => {
         <h3 className="text-[30px] md:text-[48px] font-[800] text-site-primary capitalize w-full text-center">
           Why to choose eagle car rental?
         </h3>
-        <div className="mt-[57px] w-full grid grid-cols-1 lg:grid-cols-2 gap-[27px]">
+        <div className="mt-[57px] w-full grid grid-cols-1 lg:grid-cols-3 gap-[27px]">
           {CARDS.map((card, index) => (
       
               <article key={`benefit-${index}`} className="rounded-[24px] px-[29px] py-[32px] border flex gap-[20px]">
