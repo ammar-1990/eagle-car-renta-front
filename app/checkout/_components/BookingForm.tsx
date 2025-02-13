@@ -235,7 +235,7 @@ const BookingForm = ({
             placeHolder="Return Flight"
             form={form}
             name="returnFlight"
-            label="Return Flighte"
+            label="Return Flight"
           />
         </FormWrapper>
         <FormWrapper title="Payment Method">
@@ -300,7 +300,7 @@ const BookingForm = ({
           Icon={<ArrowRight className="icon" />}
           />
         </div>
-        {JSON.stringify(form.formState.errors)}
+        {/* {JSON.stringify(form.formState.errors)} */}
       </form>
     </Form>
   );

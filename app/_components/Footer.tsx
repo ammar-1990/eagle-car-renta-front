@@ -1,7 +1,11 @@
 import ImageComponent from "@/components/ImageComponent";
+import SuperButton from "@/components/SuperButton";
 import { Mail, MapPinHouse, Phone } from "lucide-react";
 import Link from "next/link";
 import React from "react";
+import { FaTiktok } from "react-icons/fa";
+import { RiInstagramFill } from "react-icons/ri";
+
 
 type Props = {};
 
@@ -42,6 +46,18 @@ const LINKS = [
         href:'/contact-us'
     },
 ]
+
+const SOCIALS = [
+  {
+    href:"https://www.tiktok.com/@eagle.car.rental?_t=ZT-8tpq7aAz7bW&_r=1",
+    Icon:<FaTiktok className="text-white size-8" />
+
+  },
+  {
+    href:"https://www.instagram.com/eaglecarsrental?igsh=NTc4MTIwNjQ2YQ%3D%3D&utm_source=qr",
+    Icon:<RiInstagramFill className="text-white size-8" />
+  }
+]
 const Footer = (props: Props) => {
   return (
     <footer className="min-h-[300px] bg-site-primary pb-[56px] pt-12 px-[24px]">
@@ -78,6 +94,10 @@ const Footer = (props: Props) => {
             the customers by having the largest car fleet consisting of all
             kinds of cars
           </p>
+          <div className="flex items-center gap-8 flex-wrap mt-3">
+          {SOCIALS.map(({Icon,href},index)=><Link target="_blank" key={`social-${index}`}   href={href}   >{Icon}</Link>)}
+          </div>
+
         </article>
         <article className="flex flex-col justify-between md:justify-self-center gap-[20px]">
           {LINKS.map((link)=><Link  className="text-border capitalize" key={`footer-link-${link.title}`} href={link.href}>{link.title}</Link>)}

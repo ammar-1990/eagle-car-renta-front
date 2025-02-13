@@ -80,9 +80,9 @@ const Summary = ({
           label="Rental Price"
           value={formatToDollar(rentalPrice)}
         />
-        <SummaryElement label="Deposite" value={formatToDollar(deposit)} />
+        <SummaryElement label="Deposit" value={formatToDollar(deposit)} />
         <p className="text-[10px] text-[#ACACAC]">
-          Non-Refundable if you dont show up in the show room
+          Non-Refundable if you dont show up
         </p>
       </SummaryBlockWrapper>
  
