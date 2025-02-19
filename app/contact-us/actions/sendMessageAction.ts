@@ -13,7 +13,7 @@ export const sendMessage = async (values:z.infer<typeof contactUsSchema>):Promis
 
     try {
         if(!validData.success)  return  throwCustomError('Invalid Inputs')
-          const res =  await sendContactEmail({subject:values.subject??"Contact Message" ,to:'ammar.ali.haidar.1990@gmail.com',text:'contact message',html:`
+          const res =  await sendContactEmail({subject:values.subject??"Contact Message" ,to:'eaglebookingreserve@gmail.com',text:'contact message',html:`
                Sender Email: <strong>${values.email}</strong> 
                <br/>
                Sender Name: <strong> ${values.firstName} ${values.lastName}</strong> 

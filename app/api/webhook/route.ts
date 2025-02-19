@@ -51,7 +51,7 @@ export async function POST(req: Request) {
           console.log("META_DATA",JSON.stringify(metaData))
 
           const emailRes = await sendEmail({
-            to: "ammar.ali.haidar.1990@gmail.com",
+            to: "eaglebookingreserve@gmail.com",
             subject: "Booking Confirmation",
             text: "text paid",
             html: "html paid",
@@ -106,7 +106,7 @@ export async function POST(req: Request) {
       
         });
         // const emailRes = await sendEmail({
-        //   to: "ammar.ali.haidar.1990@gmail.com",
+        //   to: "eaglebookingreserve@gmail.com",
         //   subject: "test",
         //   text: "text expired",
         //   html: "html expired",
