@@ -51,7 +51,7 @@ export async function POST(req: Request) {
           console.log("META_DATA",JSON.stringify(metaData))
 
           const emailRes = await sendEmail({
-            to: "eaglebookingreserve@gmail.com",
+            to: metaData.customerEmail,
             subject: "Booking Confirmation",
             text: "text paid",
             html: "html paid",
