@@ -48,7 +48,7 @@ export async function POST(req: Request) {
           
           });
 
-          console.log("META_DATA",JSON.stringify(metaData))
+          console.log("META_DATA",JSON.stringify(metaData,undefined,4))
 
           const emailRes = await sendEmail({
             to: metaData.customerEmail,
