@@ -56,9 +56,9 @@ export async function POST(req: Request) {
             text: "text paid",
             html: "html paid",
             dynamicData:{
-              bookingDate:format(
+              bookingDate:formatInTimeZone(
                 new Date(order.createdAt),
-              
+                "America/New_York",
                 "MMM, dd yyyy - HH:mm"
               ),
               bookingID:order.bookingID,
@@ -106,7 +106,7 @@ export async function POST(req: Request) {
       
         });
         // const emailRes = await sendEmail({
-        //   to: "ammar.ali.haidar.1990@gmail.com",
+        //   to: "eaglebookingreserve@gmail.com",
         //   subject: "test",
         //   text: "text expired",
         //   html: "html expired",

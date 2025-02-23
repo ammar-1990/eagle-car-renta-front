@@ -1,5 +1,6 @@
 import ImageComponent from "@/components/ImageComponent";
-import { cn, formatToDollar } from "@/lib/utils";
+import { LocationType } from "@/lib/Types";
+import { cn, formatToDollar, getOneWayFee } from "@/lib/utils";
 import React, { ReactNode } from "react";
 
 type Props = {
@@ -12,7 +13,11 @@ type Props = {
   payLater: number;
   payNow: number;
   totalAmount: number;
-  extraOptions: { id: string; price: string; title: string }[];
+  extraOptions: { id: string; price: string; title: string,daily:boolean }[];
+  totalDays:number
+  oneWayFee:boolean,
+  pickUpLocation:LocationType,
+  dropOffLocation:LocationType | undefined
 };
 
 const Summary = ({
@@ -26,9 +31,16 @@ const Summary = ({
   payNow,
   deposit,
   totalAmount,
+  totalDays,
+  oneWayFee,
+  pickUpLocation,
+  dropOffLocation
 }: Props) => {
+
+  console.log("SUMMARY_ONE_WAY_FEE",oneWayFee)
+  const {oneWayFeePrice} = getOneWayFee({pickupLocation:pickUpLocation, dropOffLocation})
   return (
-    <div className="rounded-[16px] p-[50px] border bg-white self-start sticky top-[110px]">
+    <div className="rounded-[16px] p-[50px] border bg-white self-start sticky top-[30px] max-h-[670px] overflow-y-auto smoothScroll">
       <SummaryBlockWrapper>
         <h3 className="font-[700] text-[24px] ">Booking Summary</h3>
       </SummaryBlockWrapper>
@@ -68,22 +80,29 @@ const Summary = ({
           label="Rental Price"
           value={formatToDollar(rentalPrice)}
         />
-        <SummaryElement label="Deposite" value={formatToDollar(deposit)} />
+        <SummaryElement label="Deposit" value={formatToDollar(deposit)} />
         <p className="text-[10px] text-[#ACACAC]">
-          Non-Refundable if you dont show up in the show room
+          Non-Refundable if you dont show up
         </p>
       </SummaryBlockWrapper>
-      {!!extraOptions.length && (
-        <SummaryBlockWrapper>
+ 
+        {!!(!!extraOptions.length || !!oneWayFee) && <SummaryBlockWrapper>
+          {!!oneWayFee &&   <SummaryElement
+            
+              label={"One Way Fee"}
+              value={formatToDollar(oneWayFeePrice)}
+             
+            />}
           {extraOptions.map((option) => (
             <SummaryElement
               key={`extra-option-summary-${option.id}`}
               label={option.title}
               value={formatToDollar(+option.price)}
+              suffix={option.daily? `x${totalDays}` : undefined}
             />
           ))}
-        </SummaryBlockWrapper>
-      )}
+        </SummaryBlockWrapper>}
+     
 
       <SummaryBlockWrapper>
         <SummaryElement
@@ -116,19 +135,23 @@ const SummaryElement = ({
   label,
   value,
   isBold,
+  suffix
 }: {
   label: string;
   value: string;
   isBold?: boolean;
+  suffix?:string
 }) => {
   return (
     <div className="flex items-center justify-between">
       <p className={cn("text-[#ACACAC]", isBold && "text-black font-[500]")}>
         {label}
       </p>
-      <p className={cn("font-[500]", isBold && "font-[700] text-[24px]")}>
+      <p className={cn("font-[500] flex   gap-1", isBold && "font-[700] text-[24px] ")}>
         {value}
+        {suffix && <span className=" font-[400]">{suffix}</span>}
       </p>
+  
     </div>
   );
 };

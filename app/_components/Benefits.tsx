@@ -1,14 +1,14 @@
 import React from "react";
 import Container from "./Container";
-import { Medal, ShieldCheck, Sparkle } from "lucide-react";
+import { CreditCard, Medal, ShieldCheck, Sparkle } from "lucide-react";
 import FramerComponent from "./FramerComponent";
 
 type Props = {};
 
 const CARDS = [
   {
-    title: "Risk-Free Rental",
-    description: "Rent confidently with our money-back guarantee.",
+    title: "Wide Range of Vehiclesl",
+    description: "Eagle Car Rental offers a diverse fleet of vehicles, from compact cars to SUVs and luxury vehicles, ensuring you find the perfect ride for your needs.",
     Icon: <ShieldCheck className="text-site-primary" />,
   },
   {
@@ -17,10 +17,11 @@ const CARDS = [
     Icon: <Sparkle className="text-site-primary" />,
   },
   {
-    title: "Exceptional Service",
-    description: "No hidden costs, trustworthy, Stress-free",
-    Icon: <Medal className="text-site-primary" />,
+    title: "Credit/Debit card",
+    description: "Our system accepts all major debit and credit cards, ensuring a hassle-free booking experience.",
+    Icon: <CreditCard className="text-site-primary" />,
   },
+ 
 ];
 
 const Benefits = (props: Props) => {
@@ -41,7 +42,7 @@ const Benefits = (props: Props) => {
                   <h4 className="text-[20px] font-[700] text-site-primary capitalize clamp">
                     {card.title}
                   </h4>
-                  <p className="text-[18px] text-black mt-[16px]">
+                  <p className="text-[18px] text-black mt-[16px] text-sm">
                     {card.description}
                   </p>
                 </div>

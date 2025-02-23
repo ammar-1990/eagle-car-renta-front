@@ -76,7 +76,7 @@ const location = z.object({
 
   dropoffLocation:z.enum(LOCATIONS_CONST,{message:"Invalid Location"})
   .optional()  
-  .or(z.literal("")),
+  .or(z.literal(undefined)),
 });
 
 const prices = z.object({
@@ -86,6 +86,7 @@ const prices = z.object({
       id: z.string().optional().or(z.literal("")),
       title: z.string().min(1, "Required").max(100),
       price: numberSchema,
+      daily:z.boolean()
     })
   ),
 });
@@ -93,6 +94,10 @@ const prices = z.object({
 const status = z.object({
     status:z.nativeEnum(BookingStatus),
     terms:z.boolean().refine(value=>!!value ,{message:"You Must Accept Terms & Conditions."})
+})
+
+const extraFees = z.object({
+  oneWayFee:z.boolean()
 })
 
  
@@ -103,7 +108,9 @@ export const bookingSchema = drivingDetails
   .and(isBusiness)
   .and(location)
   .and(prices)
-  .and(status);
+  .and(status)
+  .and(extraFees)
+  
 
 
 

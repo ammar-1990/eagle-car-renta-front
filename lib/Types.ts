@@ -128,7 +128,7 @@ export const checkoutParamsSchema = z
     dropoffLocation: z
       .enum(LOCATIONS_CONST, { message: "Invalid Location" })
       .optional()
-      .or(z.literal("")),
+      .or(z.literal(undefined)),
   })
   .refine(
     (data) => {

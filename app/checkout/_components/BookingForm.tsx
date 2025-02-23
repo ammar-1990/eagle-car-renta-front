@@ -28,7 +28,7 @@ import { ArrowRight } from "lucide-react";
 type Props = {
   form: UseFormReturn<z.infer<typeof bookingSchema>>;
   onSubmit: (values: TypeOf<typeof bookingSchema>) => Promise<void>;
-  extraOptions: { id: string; price: number; title: string }[];
+  extraOptions: { id: string; price: number; title: string,daily:boolean }[];
   setIsBusinessFn: () => void;
   pending:boolean
  
@@ -169,8 +169,8 @@ const BookingForm = ({
           )}
         </FormWrapper>
         {/* Extra Options */}
-        {!!extraOptions.length && (
-          <FormWrapper title="Extra Options">
+   
+        {!!extraOptions.length  &&   <FormWrapper title="Extra Options">
             <div className="flex flex-col gap-1">
               {extraOptions.map((option, index) => {
                 const currentOptions = form.watch("extraOptions") || [];
@@ -205,15 +205,18 @@ const BookingForm = ({
                         {option.title}
                       </Label>
                     </span>
-                    <span className="font-[600]">
+                    <span className="font-[600] flex items-center gap-2">
+                    {option.daily && <span className="text-xs text-muted-foreground px-3 py-1 border rounded-full font-[400]">Daily</span>}
                       {formatToDollar(option.price)}
+                      
                     </span>
+                   
                   </div>
                 );
               })}
             </div>
-          </FormWrapper>
-        )}
+          </FormWrapper>}
+   
 
         <FormWrapper title="Required Documents">
           <FielField
@@ -232,7 +235,7 @@ const BookingForm = ({
             placeHolder="Return Flight"
             form={form}
             name="returnFlight"
-            label="Return Flighte"
+            label="Return Flight"
           />
         </FormWrapper>
         <FormWrapper title="Payment Method">
@@ -297,7 +300,7 @@ const BookingForm = ({
           Icon={<ArrowRight className="icon" />}
           />
         </div>
-        {JSON.stringify(form.formState.errors)}
+        {/* {JSON.stringify(form.formState.errors)} */}
       </form>
     </Form>
   );

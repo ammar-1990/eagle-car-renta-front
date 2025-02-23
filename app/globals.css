@@ -92,3 +92,16 @@ html,body {
  * {
  
  }
+
+ .smoothScroll::-webkit-scrollbar{
+  width: 7px;
+ }
+ .smoothScroll::-webkit-scrollbar-thumb{
+ @apply bg-site-primary rounded-full
+ }
+ .smoothScroll::-webkit-scrollbar-thumb:hover{
+ @apply bg-site-primary/60 rounded-full
+ }
+ .smoothScroll::-webkit-scrollbar-track{
+ @apply bg-muted-foreground
+ }

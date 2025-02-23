@@ -5,6 +5,8 @@ import CustomError from "@/lib/CustomError";
 import {
   calculateRentalPrice,
   generateBookingCode,
+  getExtraOptionsPrice,
+  getOneWayFee,
   getTotalNowLaterPrices,
   stripePaymentMethodMap,
   throwCustomError,
@@ -13,7 +15,11 @@ import prisma from "@/lib/prisma";
 import { PricingType, StripeMetaData } from "@/lib/Types";
 import { startStripeSession } from "@/lib/stripe";
 import { endOfDay, formatDuration } from "date-fns";
-import { calculateDuration, checkBookingAvailability, isDurationMoreThan48Hours } from "@/lib/date";
+import {
+  calculateDuration,
+  checkBookingAvailability,
+  isDurationMoreThan48Hours,
+} from "@/lib/date";
 import sendEmail from "@/SendGrid";
 import { formatInTimeZone } from "date-fns-tz";
 
@@ -65,6 +71,7 @@ export const bookCar = async (
             id: true,
             price: true,
             title: true,
+            daily: true,
           },
         },
       },
@@ -93,6 +100,9 @@ export const bookCar = async (
       validExtraOptions.some((dbOption) => dbOption.id === clientOption.id)
     );
 
+    const pickupLocation = validData.data.pickupLocation;
+    const dropOffLocation = validData.data.dropoffLocation;
+
     if (!isValid)
       return throwCustomError(
         "Extra Options Added Not Found, Please Contact Customer Service"
@@ -100,22 +110,31 @@ export const bookCar = async (
 
     //calculate price
     const duration = calculateDuration(startDate, endDate);
-    const validRange = isDurationMoreThan48Hours(startDate, endDate)
-    if(!validRange) return throwCustomError("Rent Duration Should Be More Than 48 Hours")
+    const validRange = isDurationMoreThan48Hours(startDate, endDate);
+    if (!validRange)
+      return throwCustomError("Rent Duration Should Be More Than 48 Hours");
     const durationDescription = formatDuration(duration);
     const pricing = car.pricing as unknown as PricingType;
 
     const rentalPrice = calculateRentalPrice(duration, pricing);
-    const extraOptionsPrice = car.extraOptions.reduce(
-      (acc, val) => acc + Number(val.price),
-      0
-    );
 
+    const totalDays = duration.totalDays;
+
+    const { isOneWayFee, oneWayFeePrice } = getOneWayFee({
+      dropOffLocation,
+      pickupLocation,
+    });
+    const extraOptionsPrice = getExtraOptionsPrice(car.extraOptions, totalDays);
+    console.log("ONE_WAY_PRICE", oneWayFeePrice);
+    console.log("DROPOFF_LOCATION", dropOffLocation);
     const { payLater, payNow, totalAmount } = getTotalNowLaterPrices({
       deposite: car.deposit,
       extraOptionsPrice,
       rentalPrice,
+      oneWayFeePrice,
     });
+
+    console.log("TOTAL_AMOUNT", totalAmount);
 
     // generate booking ID
     const bookingID = await generateBookingCode();
@@ -131,6 +150,7 @@ export const bookCar = async (
         bookingID,
         payNow,
         status: "PENDING",
+      
       },
     });
 

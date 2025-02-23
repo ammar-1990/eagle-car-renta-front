@@ -146,11 +146,11 @@ const Locations = (props: Props) => {
                 <Phone className="text-site-primary w-[33px] h-[33px]" />
                 <div>
                   <p className="text-[#000000B2] text-[14px]">
-                    WhatsApp: {formatPhoneNumber(center.phone)}
+                    Office Cell Number: +1 {formatPhoneNumber(center.phone)}
                   </p>
                   {center.Landline && (
                     <p className="text-[#000000B2] text-[14px]">
-                      Office: {formatPhoneNumber(center.Landline)}
+                      Office Landline Number: {formatPhoneNumber(center.Landline)}
                     </p>
                   )}
                 </div>
