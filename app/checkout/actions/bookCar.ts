@@ -8,6 +8,7 @@ import {
   getExtraOptionsPrice,
   getOneWayFee,
   getTotalNowLaterPrices,
+  sendBookingMessage,
   stripePaymentMethodMap,
   throwCustomError,
 } from "@/lib/utils";
@@ -213,6 +214,11 @@ export const bookCar = async (
     // if(!emailRes.success){
     //   console.error(emailRes.error)
     // }
+
+     const res = await sendBookingMessage({title:"New Reservation has been made",subject:'New Reservation'})
+        if(!res.success){
+          console.error("Booking Email Faild")
+        }
 
     return {
       success: true,

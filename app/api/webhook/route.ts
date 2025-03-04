@@ -8,6 +8,7 @@ import { StripeMetaData } from "@/lib/Types";
 import sendEmail from "@/SendGrid";
 import { formatInTimeZone } from "date-fns-tz";
 import { format } from "date-fns";
+import { sendBookingMessage } from "@/lib/utils";
  
 
 export async function POST(req: Request) {
@@ -84,6 +85,11 @@ export async function POST(req: Request) {
           if(!emailRes.success){
             console.error(emailRes.error)
           }
+
+          const res = await sendBookingMessage({title:"Payment Made Successfully",subject:'New Payment'})
+          if(!res.success){
+            console.error("Booking Email Faild")
+          }
        
         }
       } catch (error) {
@@ -114,6 +120,11 @@ export async function POST(req: Request) {
         // if(!emailRes.success){
         //   console.error(emailRes.error)
         // }
+
+        const res = await sendBookingMessage({title:"Reservation has been expired",subject:'Booking Expired'})
+        if(!res.success){
+          console.error("Booking Email Faild")
+        }
      
       } catch (error) {
         console.error(error);

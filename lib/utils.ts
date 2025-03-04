@@ -14,6 +14,7 @@ import {
   tomorrow,
 } from "./Types";
 import { calculateDuration, convertDateToISOString } from "./date";
+import { sendContactEmail } from "@/SendGrid";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -166,12 +167,11 @@ export const getTotalNowLaterPrices = ({
   // const baseAmount = rentalPrice  + extraOptionsPrice
   // const totalAmount = Math.max(baseAmount, payNow); // incase deposite is greater than total
   // const payLater = Math.max(totalAmount - payNow, 0)
-  
+
   const payNow = deposite;
   const totalAmount =
     rentalPrice + deposite + extraOptionsPrice + oneWayFeePrice;
-  const payLater =
-    rentalPrice + extraOptionsPrice + oneWayFeePrice;
+  const payLater = rentalPrice + extraOptionsPrice + oneWayFeePrice;
 
   return { payNow, payLater, totalAmount };
 };
@@ -244,7 +244,6 @@ export const getOneWayFee = ({
   pickupLocation: LocationType;
   dropOffLocation: LocationType | undefined;
 }): { isOneWayFee: boolean; oneWayFeePrice: number } => {
-  
   // First, ensure dropOffLocation exists and is different from pickupLocation
   if (!dropOffLocation || dropOffLocation === pickupLocation) {
     return { isOneWayFee: false, oneWayFeePrice: 0 };
@@ -259,3 +258,31 @@ export const getOneWayFee = ({
   return { isOneWayFee: true, oneWayFeePrice: 500 };
 };
 
+export const sendBookingMessage = async ({
+  subject = "New Reservation",
+  title,
+}: {
+  subject: string;
+  title: string;
+}) => {
+
+
+  try {
+    await sendContactEmail({
+      subject: subject,
+      to: "eaglebookingreserve@gmail.com",
+      text: "New Reservation",
+      html: `
+      <strong>${title}</strong>
+    <a href="https://superadmin.eaglerentalcar.com/bookings">Please Check Bookings Table For More Details</a>
+       <br/>  
+        
+       `,
+    });
+
+    return {success:true}
+  } catch (error) {
+    return {success:false}
+  }
+
+};
