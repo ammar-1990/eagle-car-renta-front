@@ -10,7 +10,7 @@ import sendEmail, { sendContactEmail } from "@/SendGrid"
 export const sendMessage = async (values:z.infer<typeof contactUsSchema>):Promise<{success:boolean,message:string}>=>{
 
     const validData = contactUsSchema.safeParse(values)
-
+//eaglebookingreserve@gmail.com
     try {
         if(!validData.success)  return  throwCustomError('Invalid Inputs')
           const res =  await sendContactEmail({subject:values.subject??"Contact Message" ,to:'eaglebookingreserve@gmail.com',text:'contact message',html:`

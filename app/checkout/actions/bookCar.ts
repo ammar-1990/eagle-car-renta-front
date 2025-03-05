@@ -8,7 +8,7 @@ import {
   getExtraOptionsPrice,
   getOneWayFee,
   getTotalNowLaterPrices,
-  sendBookingMessage,
+  
   stripePaymentMethodMap,
   throwCustomError,
 } from "@/lib/utils";
@@ -23,6 +23,7 @@ import {
 } from "@/lib/date";
 import sendEmail from "@/SendGrid";
 import { formatInTimeZone } from "date-fns-tz";
+import { sendBookingMessage } from "@/lib/serverFunctions";
 
 export const bookCar = async (
   data: BookingType,
@@ -215,7 +216,7 @@ export const bookCar = async (
     //   console.error(emailRes.error)
     // }
 
-     const res = await sendBookingMessage({title:"New Reservation has been made",subject:'New Reservation'})
+     const res = await sendBookingMessage({title:"New Reservation has been made",subject:'New Reservation',bookingID})
         if(!res.success){
           console.error("Booking Email Faild")
         }

@@ -14,7 +14,7 @@ import {
   tomorrow,
 } from "./Types";
 import { calculateDuration, convertDateToISOString } from "./date";
-import { sendContactEmail } from "@/SendGrid";
+
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -258,31 +258,3 @@ export const getOneWayFee = ({
   return { isOneWayFee: true, oneWayFeePrice: 500 };
 };
 
-export const sendBookingMessage = async ({
-  subject = "New Reservation",
-  title,
-}: {
-  subject: string;
-  title: string;
-}) => {
-
-
-  try {
-    await sendContactEmail({
-      subject: subject,
-      to: "eaglebookingreserve@gmail.com",
-      text: "New Reservation",
-      html: `
-      <strong>${title}</strong>
-    <a href="https://superadmin.eaglerentalcar.com/bookings">Please Check Bookings Table For More Details</a>
-       <br/>  
-        
-       `,
-    });
-
-    return {success:true}
-  } catch (error) {
-    return {success:false}
-  }
-
-};
