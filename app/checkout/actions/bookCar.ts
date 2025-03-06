@@ -13,7 +13,7 @@ import {
   throwCustomError,
 } from "@/lib/utils";
 import prisma from "@/lib/prisma";
-import { PricingType, StripeMetaData } from "@/lib/Types";
+import { LocationType, PricingType, StripeMetaData } from "@/lib/Types";
 import { startStripeSession } from "@/lib/stripe";
 import { endOfDay, formatDuration } from "date-fns";
 import {
@@ -225,7 +225,9 @@ export const bookCar = async (
       endDate:metaData.endDate,
       paid:`$${metaData.payNow} is pending`,
       paymentMethod:booking.paymentMethod,
-      totalAmount:`$${metaData.totalAmount}`
+      totalAmount:`$${metaData.totalAmount}`,
+      pickupLocation:booking.pickupLocation as LocationType,
+      droppOffLocation:booking.dropoffLocation as LocationType
       
      }})
         if(!res.success){

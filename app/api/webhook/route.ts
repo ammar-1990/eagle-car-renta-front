@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 
 import { stripe } from "@/lib/stripe";
 import prisma from "@/lib/prisma";
-import { StripeMetaData } from "@/lib/Types";
+import { LocationType, StripeMetaData } from "@/lib/Types";
 import sendEmail from "@/SendGrid";
 import { formatInTimeZone } from "date-fns-tz";
 import { format } from "date-fns";
@@ -97,7 +97,9 @@ export async function POST(req: Request) {
             endDate:metaData.endDate,
             paid:`$${metaData.payNow}`,
             paymentMethod:order.paymentMethod,
-            totalAmount:`$${metaData.totalAmount}`
+            totalAmount:`$${metaData.totalAmount}`,
+            pickupLocation:order.pickupLocation as LocationType,
+            droppOffLocation:order.dropoffLocation as LocationType
             
            }})
           if(!res.success){
@@ -143,7 +145,10 @@ export async function POST(req: Request) {
           endDate:metaData.endDate,
           paid:`$${metaData.payNow} is cancelled`,
           paymentMethod:order.paymentMethod,
-          totalAmount:`$${metaData.totalAmount}`
+          totalAmount:`$${metaData.totalAmount}`,
+          pickupLocation:order.pickupLocation as LocationType,
+          droppOffLocation:order.dropoffLocation as LocationType
+          
           
          }})
         if(!res.success){

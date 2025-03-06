@@ -2,6 +2,7 @@
 
 import { DynamicData, sendContactEmail } from "../SendGrid";
 import { formatDateUtc } from "./date";
+import { LOCATIONS_MAP, LocationType } from "./Types";
 
 export const sendBookingMessage = async ({
   subject = "New Reservation",
@@ -10,7 +11,7 @@ export const sendBookingMessage = async ({
 }: {
   subject: string;
   title: string;
-  dynamicData: Partial<DynamicData>;
+  dynamicData: Partial<DynamicData> &{pickupLocation:LocationType,droppOffLocation:LocationType | undefined | null};
 }) => {
   //eaglebookingreserve@gmail.com
 
@@ -39,6 +40,10 @@ export const sendBookingMessage = async ({
           new Date(dynamicData.endDate!)
         )}</strong>
           <br/> 
+          Pick up Location: <strong>${LOCATIONS_MAP[dynamicData.pickupLocation]}</strong>
+          <br/>
+          Drop off Location: <strong>${LOCATIONS_MAP[dynamicData.droppOffLocation ?? dynamicData.pickupLocation]}</strong>
+          <br/>
         Payment Method:  <strong>${dynamicData.paymentMethod}</strong>
           <br/> 
         Paid:  <strong>${dynamicData.paid}</strong>
