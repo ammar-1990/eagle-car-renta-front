@@ -126,7 +126,12 @@ export const bookCar = async (
       dropOffLocation,
       pickupLocation,
     });
-    const extraOptionsPrice = getExtraOptionsPrice(car.extraOptions, totalDays);
+
+    //map used extra options added by client to booking
+   const usedExtraOptions =  validData.data.extraOptions.map(option=>({price: +option.price,
+    daily: option.daily}))
+
+    const extraOptionsPrice = getExtraOptionsPrice(usedExtraOptions, totalDays);
     console.log("ONE_WAY_PRICE", oneWayFeePrice);
     console.log("DROPOFF_LOCATION", dropOffLocation);
     const { payLater, payNow, totalAmount } = getTotalNowLaterPrices({
