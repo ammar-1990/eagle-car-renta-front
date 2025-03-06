@@ -88,7 +88,18 @@ export async function POST(req: Request) {
             console.error(emailRes.error)
           }
 
-          const res = await sendBookingMessage({title:"Payment Made Successfully",subject:'New Payment',bookingID:order.bookingID})
+          const res = await sendBookingMessage({title:"Payment Made Successfully",subject:'New Payment',dynamicData:{
+            bookingID:metaData.bookingID,
+            carName:metaData.carTitle,
+            fullName:`${order.firstName} ${order.lastName}`,
+            email:metaData.customerEmail,
+            startDate:metaData.startDate,
+            endDate:metaData.endDate,
+            paid:`$${metaData.payNow}`,
+            paymentMethod:order.paymentMethod,
+            totalAmount:`$${metaData.totalAmount}`
+            
+           }})
           if(!res.success){
             console.error("Booking Email Faild")
           }
@@ -123,7 +134,18 @@ export async function POST(req: Request) {
         //   console.error(emailRes.error)
         // }
 
-        const res = await sendBookingMessage({title:"Reservation has been expired",subject:'Booking Expired',bookingID:order.bookingID})
+        const res = await sendBookingMessage({title:"Reservation has been expired",subject:'Booking Expired',dynamicData:{
+          bookingID:metaData.bookingID,
+          carName:metaData.carTitle,
+          fullName:`${order.firstName} ${order.lastName}`,
+          email:metaData.customerEmail,
+          startDate:metaData.startDate,
+          endDate:metaData.endDate,
+          paid:`$${metaData.payNow} is cancelled`,
+          paymentMethod:order.paymentMethod,
+          totalAmount:`$${metaData.totalAmount}`
+          
+         }})
         if(!res.success){
           console.error("Booking Email Faild")
         }

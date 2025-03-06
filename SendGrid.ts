@@ -66,7 +66,7 @@ export const sendContactEmail = async ({
 
 export default sendEmail;
 
-type DynamicData = {
+export type DynamicData = {
   fullName: string;
   carName: string;
   bookingID: string;

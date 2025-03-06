@@ -216,7 +216,18 @@ export const bookCar = async (
     //   console.error(emailRes.error)
     // }
 
-     const res = await sendBookingMessage({title:"New Reservation has been made",subject:'New Reservation',bookingID})
+     const res = await sendBookingMessage({title:"New Reservation has been made",subject:'New Reservation',dynamicData:{
+      bookingID:metaData.bookingID,
+      carName:metaData.carTitle,
+      fullName:`${booking.firstName} ${booking.lastName}`,
+      email:metaData.customerEmail,
+      startDate:metaData.startDate,
+      endDate:metaData.endDate,
+      paid:`$${metaData.payNow} is pending`,
+      paymentMethod:booking.paymentMethod,
+      totalAmount:`$${metaData.totalAmount}`
+      
+     }})
         if(!res.success){
           console.error("Booking Email Faild")
         }
