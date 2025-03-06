@@ -99,9 +99,15 @@ export async function POST(req: Request) {
             paymentMethod:order.paymentMethod,
             totalAmount:`$${metaData.totalAmount}`,
             pickupLocation:order.pickupLocation as LocationType,
-            droppOffLocation:order.dropoffLocation as LocationType
-            
-           }})
+            droppOffLocation:order.dropoffLocation as LocationType,
+            extraOptions:order.extraOptions as unknown as {
+              id: string;
+              price: number;
+              title: string;
+              daily: boolean;
+          }[]
+           },
+           rentalPrice:String(order.price)})
           if(!res.success){
             console.error("Booking Email Faild")
           }
@@ -147,10 +153,17 @@ export async function POST(req: Request) {
           paymentMethod:order.paymentMethod,
           totalAmount:`$${metaData.totalAmount}`,
           pickupLocation:order.pickupLocation as LocationType,
-          droppOffLocation:order.dropoffLocation as LocationType
+          droppOffLocation:order.dropoffLocation as LocationType,
+          extraOptions:order.extraOptions as unknown as {
+            id: string;
+            price: number;
+            title: string;
+            daily: boolean;
+        }[]
           
           
-         }})
+         },
+        rentalPrice:String(order.price)})
         if(!res.success){
           console.error("Booking Email Faild")
         }

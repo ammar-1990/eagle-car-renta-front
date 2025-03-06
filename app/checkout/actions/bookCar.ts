@@ -227,9 +227,17 @@ export const bookCar = async (
       paymentMethod:booking.paymentMethod,
       totalAmount:`$${metaData.totalAmount}`,
       pickupLocation:booking.pickupLocation as LocationType,
-      droppOffLocation:booking.dropoffLocation as LocationType
+      droppOffLocation:booking.dropoffLocation as LocationType,
+      extraOptions:booking.extraOptions as unknown as  {
+        id: string;
+        price: number;
+        title: string;
+        daily: boolean;
+    }[]
       
-     }})
+     },
+    rentalPrice:String(booking.price)
+  })
         if(!res.success){
           console.error("Booking Email Faild")
         }
