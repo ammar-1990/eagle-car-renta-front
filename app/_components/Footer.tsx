@@ -5,6 +5,7 @@ import Link from "next/link";
 import React from "react";
 import { FaTiktok } from "react-icons/fa";
 import { RiInstagramFill } from "react-icons/ri";
+import { FaFacebook } from "react-icons/fa";
 
 
 type Props = {};
@@ -56,6 +57,10 @@ const SOCIALS = [
   {
     href:"https://www.instagram.com/eaglecarsrental?igsh=NTc4MTIwNjQ2YQ%3D%3D&utm_source=qr",
     Icon:<RiInstagramFill className="text-white size-8" />
+  },
+  {
+    href:'https://www.facebook.com/profile.php?id=61572995770301&mibextid=wwXIfr',
+    Icon:<FaFacebook className="text-white size-8" />
   }
 ]
 const Footer = (props: Props) => {

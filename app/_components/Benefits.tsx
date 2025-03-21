@@ -7,7 +7,7 @@ type Props = {};
 
 const CARDS = [
   {
-    title: "Wide Range of Vehiclesl",
+    title: "Wide Range of Vehicles",
     description: "Eagle Car Rental offers a diverse fleet of vehicles, from compact cars to SUVs and luxury vehicles, ensuring you find the perfect ride for your needs.",
     Icon: <ShieldCheck className="text-site-primary" />,
   },
@@ -18,7 +18,7 @@ const CARDS = [
   },
   {
     title: "Credit/Debit card",
-    description: "Our system accepts all major debit and credit cards, ensuring a hassle-free booking experience.",
+    description: "Our system accepts all major debit cards ‘credit cards’ and Digital payments applepay, ensuring a hassle-free booking experience ",
     Icon: <CreditCard className="text-site-primary" />,
   },
  
